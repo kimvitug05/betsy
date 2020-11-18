@@ -9,4 +9,11 @@ Rails.application.routes.draw do
   get 'merchants/index'
   get 'merchants/show'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+
+  resources :merchants
+  resources :products
+  resources :categorizations
+  resources :order_items
+  resources :orders
+  resources :reviews
 end
