@@ -5,13 +5,15 @@ class Merchant < ApplicationRecord
   validates :email, presence: true, format: {with: /@/}, uniqueness: true
 
   def self.build_from_github(auth_hash)
-    user = Merchant.new
-    user.uid = auth_hash[:uid]
-    user.provider = "github"
-    user.username = auth_hash["info"]["name"]
-    user.email = auth_hash["info"]["email"]
+    merchant = Merchant.new
+    merchant.uid = auth_hash[:uid]
+    merchant.provider = "github"
+    merchant.username = auth_hash["info"]["nickname"]
+    merchant.email = auth_hash["info"]["email"]
+    merchant.avatar = auth_hash["info"]["image"]
     # Note that the user has not been saved.
     # We'll choose to do the saving outside of this method
-    return user
+    return merchant
   end
 end
+
