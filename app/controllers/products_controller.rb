@@ -24,7 +24,15 @@ class ProductsController < ApplicationController
   end
 
   def create
+    unless session[:merchant_id]
+      flash[:status] = :failure
+      flash[:result_text] = "Only merchants can create a new product"
+      render :index, status: :forbidden
+      return
+    end
+
     @product = Product.new(product_params)
+    @product.merchant_id = session[:merchant.id] #<--will this work? Or need to declare @merchant?
     if @product.save
       flash[:status] = :success
       flash[:result_text] = "Successfully created new product: #{@product.name}"
