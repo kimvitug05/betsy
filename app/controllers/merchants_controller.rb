@@ -1,5 +1,10 @@
 class MerchantsController < ApplicationController
 
+  before_action :require_login, except: [:index, :create, :show]
+
+  def dashboard
+  end
+
   def create
     auth_hash = request.env["omniauth.auth"]
     merchant = Merchant.find_by(uid: auth_hash[:uid], provider: "github")
@@ -31,10 +36,10 @@ class MerchantsController < ApplicationController
 
   def show
     merchant_id = params[:id].to_i
-    @merchant = User.find_by(id: merchant_id)
+    @merchant = Merchant.find_by(id: merchant_id)
 
     if @merchant.nil?
-      redirect_to merchants_path
+      render render_404
       return
     end
   end

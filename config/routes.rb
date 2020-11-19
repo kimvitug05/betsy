@@ -19,6 +19,7 @@ Rails.application.routes.draw do
 
   resources :homepages, only: [:index]
   resources :merchants, only: [:create, :index, :show]
+  get "/dashboard", to: "merchants#dashboard", as: "dashboard"
   resources :products
   resources :categorizations
   resources :order_items
