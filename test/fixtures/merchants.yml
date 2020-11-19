@@ -1,0 +1,6 @@
+merchant1:
+  username: bob_belcher
+  email: bob@bob.com
+  uid: 12345
+  provider: github
+  avatar: nil
