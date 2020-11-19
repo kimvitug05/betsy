@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   root to: "homepages#index"
 
   resources :homepages, only: [:index]
-  resources :merchants
+  resources :merchants, only: [:create, :index, :show]
   resources :products
   resources :categorizations
   resources :order_items

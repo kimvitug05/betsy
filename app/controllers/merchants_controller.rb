@@ -26,9 +26,17 @@ class MerchantsController < ApplicationController
   end
 
   def index
+    @merchants = Merchant.all
   end
 
   def show
+    merchant_id = params[:id].to_i
+    @merchant = User.find_by(id: merchant_id)
+
+    if @merchant.nil?
+      redirect_to merchants_path
+      return
+    end
   end
 
   def logout
