@@ -14,7 +14,8 @@
 <!--  LOGIN/LOGOUT BUTTONS-->
   <ul class="nav app-header__user-nav-container">
     <% if @login_user %>
-<!--      <li class="nav-item app-header__nav_item">-->
+      <%= link_to "My Account", dashboard_path, class: "btn btn-primary" %>
+      <!--      <li class="nav-item app-header__nav_item">-->
         <%#= link_to "Logged in as #{@login_user.username}", user_path(@login_user), class: "btn btn-primary" %>
 <!--      </li>-->
       <li class="nav-item app-header__nav_item">
@@ -24,7 +25,7 @@
       <li class="nav-item app-header__nav_item">
         <%= link_to "Log In", github_login_path, class: "btn btn-primary" %>
       </li>
-    <% end %>
+  <% end %>
   </ul>
 
 

@@ -1,14 +1,31 @@
 require "test_helper"
 
 describe MerchantsController do
-  it "must get index" do
-    get merchants_index_url
-    must_respond_with :success
+  describe "index" do
+    it "must get index" do
+      get merchants_path
+      must_respond_with :success
+    end
   end
 
-  it "must get show" do
-    get merchants_show_url
-    must_respond_with :success
+  describe "show" do
+    it "must get show" do
+      get merchant_path(merchants(:merchant1))
+      must_respond_with :success
+    end
   end
 
+  describe "dashboard" do
+    it "must get the dashboard page" do
+      skip
+    end
+  end
+
+  describe "create" do
+
+  end
+
+  describe "logout" do
+
+  end
 end

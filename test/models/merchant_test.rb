@@ -61,4 +61,22 @@ describe Merchant do
     expect(another_merchant.errors.messages.include?(:email)).must_equal true
     expect(another_merchant.errors.messages[:email].include?("has already been taken")).must_equal true
   end
+  
+  #TODO - edge case for uid
+#   it "requires a unique uid" do
+#     dup = Merchant.new(username: "bob_belcher", provider: "github", uid: 12345, email: "bob@bob.com")
+#     expect(dup.valid?).must_equal false
+#     expect(dup.errors.messages).must_include :uid
+#   end
+
+#   describe "relations" do
+#     it "has a list of products" do
+#       expect(@merchant1).must_respond_to :products
+
+#       #TODO - uncomment when products are created
+
+#       # @merchant1.products.each do |product|
+#       #   expect(product).must_be_kind_of Product
+#       # end
+#     end
 end

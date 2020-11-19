@@ -3,6 +3,7 @@ class Merchant < ApplicationRecord
 
   validates :username, uniqueness: true, presence: true
   validates :email, presence: true, format: {with: /@/}, uniqueness: true
+  validates :uid, uniqueness: { scope: :provider }
 
   def self.build_from_github(auth_hash)
     merchant = Merchant.new
