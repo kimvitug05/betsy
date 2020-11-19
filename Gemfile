@@ -80,5 +80,3 @@ group :test do
   gem 'minitest-rails'
   gem 'minitest-reporters'
 end
-
-ENV['GITHUB_CLIENT_ID']
