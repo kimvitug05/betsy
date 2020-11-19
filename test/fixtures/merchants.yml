@@ -1,0 +1,11 @@
+adies:
+  provider: github
+  uid: 12345
+  email: mkkrs@mkkrs.org
+  username: neopetsy
+
+neopetsy:
+  provider: github
+  uid: 1134
+  email: weloveneopets@yes.org
+  username: neopets4_ever
