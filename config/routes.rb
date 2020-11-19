@@ -10,8 +10,8 @@ Rails.application.routes.draw do
   get 'merchants/show'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.htmlget "/auth/github", as: "github_login" #OmniAuth login
   get "/auth/github", as: "github_login" #OmniAuth login
-  get "/auth/:provider/callback", to: "users#create" #OmniAuth Github callback
-  post "/logout", to: "users#logout", as: "logout"
+  get "/auth/:provider/callback", to: "merchants#create" #OmniAuth Github callback
+  post "/logout", to: "merchants#logout", as: "logout"
 
   resources :merchants
   resources :products
