@@ -1,5 +1,7 @@
 class ProductsController < ApplicationController
 
+  skip_before_action :require_login, except [:new, :edit, :destroy]
+
   def index
     @products = Product.all
   end
