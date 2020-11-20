@@ -12,8 +12,9 @@ Rails.application.routes.draw do
     # delete 'products/remove_from_cart/id', to: 'products#remove_from_cart', as: "remove_from_cart"
 
   end
-
+  get "/checkout", to: "orders#new", as: "checkout"
   get "/cart", to:"products#cart", as: "cart"
+
   post "/add_to_cart", to:"products#add_to_cart", as: "add_to_cart"
   get "/clear_cart", to:"products#clear_cart", as: "clear_cart"
   root to: "homepages#index"

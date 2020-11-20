@@ -23,10 +23,12 @@
     </ul>
    <% end  %>
 
+
   Cart Total: $<%= @cart_total %>
   <%= link_to "Clear Cart", clear_cart_path %>
 <% end %>
 <%= link_to "Go Shopping", products_path %>
+<%= link_to "Checkout", checkout_path %>
 
 
 
