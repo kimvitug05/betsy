@@ -4,14 +4,26 @@
         @cart = "Your cart is currently empty!" %>
         <%= @cart %>
 <% else %>
+  <%# @cart.each do |item| %>
+<!--    <ul>-->
+<!--    <li><%#= link_to item["name"], products_path(item["id"])  %></li>-->
+<!--    <li><%#= item["price"] %></li>-->
+<!--      <li>Quantity: <%#= @selected_quantity %></li>-->
+
+<!--    </ul>-->
+  <%# end %>
+
   <% @cart.each do |item| %>
     <ul>
-    <li><%= link_to item["name"], products_path(item["id"])  %></li>
-    <li><%= item["price"] %></li>
-      <li>Quantity: coming soon</li>
+      <li>Product: <%= link_to item["product"]["name"], products_path(item["product"]) %> </li>
+      <li>Description: <%= item["product"]["description"] %></li>
+      <li>Price: $<%= item["product"]["price"] %></li>
+      <li>Selected Quantity: <%= item["selected_quantity"] %></li>
 
     </ul>
-  <% end %>
+   <% end  %>
+
+  Cart Total: $<%= @cart_total %>
   <%= link_to "Clear Cart", clear_cart_path %>
 <% end %>
 <%= link_to "Go Shopping", products_path %>

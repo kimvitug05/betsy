@@ -13,16 +13,37 @@ class ProductsController < ApplicationController
 
   def cart
     @cart = session[:cart]
+    @cart_total = get_total
+  end
+
+  def get_total
+    total = 0.0
+    @cart.each do |item|
+      total = total + item['product']['price'] * item['selected_quantity']
+    end
+    return total
   end
 
   def clear_cart
     session[:cart] = []
+    @cart = {}
     redirect_to cart_path
   end
 
   def add_to_cart
     initialize_session
-    session[:cart]  << find_product
+    product = find_product
+    quantity = params[:selected_quantity].to_i
+    if product.quantity.nil?
+      product.quantity = 0
+      product.save
+    end
+    if quantity > product.quantity.to_i
+      quantity = product.quantity #if more is added than is available, add remaining
+    end
+
+    product_hash = {"product"=> product, "selected_quantity"=>quantity}
+    session[:cart]  << product_hash
     redirect_to cart_path
   end
 
