@@ -3,13 +3,20 @@
 </ul>
 
     <div class="product-title"><h1><%= @product.name %></h1></div>
+<!--    <div class="product-merch"><p>Sold by <%#=  @product.photo_url %> </p></div>-->
     <div class="product-merch"><p>Sold by <%=  @product.merchant.username %> </p></div>
-    <div class="product-desc"><p>Price: $<%=  @product.price %> </p></div>
+    <div class="product-desc"><p>Price: <%=  number_to_currency(@product.price) %> </p></div>
     <div class="product-desc"><p>Description: <%=  @product.description %> </p></div>
 <!--    <div class="product-desc"><p>Price: $<%#=  @product.categorizations_products %> </p></div>-->
     <hr>
-
+    <%= form_with model: @products, url: product_add_to_cart_path(@product.id), method: :post do |f| %>
+    <%= f.select :quantity, (1..20) %>
+    <%= f.submit "Add to cart", class:"btn btn-primary" %>
+    <%end%>
     <div class="product-stock"> <%= @quantity %> In Stock</div>
+
+
+
 
 
 

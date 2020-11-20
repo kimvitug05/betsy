@@ -9,7 +9,22 @@ class ProductsController < ApplicationController
   def show
     @product = Product.find_by(id: params[:id])
     render_404 unless @product
+  end
 
+  def add_to_cart
+    initialize_session
+    unless session[:cart].include?(find_product)
+      session[:cart] << find_product
+      redirect_to product_shopping_cart_path(find_product)
+    end
+    # id = params[:id]
+    # session[:cart] << id unless session[:cart].include?(id)
+
+  end
+
+  def shopping_cart
+    initialize_session
+    @product = Product(session[:cart])
   end
 
   def new
@@ -65,6 +80,10 @@ class ProductsController < ApplicationController
   #TODO def retire?
 
   private
+
+  def initialize_session
+    return session[:cart] ||= []
+  end
 
   def product_params
     return params.require(:product).permit(:name, :price, :merchant_id, :quantity, :status)
