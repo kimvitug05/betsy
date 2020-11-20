@@ -5,14 +5,9 @@ Rails.application.routes.draw do
   get "/auth/:provider/callback", to: "merchants#create", as: "auth_callback" #OmniAuth Github callback
   post "/logout", to: "merchants#logout", as: "logout"
 
-  resources :products, except: [:delete] do
-    # post "/products/:product_id/order_items", to: "order_items#create", as: "start_shopping"
-    # get "/cart", to: "products#shopping_cart", as: "shopping_cart"
-    # post 'products/add_to_cart/id', to: 'products#add_to_cart', as: "add_to_cart"
-    # delete 'products/remove_from_cart/id', to: 'products#remove_from_cart', as: "remove_from_cart"
+  resources :products, except: [:delete]
 
-  end
-  get "/checkout", to: "orders#new", as: "checkout"
+  get "/checkout", to: "orders#edit", as: "checkout"
   get "/cart", to:"products#cart", as: "cart"
 
   post "/add_to_cart", to:"products#add_to_cart", as: "add_to_cart"
