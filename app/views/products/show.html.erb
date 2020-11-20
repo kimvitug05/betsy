@@ -1,0 +1,15 @@
+
+
+</ul>
+
+    <div class="product-title"><h1><%= @product.name %></h1></div>
+    <div class="product-merch"><p>Sold by <%=  @product.merchant.username %> </p></div>
+    <div class="product-desc"><p>Price: $<%=  @product.price %> </p></div>
+    <div class="product-desc"><p>Description: <%=  @product.description %> </p></div>
+<!--    <div class="product-desc"><p>Price: $<%#=  @product.categorizations_products %> </p></div>-->
+    <hr>
+
+    <div class="product-stock"> <%= @quantity %> In Stock</div>
+
+
+

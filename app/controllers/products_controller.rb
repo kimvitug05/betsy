@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  before_action :find_product, only: [:show, :edit, :update]
+  # before_action :find_product, only: [:show, :edit, :update]
   # skip_before_action :require_login, except [:new, :edit, :destroy]
 
   def index
@@ -7,11 +7,17 @@ class ProductsController < ApplicationController
   end
 
   def show
+    @product = Product.find_by(id: params[:id])
     render_404 unless @product
+
   end
 
   def new
     @product = Product.new
+    @quantity = @product.quantity
+    if @product.quantity.nil?
+      @quantity = 0
+    end
   end
 
   def edit
@@ -65,6 +71,7 @@ class ProductsController < ApplicationController
   end
 
   def find_product
-    @product = Product.find_by_id(id: params[:id])
+    @product = Product.find_by(id: params[:product_id])
   end
+
 end
