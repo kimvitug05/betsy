@@ -1,13 +1,12 @@
 class ProductsController < ApplicationController
-
-  skip_before_action :require_login, except [:new, :edit, :destroy]
+  before_action :find_product, only: [:show, :edit, :update]
+  # skip_before_action :require_login, except [:new, :edit, :destroy]
 
   def index
     @products = Product.all
   end
 
   def show
-    @product = Product.find_by(id: params[:id])
     render_404 unless @product
   end
 
@@ -16,11 +15,10 @@ class ProductsController < ApplicationController
   end
 
   def edit
-    @product = Product.find_by(id: params[:id])
-    if @product.nil?
-      redirect_to products_path
-      return
-    end
+    # if @product.nil?
+    #   redirect_to products_path
+    #   return
+    # end
   end
 
   def create
@@ -60,10 +58,13 @@ class ProductsController < ApplicationController
 
   #TODO def retire?
 
-    private
+  private
 
-    def product_params
-      return params.require(:product).permit(:name, :price, :merchant_id, :quantity, :category_id)
-    end
+  def product_params
+    return params.require(:product).permit(:name, :price, :merchant_id, :quantity, :status)
+  end
 
+  def find_product
+    @product = Product.find_by_id(id: params[:id])
+  end
 end

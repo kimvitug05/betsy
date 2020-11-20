@@ -1,0 +1,23 @@
+<%= form_with model: @order, class: 'create-book' do |f| %>
+
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+  
+  <%= f.label :email %>
+  <%= f.text_field :email %>
+
+  <%= f.label :address %>
+  <%= f.text_field :address %>
+
+  <%= f.label :zip_code %>
+  <%= f.text_field :zip_code %>
+
+  <%= f.label :credit_card %>
+  <%= f.text_field :credit_card %>
+
+  <%= f.label :exp_date %>
+  <%= f.text_field :exp_date %>
+
+
+  <%= f.submit action_name, class: "book-button" %>
+<% end %>
