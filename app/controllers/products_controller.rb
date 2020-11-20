@@ -11,20 +11,19 @@ class ProductsController < ApplicationController
     render_404 unless @product
   end
 
-  def add_to_cart
-    initialize_session
-    unless session[:cart].include?(find_product)
-      session[:cart] << find_product
-      redirect_to product_shopping_cart_path(find_product)
-    end
-    # id = params[:id]
-    # session[:cart] << id unless session[:cart].include?(id)
-
+  def cart
+    @cart = session[:cart]
   end
 
-  def shopping_cart
+  def clear_cart
+    session[:cart] = []
+    redirect_to cart_path
+  end
+
+  def add_to_cart
     initialize_session
-    @product = Product(session[:cart])
+    session[:cart]  << find_product
+    redirect_to cart_path
   end
 
   def new

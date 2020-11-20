@@ -7,12 +7,15 @@ Rails.application.routes.draw do
 
   resources :products, except: [:delete] do
     # post "/products/:product_id/order_items", to: "order_items#create", as: "start_shopping"
-    get "products/shopping_cart", to: "products#shopping_cart", as: "shopping_cart"
-    post 'products/add_to_cart/id', to: 'products#add_to_cart', as: "add_to_cart"
-    delete 'products/remove_from_cart/id', to: 'products#remove_from_cart', as: "remove_from_cart"
+    # get "/cart", to: "products#shopping_cart", as: "shopping_cart"
+    # post 'products/add_to_cart/id', to: 'products#add_to_cart', as: "add_to_cart"
+    # delete 'products/remove_from_cart/id', to: 'products#remove_from_cart', as: "remove_from_cart"
 
   end
 
+  get "/cart", to:"products#cart", as: "cart"
+  post "/add_to_cart", to:"products#add_to_cart", as: "add_to_cart"
+  get "/clear_cart", to:"products#clear_cart", as: "clear_cart"
   root to: "homepages#index"
 
   resources :homepages, only: [:index]

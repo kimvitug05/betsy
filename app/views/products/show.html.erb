@@ -1,7 +1,5 @@
 
 
-</ul>
-
     <div class="product-title"><h1><%= @product.name %></h1></div>
 <!--    <div class="product-merch"><p>Sold by <%#=  @product.photo_url %> </p></div>-->
     <div class="product-merch"><p>Sold by <%=  @product.merchant.username %> </p></div>
@@ -9,8 +7,9 @@
     <div class="product-desc"><p>Description: <%=  @product.description %> </p></div>
 <!--    <div class="product-desc"><p>Price: $<%#=  @product.categorizations_products %> </p></div>-->
     <hr>
-    <%= form_with model: @products, url: product_add_to_cart_path(@product.id), method: :post do |f| %>
+    <%= form_with model: @products, url: add_to_cart_path(@product), method: :post do |f| %>
     <%= f.select :quantity, (1..20) %>
+      <%= f.hidden_field :product_id, value: @product.id %>
     <%= f.submit "Add to cart", class:"btn btn-primary" %>
     <%end%>
     <div class="product-stock"> <%= @quantity %> In Stock</div>
