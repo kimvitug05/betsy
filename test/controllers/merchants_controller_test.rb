@@ -1,6 +1,50 @@
 require "test_helper"
 
 describe MerchantsController do
+  describe "auth_callback" do
+    it "logs in an existing merchant and redirects to the root path" do
+      start_count = Merchant.count
+      merchant = merchants(:merchant1)
+
+      OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new(mock_auth_hash(merchant))
+
+      get auth_callback_path(:github)
+
+      must_redirect_to root_path
+
+      expect(session[:user_id]).must_equal merchant.id
+      expect(Merchant.count).must_equal start_count
+    end
+
+    it "creates a new user and redirects to the root path" do
+      start_count = Merchant.count
+      new_merchant = Merchant.new(provider: "github", uid: 99999, username: "test_user", email: "test@user.com")
+
+      OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new(mock_auth_hash(new_merchant))
+      get auth_callback_path(:github)
+
+      must_redirect_to root_path
+
+      expect(Merchant.count).must_equal start_count + 1
+      expect(session[:user_id]).must_equal Merchant.last.id
+    end
+
+    it "redirects to the root path if given invalid user data" do
+      start_count = Merchant.count
+      new_merchant = Merchant.new(provider: "github", uid: nil, username: "test_user", email: "test@user.com")
+
+      OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new(mock_auth_hash(new_merchant))
+      get auth_callback_path(:github)
+
+      must_redirect_to root_path
+
+      new_merchant = Merchant.find_by(uid: new_merchant.uid, provider: new_merchant.provider)
+      expect(new_merchant).must_be_nil
+      expect(Merchant.count).must_equal start_count
+      expect(session[:user_id]).must_be_nil
+    end
+  end
+
   describe "index" do
     it "must get index" do
       get merchants_path
@@ -28,4 +72,6 @@ describe MerchantsController do
   describe "logout" do
 
   end
+
+
 end
