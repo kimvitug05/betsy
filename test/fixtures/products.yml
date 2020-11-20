@@ -1,0 +1,6 @@
+blue_shoes:
+  name: shoes
+  price: 2.99
+  merchant_id: 1
+  quantity: 10
+  status: false
