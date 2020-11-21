@@ -3,4 +3,4 @@ blue_shoes:
   price: 2.99
   merchant_id: 1
   quantity: 10
-  status: false
+  active: true
