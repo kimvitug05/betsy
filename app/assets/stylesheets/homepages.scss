@@ -1,3 +1,9 @@
 // Place all the styles related to the Homepages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+div.homepage-banner {
+padding: 6px;
+display: flex;
+justify-content: center;
+}
