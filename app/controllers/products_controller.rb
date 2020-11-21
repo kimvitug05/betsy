@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  # before_action :find_product, only: [:show, :edit, :update]
+  before_action :find_product, only: [:show, :edit, :update]
   # skip_before_action :require_login, except [:new, :edit, :destroy]
 
   def index
@@ -7,7 +7,6 @@ class ProductsController < ApplicationController
   end
 
   def show
-    @product = Product.find_by(id: params[:id])
     render_404 unless @product
   end
 
@@ -57,10 +56,10 @@ class ProductsController < ApplicationController
   end
 
   def edit
-    # if @product.nil?
-    #   redirect_to products_path
-    #   return
-    # end
+    if @product.nil?
+      redirect_to products_path
+      return
+    end
   end
 
   def create
@@ -86,6 +85,13 @@ class ProductsController < ApplicationController
   end
 
   def update
+    unless session[:user_id]
+      flash[:status] = :failure
+      flash[:result_text] = "Only merchants can update a product"
+      render :index, status: :forbidden
+      return
+    end
+
     if @product.update(product_params)
       flash[:status] = :success
       flash[:result_text] = "Successfully updated #{@product.id}"
@@ -111,7 +117,7 @@ class ProductsController < ApplicationController
   end
 
   def find_product
-    @product = Product.find_by(id: params[:product_id])
+    @product = Product.find_by(id: params[:id])
   end
 
 end
