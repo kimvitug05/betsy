@@ -1,0 +1,6 @@
+<section>
+  <h2>View Products By Category</h2>
+  <% @categorizations.each do |category| %>
+    <h3><%= link_to category.name, categorization_path(category.id), :class => "badge badge-secondary badge-pill"%></h3>
+  <% end %>
+</section>
