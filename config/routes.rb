@@ -8,10 +8,10 @@ Rails.application.routes.draw do
   resources :products, except: [:delete]
 
   get "/checkout", to: "orders#edit", as: "checkout"
-  get "/cart", to:"products#cart", as: "cart"
+  get "/cart", to:"order_items#cart", as: "cart"
 
-  post "/add_to_cart", to:"products#add_to_cart", as: "add_to_cart"
-  get "/clear_cart", to:"products#clear_cart", as: "clear_cart"
+  post "/add_to_cart", to:"order_items#add_to_cart", as: "add_to_cart"
+  get "/clear_cart", to:"order_items#clear_cart", as: "clear_cart"
   root to: "homepages#index"
 
   resources :homepages, only: [:index]
