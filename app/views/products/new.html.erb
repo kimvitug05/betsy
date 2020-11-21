@@ -1,0 +1,33 @@
+<section class="container">
+  <h2>Create New Product</h2>
+
+  <%= form_with model: @product do |f| %>
+    <div class="form-group">
+      <%= f.label :name %>
+      <br>
+      <%= f.text_field :name, :class => "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.label :price %>
+      <br>
+      <%= f.text_field :price, :type => "number", :step => "0.01", :class => "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.label :quantity %>
+      <br>
+      <%= f.text_field :quantity, :type => "number", :class => "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.label :photo %>
+      <br>
+      <%= f.text_field :photo, :type => "url", :class => "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.label :description %>
+      <br>
+      <%= f.text_area :description, :class => "form-control" %>
+    </div>
+    <br>
+    <%= f.submit "Save", :class => "btn btn-primary"%>
+  <% end %>
+</section>
