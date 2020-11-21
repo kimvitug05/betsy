@@ -14,11 +14,12 @@
   <%# end %>
 
   <% @cart.each do |item| %>
+
     <ul>
-      <li>Product: <%= link_to item["product"]["name"], products_path(item["product"]) %> </li>
-      <li>Description: <%= item["product"]["description"] %></li>
-      <li>Price: $<%= item["product"]["price"] %></li>
-      <li>Selected Quantity: <%= item["selected_quantity"] %></li>
+      <li>Product: <%= link_to item.product.name, products_path(item.product) %> </li>
+      <li>Description: <%= item.product.description %></li>
+      <li>Price: $<%= item.product.price %></li>
+      <li>Selected Quantity: <%= item.quantity %></li>
 
     </ul>
    <% end  %>

@@ -12,21 +12,21 @@ class ProductsController < ApplicationController
   end
 
   def cart
-    @cart = session[:cart]
+    @cart = session[:cart].map { |attributes| OrderItem.new(attributes)}
     @cart_total = get_total
   end
 
   def get_total
     total = 0.0
     @cart.each do |item|
-      total = total + item['product']['price'] * item['selected_quantity']
+      total = total + item.product.price * item.quantity
     end
     return total
   end
 
   def clear_cart
     session[:cart] = []
-    @cart = {}
+
     redirect_to cart_path
   end
 
@@ -42,8 +42,9 @@ class ProductsController < ApplicationController
       quantity = product.quantity #if more is added than is available, add remaining
     end
 
-    product_hash = {"product"=> product, "selected_quantity"=>quantity}
-    session[:cart]  << product_hash
+    order_item = OrderItem.new(product: product, quantity: quantity)
+    # product_hash = {"product"=> product, "selected_quantity"=>quantity}
+    session[:cart]  << order_item
     redirect_to cart_path
   end
 
