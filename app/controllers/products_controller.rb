@@ -31,7 +31,7 @@ class ProductsController < ApplicationController
 
   def add_to_cart
     initialize_session
-    product = find_product
+    # product = find_product
     quantity = params[:selected_quantity].to_i
     if product.quantity.nil?
       product.quantity = 0
@@ -117,7 +117,7 @@ class ProductsController < ApplicationController
   end
 
   def find_product
-    @product = Product.find_by(id: params[:product_id])
+    @product = Product.find_by(id: params[:id])
   end
 
 end
