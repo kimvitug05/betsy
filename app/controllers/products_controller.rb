@@ -64,7 +64,7 @@ class ProductsController < ApplicationController
   end
 
   def create
-    unless session[:merchant_id]
+    unless session[:user_id]
       flash[:status] = :failure
       flash[:result_text] = "Only merchants can create a new product"
       render :index, status: :forbidden
@@ -72,7 +72,7 @@ class ProductsController < ApplicationController
     end
 
     @product = Product.new(product_params)
-    @product.merchant_id = session[:merchant.id] #<--will this work? Or need to declare @merchant?
+    @product.merchant_id = session[:user_id]
     if @product.save
       flash[:status] = :success
       flash[:result_text] = "Successfully created new product: #{@product.name}"
@@ -107,7 +107,7 @@ class ProductsController < ApplicationController
   end
 
   def product_params
-    return params.require(:product).permit(:name, :price, :merchant_id, :quantity, :status)
+    return params.require(:product).permit(:name, :price, :quantity, :active, :description, :photo)
   end
 
   def find_product

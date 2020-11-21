@@ -1,5 +1,5 @@
 <div class="product-title"><h1><%= @product.name %></h1></div>
-<!--    <div class="product-merch"><p>Sold by <%#=  @product.photo_url %> </p></div>-->
+<%= image_tag @product.photo, :alt => "#{@product.name} image", :class => "product-photo" %>
 <div class="product-merch"><p>Sold by <%=  @product.merchant.username %> </p></div>
 <div class="product-desc"><p>Price: <%=  number_to_currency(@product.price) %> </p></div>
 <div class="product-desc"><p>Description: <%=  @product.description %> </p></div>
