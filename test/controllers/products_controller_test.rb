@@ -3,7 +3,7 @@ require "test_helper"
 describe ProductsController do
   let (:product) { products(:blue_shoes) }
   before do
-    @merchant = Merchant.create!(email: "email@123.com", username: "kayla-bo-bayla", uid: "123456", provider: "github", avatar: "avatar")
+    @merchant = Merchant.create!(email: "email@123.com", username: "username", uid: "123456", provider: "github", avatar: "avatar")
 
     OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new(mock_auth_hash(@merchant))
 
@@ -45,10 +45,11 @@ describe ProductsController do
 
   describe "create" do
     it "creates a product with valid data" do
-      new_product = { product: { name: "Shoes", price: 2.99, merchant_id: @merchant[:id], quantity: 10, category_id: 1 } }
+
+      new_product = { product: {name: "Shoes", price: 2.99, merchant_id: @merchant[:id], quantity: 10 }}
 
       expect {
-        post product_path, params: new_product
+        post "/products", params: new_product
       }.must_change "Product.count", 1
 
       new_product_id = Product.find_by(name: "Shoes").id
@@ -58,13 +59,13 @@ describe ProductsController do
     end
 
     it "renders bad_request and does not update the DB for invalid data" do
-      bad_product = { product: { name: "Shoes", price: nil, merchant_id: @merchant[:id], quantity: 10, category_id: 1 } }
+      bad_product = { product: { name: "Shoes", price: nil, merchant_id: @merchant[:id], quantity: 10 } }
 
       expect {
         post products_path, params: bad_product
       }.wont_change "Product.count"
 
-      must_respond_with :not_found
+      must_respond_with :bad_request
     end
   end
 
@@ -106,13 +107,13 @@ describe ProductsController do
       updates = { product: { name: "fries" } }
 
       expect {
-        put products_path(@product), params: updates
+        put product_path(@product), params: updates
       }.wont_change "Product.count"
       updated_product = Product.find_by(id: @product.id)
 
       expect(updated_product.name).must_equal "fries"
       must_respond_with :redirect
-      must_redirect_to products_path(@product.id)
+      must_redirect_to product_path(@product.id)
     end
 
     # it "renders bad_request for invalid data" do
