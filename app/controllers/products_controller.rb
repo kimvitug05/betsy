@@ -1,6 +1,8 @@
 class ProductsController < ApplicationController
+  # before_action :require_login, only: [:new, :edit, :update, :create]
+  before_action :find_merchant, only: [:new, :edit, :update, :create]
   before_action :find_product, only: [:show, :edit, :update, :create]
-  before_action :find_merchant, only: [:edit, :update, :create]
+
   # skip_before_action :require_login, except [:new, :edit, :destroy]
 
   def index
@@ -58,7 +60,7 @@ class ProductsController < ApplicationController
 
   def edit
     if @product.nil?
-      redirect_to products_path
+      redirect_to product_path(@product.id)
       return
     end
   end
@@ -83,9 +85,6 @@ class ProductsController < ApplicationController
       flash[:messages] = @product.errors.messages
       render :new, status: :bad_request
     end
-  end
-
-  def edit
   end
 
   def update
@@ -116,22 +115,24 @@ class ProductsController < ApplicationController
     return session[:cart] ||= []
   end
 
-  def product_params
-    return params.require(:product).permit(:name, :price, :quantity, :active, :description, :photo)
-  end
-
-  def find_product
-    @product = Product.find_by_id(id: params[:id])
-    return render_404 unless @product
-  end
-
   def find_merchant
-    @merchant = Merchant.find_by(id: params[:author_id])
+    @merchant = Merchant.find_by(id: session[:user_id], provider: "github")
 
     if @merchant.nil?
       flash.now[:error] = "Merchant not found."
       render :new, status: :bad_request
     end
   end
+
+  def product_params
+    return params.require(:product).permit(:name, :price, :quantity, :active, :description, :photo).with_defaults(merchant_id: @merchant.id)
+  end
+
+  def find_product
+    @product = Product.find_by_id(params[:id])
+    return render_404 unless @product
+  end
+
+
 
 end

@@ -3,7 +3,18 @@ require "test_helper"
 describe ProductsController do
   let (:product) { products(:blue_shoes) }
   before do
-    @merchant = Merchant.create(email: "email@123.com", username: "kayla-bo-bayla")
+    @merchant = Merchant.create!(email: "email@123.com", username: "kayla-bo-bayla", uid: "123456", provider: "github", avatar: "avatar")
+
+    OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new(mock_auth_hash(@merchant))
+
+    get auth_callback_path(:github)
+
+    @product = Product.create!(
+      name: "sleds",
+      price: 2.99,
+      merchant_id: @merchant.id,
+      quantity: 10,
+      active: true)
   end
 
   describe "index" do
@@ -37,7 +48,7 @@ describe ProductsController do
       new_product = { product: { name: "Shoes", price: 2.99, merchant_id: @merchant[:id], quantity: 10, category_id: 1 } }
 
       expect {
-        post products_path, params: new_product
+        post product_path, params: new_product
       }.must_change "Product.count", 1
 
       new_product_id = Product.find_by(name: "Shoes").id
@@ -53,7 +64,7 @@ describe ProductsController do
         post products_path, params: bad_product
       }.wont_change "Product.count"
 
-      must_respond_with :bad_request
+      must_respond_with :not_found
     end
   end
 
@@ -61,7 +72,7 @@ describe ProductsController do
     # used fixture
     it "shows a product" do
       # product = products(:blue_shoes)
-      get product_path(products(:blue_shoes).id)
+      get products_path(@product.id)
 
       must_respond_with :success
     end
@@ -79,8 +90,7 @@ describe ProductsController do
 
   describe "edit" do
     it "succeeds in editing existing product" do
-      product = products(:blue_shoes)
-      get edit_product_path(product.id)
+      get edit_product_path(@product[:id])
 
       must_respond_with :success
     end
@@ -92,21 +102,17 @@ describe ProductsController do
   end
 
   describe "update" do
-    before do
-      @merchant = Merchant.create!(email: "email@123.com", username: "kayla-bo-bayla")
-    end
-
     it "succeeds for updating" do
       updates = { product: { name: "fries" } }
 
       expect {
-        put product_path(products(:blue_shoes).id), params: updates
+        put products_path(@product), params: updates
       }.wont_change "Product.count"
-      updated_product = Product.find_by(id: products(:blue_shoes)[:id])
+      updated_product = Product.find_by(id: @product.id)
 
       expect(updated_product.name).must_equal "fries"
       must_respond_with :redirect
-      must_redirect_to product_path(products(:blue_shoes)[:id])
+      must_redirect_to products_path(@product.id)
     end
 
     # it "renders bad_request for invalid data" do
