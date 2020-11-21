@@ -7,6 +7,7 @@ class OrdersController < ApplicationController
 
   def create
     @order = Order.new(order_params)
+    @order.order_items = session[:cart].map { |attributes| OrderItem.new(attributes)}
     if @order.save
       flash[:status] = :success
       flash[:result_text] = "Successfully ordered: #{@order.id}"
