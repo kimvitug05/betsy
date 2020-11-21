@@ -31,8 +31,8 @@ class ProductsController < ApplicationController
 
   def add_to_cart
     initialize_session
-    # product = find_product
-    quantity = params[:selected_quantity].to_i
+    product = Product.find_by(id: params["product_id"])
+    quantity = params["selected_quantity"].to_i
     if product.quantity.nil?
       product.quantity = 0
       product.save
@@ -41,7 +41,7 @@ class ProductsController < ApplicationController
       quantity = product.quantity #if more is added than is available, add remaining
     end
 
-    order_item = OrderItem.new(product: product, quantity: quantity)
+    order_item = OrderItem.new(product_id: product.id, quantity: quantity)
     # product_hash = {"product"=> product, "selected_quantity"=>quantity}
     session[:cart]  << order_item
     redirect_to cart_path
