@@ -17,6 +17,25 @@
     <p class="card-text">
       <%= product.description %>
     </p>
-    <%= link_to 'View Product', product_path(product.id), :class => 'btn btn-primary' %>
+
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm">
+        <%= button_to 'View Product', product_path(product.id), method: :get, :class => 'btn btn-primary' %>
+        <br>
+      </div>
+      <div class="col-sm">
+        <% if @login_user %>
+          <% if product.merchant_id == @login_user.id %>
+            <!--        MAKE THIS A METHOD LATER -->
+            <%= button_to "Retire Product", product_path(product.id),
+                          params: {:product => { :id => product.id, :active => false }},
+                          method: :put,  :class => 'btn btn-primary', data: { confirm: "Retire this item?  This will hide it from customers' view." } %>
+          <% end %>
+        <% end %>
+        <br>
+      </div>
+    </div>
   </div>
 </div>
