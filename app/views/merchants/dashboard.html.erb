@@ -1,40 +1,38 @@
-<h1>Merchant Dashboard</h1>
-<p><%= @login_user.username %></p>
-<p><%= @login_user.email %></p>
-<%= image_tag @login_user.avatar, alt: "user's Github image"  %>
+<section class="container">
+  <h2>Merchant Dashboard</h2>
+  <div class="mb-4">
+    <p><%= @login_user.username %></p>
+    <p><%= @login_user.email %></p>
+    <%= image_tag @login_user.avatar, alt: "user's Github image"  %>
+  </div>
 
-<ul>
-  <% @login_user.products.each do |product| %>
-    <li><%= product.name %></li>
-    <li><%= product.price %></li>
-    <li><%= product.quantity %></li>
-<!--    <li><%#= product.status %></li>-->
-  <% end %>
-</ul>
+  <h2>Products</h2>
+  <%= render partial: 'products/product-grid', locals: { products: @login_user.products } %>
 
-<p>Total Revenue: $<%= @login_user.total_revenue %></p>
-<p>View Orders:</p>
-<p>Fulfilled Orders Revenue: $<%= @login_user.total_revenue_by_status("fulfilled") %></p>
-<p>Total number of fulfilled orders: $<%= @login_user.total_num_orders_by_status("fulfilled") %></p>
-<p>Pending Orders Revenue: $<%= @login_user.total_revenue_by_status("pending") %></p>
-<p>Total number of fulfilled orders: $<%= @login_user.total_num_orders_by_status("pending") %></p>
+  <p>Total Revenue: $<%= @login_user.total_revenue %></p>
+  <p>View Orders:</p>
+  <p>Fulfilled Orders Revenue: $<%= @login_user.total_revenue_by_status("fulfilled") %></p>
+  <p>Total number of fulfilled orders: $<%= @login_user.total_num_orders_by_status("fulfilled") %></p>
+  <p>Pending Orders Revenue: $<%= @login_user.total_revenue_by_status("pending") %></p>
+  <p>Total number of fulfilled orders: $<%= @login_user.total_num_orders_by_status("pending") %></p>
 
-<ul>
-  <% @login_user.filter_orders("fulfilled").each do |order| %>
-    <li><%= order.name %></li>
-    <li><%= order.email %></li>
-    <li><%= order.address %></li>
-    <li><%= order.credit_card %></li>
-    <li><%= order.exp_date %></li>
-  <% end %>
-</ul>
+  <ul>
+    <% @login_user.filter_orders("fulfilled").each do |order| %>
+      <li><%= order.name %></li>
+      <li><%= order.email %></li>
+      <li><%= order.address %></li>
+      <li><%= order.credit_card %></li>
+      <li><%= order.exp_date %></li>
+    <% end %>
+  </ul>
 
-<ul>
-  <% @login_user.filter_orders("pending").each do |order| %>
-    <li><%= order.name %></li>
-    <li><%= order.email %></li>
-    <li><%= order.address %></li>
-    <li><%= order.credit_card %></li>
-    <li><%= order.exp_date %></li>
-  <% end %>
-</ul>
+  <ul>
+    <% @login_user.filter_orders("pending").each do |order| %>
+      <li><%= order.name %></li>
+      <li><%= order.email %></li>
+      <li><%= order.address %></li>
+      <li><%= order.credit_card %></li>
+      <li><%= order.exp_date %></li>
+    <% end %>
+  </ul>
+</section>

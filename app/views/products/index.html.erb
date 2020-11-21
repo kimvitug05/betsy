@@ -1,8 +1,4 @@
-<% @products.each do |product|%>
-  <h2><%= link_to product.name, product_path(product.id) %></h2>
-    <% if product.photo.present? %>
-      <p><%= image_tag product.photo, :class => 'product-photo' %></p>
-    <%end %>
-    <p>Price: <%= number_to_currency(product.price) %></p>
-    <p><%= product.description %></p>
-<% end %>
+<div class="container">
+  <h2>Products</h2>
+  <%= render partial: 'product-grid', locals: { products: @products } %>
+</div>

@@ -1,0 +1,4 @@
+<section class="container">
+  <h2>Browse All Products In <%= @categorization.name.capitalize %></h2>
+  <%= render partial: 'products/product-grid', locals: { products: @categorization.products } %>
+</section>

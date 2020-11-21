@@ -1,0 +1,22 @@
+<div class="card d-flex h-100 product-card">
+  <div
+    alt="product image"
+    class="card-img-top product-image-preview"
+    style="background-image: url(<%= product.photo || 'https://via.placeholder.com/320x240' %>)"
+  ></div>
+  <div class="card-body">
+    <h5 class="card-title">
+      <%= product.name.capitalize %>
+    </h5>
+<!--    <p class="card-text">-->
+<!--      Category: <%#= product.categorizations[0] ? product.categorizations[0].name : '' %>-->
+<!--    </p>-->
+    <h5 class="card-text text-success">
+      <%= number_to_currency(product.price) %>
+    </h5>
+    <p class="card-text">
+      <%= product.description %>
+    </p>
+    <%= link_to 'View Product', product_path(product.id), :class => 'btn btn-primary' %>
+  </div>
+</div>
