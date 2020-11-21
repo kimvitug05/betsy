@@ -15,7 +15,12 @@ Rails.application.routes.draw do
   root to: "homepages#index"
 
   resources :homepages, only: [:index]
+
   resources :merchants, only: [:create, :index, :show]
+  resources :merchants do
+    resources :products, only: [:new, :edit]
+  end
+
   get "/dashboard", to: "merchants#dashboard", as: "dashboard"
 
   resources :categorizations
