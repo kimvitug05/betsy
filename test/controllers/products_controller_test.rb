@@ -47,7 +47,7 @@ describe ProductsController do
     end
 
     it "renders bad_request and does not update the DB for invalid data" do
-      bad_product = { product: { name: "Shoes", price: nil, merchant_id: 1, quantity: 10, category_id: 1 } }
+      bad_product = { product: { name: "Shoes", price: nil, merchant_id: @merchant[:id], quantity: 10, category_id: 1 } }
 
       expect {
         post products_path, params: bad_product
