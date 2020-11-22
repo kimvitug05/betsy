@@ -1,8 +1,6 @@
 class OrderItemsController < ApplicationController
 
-  def create
-    @order = current_order
-  end
+
 
     def cart
       @cart = session[:cart].map { |attributes| OrderItem.new(attributes)}
@@ -11,7 +9,7 @@ class OrderItemsController < ApplicationController
 
   def add_to_cart
     #start order array if nothing is in the cart
-    initialize_session if @cart.empty?
+    initialize_session
 
     product = Product.find_by(id: params["product_id"])
     quantity = params["selected_quantity"].to_i
@@ -25,39 +23,47 @@ class OrderItemsController < ApplicationController
       quantity = product.quantity
     end
 
-    #start new order item
-    order_item = OrderItem.new(product_id: product.id, quantity: quantity)
+    order_item = OrderItem.create(product_id: product.id, quantity: quantity)
     if order_item.save
-      session[:cart]  << order_item
-      flash[:status] = :success
-      flash[:result_text] = "Woohoo! Your #{product.name} is in the cart!"
-      redirect_to cart_path
-      return
-    else
-      flash[:status] = :error
-      flash[:result_text] = "There was a problem with your request"
-      render_404
-      return
+        session[:cart]  << order_item
+        flash[:status] = :success
+        flash[:result_text] = "Woohoo! Your #{product.name} is in the cart!"
     end
+    redirect_to cart_path
+    return
+    #start new order item
+    # order_item = OrderItem.create(product_id: product.id, quantity: quantity)
+    # if order_item.save
+    #   session[:cart]  << order_item
+    #   flash[:status] = :success
+    #   flash[:result_text] = "Woohoo! Your #{product.name} is in the cart!"
+    #   redirect_to cart_path
+    #   return
+    # else
+    #   flash[:status] = :error
+    #   flash[:result_text] = "There was a problem with your request"
+    #   render_404
+    #   return
+    # end
 
     #Update quantity if item is already in the cart
-    @cart.each do |item|
-    if item["product_id"] == product.id && item["quantity"] < product.quantity
-      item["quantity"] += 1
-      flash[:status] = :success
-      flash[:result_text] = "Woohoo! Your N.E.O.P.E.T.S.Y item is in the cart!"
-      redirect_to cart_path
-      return
-    elsif item["quantity"] > product.quantity
-      flash[:status] = :error
-      flash[:result_text] = "Oh no! Not enough inventory to fulfill your request!"
-    end
-    end
+    # @cart.each do |item|
+    # if item["product_id"] == product.id && item["quantity"] < product.quantity
+    #   item["quantity"] += 1
+    #   flash[:status] = :success
+    #   flash[:result_text] = "Woohoo! Your N.E.O.P.E.T.S.Y item is in the cart!"
+    #   redirect_to cart_path
+    #   return
+    # elsif item["quantity"] > product.quantity
+    #   flash[:status] = :error
+    #   flash[:result_text] = "Oh no! Not enough inventory to fulfill your request!"
+    # end
+    # end
   end
 
   def get_total
     total = 0.0
-    initialize_session.each do |item|
+    @cart.each do |item|
       total = total + item.product.price * item.quantity
     end
     return total
