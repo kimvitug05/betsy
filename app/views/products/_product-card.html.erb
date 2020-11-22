@@ -1,4 +1,4 @@
-<div class="card d-flex h-100 product-card">
+<div class="card border-secondary mb-3 d-flex h-100 product-card">
   <div class="container">
     <div
       alt="product image"
@@ -38,10 +38,17 @@
     </div>
       <div class="row text-center">
         <div class="col-sm">
+          <% if product.active %>
           <%= button_to "Retire Product", product_path(product.id),
                         params: {:product => { :id => product.id, :active => false }},
                         method: :put,  :class => 'btn btn-primary', data: { confirm: "Retire this item?  This will hide it from customers' view." } %>
           <br>
+          <% else %>
+            <%= button_to "Restore Product", product_path(product.id),
+                          params: {:product => { :id => product.id, :active => true }},
+                          method: :put,  :class => 'btn btn-primary', data: { confirm: "Restore this item?  This make it visible to customers." } %>
+            <br>
+          <% end %>
         </div>
       <% else %>
         <div class="col-sm text-center">
