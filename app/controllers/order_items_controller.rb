@@ -43,6 +43,31 @@ class OrderItemsController < ApplicationController
     redirect_to cart_path
   end
 
+  def add_one
+    product_id = params[:product].to_i
+    product = Product.find_by(id: product_id)
+    session[:cart].each do |item|
+      if item["product_id"] == product_id
+        if item["quantity"] < product.quantity
+          item["quantity"] = item["quantity"] + 1
+        end
+      end
+    end
+    redirect_to cart_path
+  end
+
+  def less_one
+    product_id = params[:product].to_i
+    session[:cart].each do |item|
+      if item["product_id"] == product_id
+        if item["quantity"] > 0
+          item["quantity"] = item["quantity"] - 1
+        end
+      end
+    end
+    redirect_to cart_path
+  end
+
   def cart_has_item(test_item)
     session[:cart].each do |item|
       if item["product_id"] == test_item.product_id
