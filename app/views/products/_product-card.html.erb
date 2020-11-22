@@ -1,39 +1,54 @@
 <div class="card d-flex h-100 product-card">
-  <div
-    alt="product image"
-    class="card-img-top product-image-preview"
-    style="background-image: url(<%= product.photo || 'https://via.placeholder.com/320x240' %>)"
-  ></div>
+  <div class="container">
+    <div
+      alt="product image"
+      class="card-img-top product-image-preview"
+      style="background-image: url(<%= product.photo || 'https://via.placeholder.com/320x240' %>)"
+    ></div>
+  </div>
+
   <div class="card-body">
-    <h5 class="card-title">
+    <h5 class="card-title text-center">
       <%= product.name.capitalize %>
     </h5>
 <!--    <p class="card-text">-->
 <!--      Category: <%#= product.categorizations[0] ? product.categorizations[0].name : '' %>-->
 <!--    </p>-->
-    <h5 class="card-text text-success">
+    <h5 class="card-text text-success text-center">
       <%= number_to_currency(product.price) %>
     </h5>
-    <p class="card-text">
-      <%= product.description %>
-    </p>
-
+    <% unless current_page?('/dashboard') %>
+      <p class="card-text text-center">
+        <%= product.description %>
+      </p>
+    <% end %>
   </div>
+
   <div class="container">
-    <div class="row">
-      <div class="col-sm">
-        <%= button_to 'View Product', product_path(product.id), method: :get, :class => 'btn btn-primary' %>
-        <br>
-      </div>
-      <div class="col-sm">
-        <% if current_page?('/dashboard') %>
-            <!--        MAKE THIS A METHOD LATER -->
-            <%= button_to "Retire Product", product_path(product.id),
-                          params: {:product => { :id => product.id, :active => false }},
-                          method: :put,  :class => 'btn btn-primary', data: { confirm: "Retire this item?  This will hide it from customers' view." } %>
-        <% end %>
-        <br>
-      </div>
+    <div class="row text-center">
+      <% if current_page?('/dashboard') %>
+        <div class="col-sm">
+          <%= button_to 'View Product', product_path(product.id), method: :get, :class => 'btn btn-primary' %>
+          <br>
+        </div>
+        <div class="col-sm">
+          <%= button_to 'Edit Product', edit_product_path(product.id), method: :get, :class => 'btn btn-primary' %>
+          <br>
+        </div>
+    </div>
+      <div class="row text-center">
+        <div class="col-sm">
+          <%= button_to "Retire Product", product_path(product.id),
+                        params: {:product => { :id => product.id, :active => false }},
+                        method: :put,  :class => 'btn btn-primary', data: { confirm: "Retire this item?  This will hide it from customers' view." } %>
+          <br>
+        </div>
+      <% else %>
+        <div class="col-sm text-center">
+          <%= button_to 'View Product', product_path(product.id), method: :get, :class => 'btn btn-primary' %>
+          <br>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>

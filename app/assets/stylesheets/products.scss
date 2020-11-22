@@ -6,8 +6,20 @@
 }
 
 .product-image-preview {
-  background-size: cover;
-  padding-bottom: 300px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  padding-bottom: 100px;
   position: relative;
-  width: 100%;
+  max-width: 100%;
+  background-size: cover;
+  width: 100px;
+  height: 100px;
+  margin-left: 25px;
+  margin-top: 20px;
+}
+
+.product-card {
+ width: 220px;
+ padding-left: 10px;
+ padding-right: 10px;
 }
