@@ -27,7 +27,12 @@
       <br>
       <%= f.text_area :description, :class => "form-control" %>
     </div>
-    <br>
+    <div class="form-group">
+      <%= f.label :category %>
+      <br>
+      <div class="custom-checkbox"><%= collection_check_boxes(:product, :categorization_ids, Categorization.all, :id, :name) %></div>
+    </div>
     <%= f.submit (edit ? "Update" : "Create"), :class => "btn btn-primary"%>
   <% end %>
 </section>
+

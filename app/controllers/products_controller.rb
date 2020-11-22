@@ -4,7 +4,7 @@ class ProductsController < ApplicationController
   #, only: [:new, :edit, :update, :create]
   before_action :find_product, only: [:show, :edit, :update]
 
-  # skip_before_action :require_login, except [:new, :edit, :destroy]
+  before_action :require_login, only: [:new, :edit, :retire]
 
   def index
     @products = Product.all
@@ -85,7 +85,7 @@ class ProductsController < ApplicationController
   # end
 
   def product_params
-    return params.require(:product).permit(:name, :price, :quantity, :active, :description, :photo).with_defaults(merchant_id: @login_user.id)
+    return params.require(:product).permit(:name, :price, :quantity, :active, :description, :photo, categorization_ids: []).with_defaults(merchant_id: @login_user.id)
   end
 
   def find_product
