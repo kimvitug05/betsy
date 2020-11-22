@@ -12,6 +12,10 @@ Rails.application.routes.draw do
 
   post "/add_to_cart", to:"order_items#add_to_cart", as: "add_to_cart"
   get "/clear_cart", to:"order_items#clear_cart", as: "clear_cart"
+
+  # patch "order_items/add", to: "order_items#add_quantity", as: "add_quantity"
+  # post "order_items/reduce", to: "order_items#reduce_quantity", as: "reduce_quantity"
+
   root to: "homepages#index"
 
   resources :homepages, only: [:index]

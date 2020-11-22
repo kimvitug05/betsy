@@ -16,15 +16,15 @@
   <p>Pending Orders Revenue: $<%= @login_user.total_revenue_by_status("pending") %></p>
   <p>Total number of fulfilled orders: $<%= @login_user.total_num_orders_by_status("pending") %></p>
 
-  <ul>
-    <% @login_user.filter_orders("fulfilled").each do |order| %>
-      <li><%= order.name %></li>
-      <li><%= order.email %></li>
-      <li><%= order.address %></li>
-      <li><%= order.credit_card %></li>
-      <li><%= order.exp_date %></li>
-    <% end %>
-  </ul>
+<!--  <ul>-->
+    <%# @login_user.filter_orders("fulfilled").each do |order| %>
+<!--      <li><%#= order.name %></li>-->
+<!--      <li><%#= order.email %></li>-->
+<!--      <li><%#= order.address %></li>-->
+<!--      <li><%#= order.credit_card %></li>-->
+<!--      <li><%#= order.exp_date %></li>-->
+    <%# end %>
+<!--  </ul>-->
 
   <ul>
     <% @login_user.filter_orders("pending").each do |order| %>

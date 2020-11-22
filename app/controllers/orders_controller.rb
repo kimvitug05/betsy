@@ -23,6 +23,7 @@ class OrdersController < ApplicationController
       @order = Order.new
     end
 
+
   private
 
   def order_params
