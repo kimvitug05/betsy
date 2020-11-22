@@ -4,3 +4,15 @@ blue_shoes:
   merchant_id: 1
   quantity: 10
   active: true
+laptop:
+  name: laptop
+  price: 500.65
+  merchant_id: 1
+  quantity: 12
+  active: true
+desktop:
+  name: desktop computer
+  price: 150.57
+  merchant_id: 1
+  quantity: 13
+  active: true

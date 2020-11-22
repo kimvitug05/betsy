@@ -11,3 +11,13 @@
   position: relative;
   width: 100%;
 }
+
+.custom-checkbox {
+  input {
+    margin-left: 8px;
+  }
+  label {
+    margin-left: 4px;
+    margin-right: 8px;
+  }
+}

@@ -18,16 +18,7 @@ class Merchant < ApplicationRecord
   end
 
   def total_revenue
-    return 0 if self.products.empty?
-    result = 0
-
-    self.products.sum do |product|
-      product.order_items.each do |order_item|
-        result += order_item.quantity * product.price
-      end
-    end
-
-    return result
+    return self.total_revenue_by_status('fulfilled')
   end
 
   def total_revenue_by_status(status)
