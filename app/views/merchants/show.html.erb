@@ -1,2 +1,17 @@
-<h1>Merchants#show</h1>
-<p>Find me in app/views/merchants/show.html.erb</p>
+<section class="container text-center">
+
+  <div class="top-banner">
+    <%= image_tag("market_bazaar.gif", :alt => "user banner") %>
+  </div>
+
+  <%= image_tag "shopkeeper_#{rand(1..8)}.gif" %>
+  <div class="mb-4">
+    <p><b>Merchant: <%= @merchant.username %></b></p>
+    <p>Joined On: <%= readable_date(@merchant.created_at) %></p>
+  </div>
+
+  <br>
+
+  <%= render partial: 'products/product-grid', locals: { products: @merchant.products } %>
+
+</section>

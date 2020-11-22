@@ -1,71 +1,15 @@
 <section class="container text-center">
 
-<!--  <div class="row">-->
-<!--    <div class="col-sm text-center">-->
-      <div class="top-banner">
-        <%= image_tag("userlookup.gif", :alt => "user banner") %>
-      </div>
-<!--    </div>-->
-<!--  </div>-->
+  <div class="top-banner">
+    <%= image_tag("userlookup.gif", :alt => "user banner") %>
+  </div>
 
-<!--  Why couldn't I render the partial, I had to copy/paste card deets??-->
-  <%#= render partial: 'merchants/merchant-card', locals: { merchant: @login_user.id } %>
-
-  <%#= render partial: 'merchant-grid', locals: { merchants: @merchants.where(id: @login_user.id) } %>
-
-<!--  <div class="row text-center">-->
-<!--    <div class="col-sm text-center">-->
-<!--      <div class="row">-->
-        <%#= button_to 'Add Product', new_product_path, method: :get, class: "btn btn-primary" %>
-        <%#= button_to 'Add Category', new_categorization_path, method: :get, class: "btn btn-primary" %>
-        <%#= button_to 'Account Orders', orders_path, method: :get, class: "btn btn-primary" %>
-        <%#= button_to 'My Merchant Page', merchant_path(@login_user), method: :get, class: "btn btn-primary" %>
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div class="col-sm text-center">-->
-<!--      <div class="card text-white bg-dark mb-3 d-flex h-100 merchant-card">-->
-<!--          <div-->
-<!--            alt="merchant image"-->
-<!--            class="card-img-top merchant-image-preview"-->
-<!--            style="background-image: url(<%#= "shopkeeper_#{rand(1..4)}.gif" %>)"-->
-<!--          ></div>-->
-          <%#= image_tag("shopkeeper_1.gif", class: "card-img-top merchant-image-preview") %>
-<!--        <div-->
-<!--          alt="merchant image"-->
-<!--          class="card-img-top merchant-image-preview align-items-center text-center">-->
-          <%#= image_tag "shopkeeper_#{rand(1..4)}.gif" %>
-<!--          <br>-->
-<!--        </div>-->
-<!--        <div class="card-body align-items-center">-->
-<!--          <h5 class="card-title text-center">-->
-            <%#= @login_user.username %>
-<!--          </h5>-->
-<!--          <h6 class="card-title text-center">-->
-<!--            <u>Total Revenue:</u> $<%#= @login_user.total_revenue %>-->
-<!--          </h6>-->
-<!--          <h6 class="text-center">-->
-<!--            <u>Pending Orders:</u> <%#= @login_user.filter_orders("pending").count > 1 ? "0" : @login_user.filter_orders("pending").count %>-->
-<!--          </h6>-->
-<!--          <br>-->
-          <%#= button_to 'Manage Orders', dashboard_path, method: :get, :class => 'btn btn-primary disabled' %>
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div class="col-sm text-center">-->
-<!--      <div class="spacer">-->
-<!--    </div>-->
-<!--  </div>-->
-
-<!--    <h2>My Dashboard</h2>-->
-  <%= image_tag "shopkeeper_#{rand(1..4)}.gif" %>
+  <%= image_tag "shopkeeper_#{rand(1..8)}.gif" %>
   <div class="mb-4">
     <p><%= @login_user.username %></p>
     <p><%= @login_user.email %></p>
-    <u>Total Revenue:</u> $<%= @login_user.total_revenue %> |||
-    <u>Pending Orders:</u> <%= @login_user.filter_orders("pending").count > 1 ? "0" : @login_user.filter_orders("pending").count %>
-    <!--    <div class="merchant-dash-avatar">-->
-      <%#= image_tag @login_user.avatar, alt: "user's Github image"  %>
-<!--    </div>-->
+    <u><b>Total Revenue:</u></b> $<%= @login_user.total_revenue %> |||
+    <u><b>Pending Orders:</u></b> <%= @login_user.filter_orders("pending").count > 1 ? "0" : @login_user.filter_orders("pending").count %>
   </div>
 
   <div class="container">
@@ -86,33 +30,7 @@
   </div>
 
   <br>
-<!--  <h2 text-center>Products</h2>-->
+
   <%= render partial: 'products/product-grid', locals: { products: @login_user.products } %>
 
-  <p>Total Revenue: $<%= @login_user.total_revenue %></p>
-  <p>View Orders:</p>
-  <p>Fulfilled Orders Revenue: $<%= @login_user.total_revenue_by_status("fulfilled") %></p>
-  <p>Total number of fulfilled orders: $<%= @login_user.total_num_orders_by_status("fulfilled") %></p>
-  <p>Pending Orders Revenue: $<%= @login_user.total_revenue_by_status("pending") %></p>
-  <p>Total number of fulfilled orders: $<%= @login_user.total_num_orders_by_status("pending") %></p>
-
-  <ul>
-    <% @login_user.filter_orders("fulfilled").each do |order| %>
-      <li><%= order.name %></li>
-      <li><%= order.email %></li>
-      <li><%= order.address %></li>
-      <li><%= order.credit_card %></li>
-      <li><%= order.exp_date %></li>
-    <% end %>
-  </ul>
-
-  <ul>
-    <% @login_user.filter_orders("pending").each do |order| %>
-      <li><%= order.name %></li>
-      <li><%= order.email %></li>
-      <li><%= order.address %></li>
-      <li><%= order.credit_card %></li>
-      <li><%= order.exp_date %></li>
-    <% end %>
-  </ul>
 </section>
