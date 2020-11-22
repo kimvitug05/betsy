@@ -1,17 +1,19 @@
 <div class="card d-flex h-100 merchant-card">
-  <div
-    alt="merchant image"
-    class="card-img-top merchant-image-preview"
-    style="background-image: url(<%= merchant.avatar || 'https://via.placeholder.com/320x240' %>)"
-  ></div>
+  <div class="container">
+    <div
+      alt="merchant image"
+      class="card-img-top merchant-image-preview"
+      style="background-image: url(<%= merchant.avatar || 'https://via.placeholder.com/320x240' %>)"
+    ></div>
+  </div>
   <div class="card-body">
-    <h5 class="card-title">
+    <h5 class="card-title text-center">
       <%= merchant.username.capitalize %>
     </h5>
 <!--    <p class="card-text">-->
 <!--      Category: <%#= product.categorizations[0] ? product.categorizations[0].name : '' %>-->
 <!--    </p>-->
-    <h5 class="card-text text-success">
+    <h5 class="card-text text-success text-center">
       Joined: <%= readable_date(merchant.created_at) %>
     </h5>
 <!--    <p class="card-text">-->
@@ -21,7 +23,7 @@
   </div>
   <div class="container">
     <div class="row">
-      <div class="col-sm">
+      <div class="col-sm text-center">
         <%= button_to 'View Wares', merchant_path(merchant.id), method: :get, :class => 'btn btn-primary' %>
         <br>
       </div>

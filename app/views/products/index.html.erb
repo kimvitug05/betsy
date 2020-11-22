@@ -1,5 +1,8 @@
 <div class="container">
-  <h2>Products</h2>
+
+  <div class="top-banner">
+    <%= image_tag("market_banner.gif", :alt => "marketplace banner") %>
+  </div>
 
   <% if @login_user %>
     <%= render partial: 'product-grid', locals: { products: @products.where.not(merchant_id: @login_user.id, active: false) } %>
