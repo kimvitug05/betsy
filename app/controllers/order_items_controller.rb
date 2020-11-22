@@ -11,7 +11,7 @@ class OrderItemsController < ApplicationController
 
   def add_to_cart
     #start order array if nothing is in the cart
-    # initialize_session if @cart.empty?
+    initialize_session if @cart.empty?
 
     product = Product.find_by(id: params["product_id"])
     quantity = params["selected_quantity"].to_i
@@ -34,13 +34,14 @@ class OrderItemsController < ApplicationController
       redirect_to cart_path
       return
     else
-      flash.now[:error] = "We're sorry, but your order did not save"
-      render :cart, status: :bad_request
+      flash[:status] = :error
+      flash[:result_text] = "There was a problem with your request"
+      render_404
       return
     end
 
     #Update quantity if item is already in the cart
-    session[:cart].each do |item|
+    @cart.each do |item|
     if item["product_id"] == product.id && item["quantity"] < product.quantity
       item["quantity"] += 1
       flash[:status] = :success
@@ -56,7 +57,7 @@ class OrderItemsController < ApplicationController
 
   def get_total
     total = 0.0
-    @cart.each do |item|
+    initialize_session.each do |item|
       total = total + item.product.price * item.quantity
     end
     return total

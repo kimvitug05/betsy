@@ -1,7 +1,9 @@
 
 <h1>Your Shopping Cart:</h1>
-
-
+  <% if @cart.empty? %>
+         <%= @cart = "Your cart is currently empty!" %>
+          <%= @cart %>
+  <% else %>
 
   <% @cart.each do |item| %>
 
@@ -14,6 +16,7 @@
 <!--      <li><%#= link_to "Reduce Item", reduce_quantity_path(@order_item), method: :post %></li>-->
     </ul>
    <% end  %>
+<% end  %>
 
 
   Cart Total: <%= number_to_currency(@cart_total) %>
