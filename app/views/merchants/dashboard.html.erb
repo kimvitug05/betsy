@@ -1,9 +1,11 @@
 <section class="container">
   <h2>Merchant Dashboard</h2>
   <div class="mb-4">
-    <p><%= @login_user.username %></p>
-    <p><%= @login_user.email %></p>
-    <%= image_tag @login_user.avatar, alt: "user's Github image"  %>
+    <p>User: <%= @login_user.username %></p>
+    <p>Email: <%= @login_user.email %></p>
+    <div class="merchant-dash-avatar">
+      <%= image_tag @login_user.avatar, alt: "user's Github image"  %>
+    </div>
   </div>
 
   <h2>Products</h2>

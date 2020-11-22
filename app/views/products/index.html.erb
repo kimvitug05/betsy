@@ -1,4 +1,10 @@
 <div class="container">
   <h2>Products</h2>
-  <%= render partial: 'product-grid', locals: { products: @products } %>
+
+  <% if @login_user %>
+    <%= render partial: 'product-grid', locals: { products: @products.where.not(merchant_id: @login_user.id, active: false) } %>
+  <% else %>
+    <%= render partial: 'product-grid', locals: { products: @products.where(active: true) } %>
+  <% end %>
+
 </div>

@@ -26,13 +26,11 @@
         <br>
       </div>
       <div class="col-sm">
-        <% if @login_user %>
-          <% if product.merchant_id == @login_user.id %>
+        <% if current_page?('/dashboard') %>
             <!--        MAKE THIS A METHOD LATER -->
             <%= button_to "Retire Product", product_path(product.id),
                           params: {:product => { :id => product.id, :active => false }},
                           method: :put,  :class => 'btn btn-primary', data: { confirm: "Retire this item?  This will hide it from customers' view." } %>
-          <% end %>
         <% end %>
         <br>
       </div>
