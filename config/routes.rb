@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   end
 
   get "/dashboard", to: "merchants#dashboard", as: "dashboard"
+  get "/dashboard/products", to: "merchants#dashboard_products", as: "dashboard_products"
 
   resources :categorizations
   # resources :order_items
