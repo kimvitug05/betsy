@@ -1,6 +1,9 @@
 class OrderItemsController < ApplicationController
 
-
+  def create
+    @order_item = OrderItem.new
+    @order_item
+  end
 
     def cart
       @cart = session[:cart].map { |attributes| OrderItem.new(attributes)}
@@ -26,8 +29,9 @@ class OrderItemsController < ApplicationController
     order_item = OrderItem.create(product_id: product.id, quantity: quantity)
     if order_item.save
         session[:cart]  << order_item
-        flash[:status] = :success
-        flash[:result_text] = "Woohoo! Your #{product.name} is in the cart!"
+
+        # flash[:status] = :success
+        # flash[:result_text] = "Woohoo! Your #{product.name} is in the cart!"
     end
     redirect_to cart_path
     return

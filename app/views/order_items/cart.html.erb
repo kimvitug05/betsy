@@ -6,15 +6,15 @@
   <% else %>
 
   <% @cart.each do |item| %>
-
-    <ul>
-      <li>Product: <%= link_to item.product.name, products_path(item.product) %> </li>
-      <li>Description: <%= item.product.description %></li>
-      <li>Price: $<%= item.product.price %></li>
-      <li>Selected Quantity: <%= item.quantity %></li>
+    <%= @cart %>
+<!--    <ul>-->
+<!--      <li>Product: <%#= link_to item.product.name, products_path(item.product) %> </li>-->
+<!--      <li>Description: <%#= item.product.description %></li>-->
+<!--      <li>Price: $<%#= item.product.price %></li>-->
+<!--      <li>Selected Quantity: <%#= item.quantity %></li>-->
 <!--      <li><%#= link_to "Add Item", add_quantity_path([:session_id]), method: :post %></li>-->
 <!--      <li><%#= link_to "Reduce Item", reduce_quantity_path(@order_item), method: :post %></li>-->
-    </ul>
+<!--    </ul>-->
    <% end  %>
 <% end  %>
 
