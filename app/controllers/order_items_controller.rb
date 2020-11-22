@@ -1,8 +1,12 @@
 class OrderItemsController < ApplicationController
 
   def create
+    @order = current_order
     @order_item = OrderItem.new
-    @order_item
+    @order_item.product_id = :product_id
+    @order_item.order_id = @order.id
+    @order_item.quantity = :quantity
+    @order_item.save
   end
 
     def cart
@@ -27,12 +31,12 @@ class OrderItemsController < ApplicationController
     end
 
     order_item = OrderItem.create(product_id: product.id, quantity: quantity)
-    if order_item.save
-        session[:cart]  << order_item
+
+    session[:cart]  << order_item
 
         # flash[:status] = :success
         # flash[:result_text] = "Woohoo! Your #{product.name} is in the cart!"
-    end
+
     redirect_to cart_path
     return
     #start new order item
