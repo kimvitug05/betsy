@@ -1,0 +1,30 @@
+<div class="card d-flex h-100 merchant-card">
+  <div
+    alt="merchant image"
+    class="card-img-top merchant-image-preview"
+    style="background-image: url(<%= merchant.avatar || 'https://via.placeholder.com/320x240' %>)"
+  ></div>
+  <div class="card-body">
+    <h5 class="card-title">
+      <%= merchant.username.capitalize %>
+    </h5>
+<!--    <p class="card-text">-->
+<!--      Category: <%#= product.categorizations[0] ? product.categorizations[0].name : '' %>-->
+<!--    </p>-->
+    <h5 class="card-text text-success">
+      Joined: <%= readable_date(merchant.created_at) %>
+    </h5>
+<!--    <p class="card-text">-->
+      <%#= product.description %>
+<!--    </p>-->
+
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm">
+        <%= button_to 'View Wares', merchant_path(merchant.id), method: :get, :class => 'btn btn-primary' %>
+        <br>
+      </div>
+    </div>
+  </div>
+</div>
