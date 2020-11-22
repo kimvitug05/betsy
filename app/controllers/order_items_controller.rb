@@ -30,43 +30,43 @@ class OrderItemsController < ApplicationController
       quantity = product.quantity
     end
 
-    order_item = OrderItem.create(product_id: product.id, quantity: quantity)
-
-    session[:cart]  << order_item
+    # order_item = OrderItem.create(product_id: product.id, quantity: quantity)
+    #
+    # session[:cart]  << order_item
 
         # flash[:status] = :success
         # flash[:result_text] = "Woohoo! Your #{product.name} is in the cart!"
+    #
+    # redirect_to cart_path
+    # return
 
-    redirect_to cart_path
-    return
-    #start new order item
-    # order_item = OrderItem.create(product_id: product.id, quantity: quantity)
-    # if order_item.save
-    #   session[:cart]  << order_item
-    #   flash[:status] = :success
-    #   flash[:result_text] = "Woohoo! Your #{product.name} is in the cart!"
-    #   redirect_to cart_path
-    #   return
-    # else
-    #   flash[:status] = :error
-    #   flash[:result_text] = "There was a problem with your request"
-    #   render_404
-    #   return
-    # end
+    order_item = OrderItem.create(product_id: product.id, quantity: quantity)
+    if order_item.save
+      session[:cart]  << order_item
+      flash[:status] = :success
+      flash[:result_text] = "Woohoo! Your #{product.name} is in the cart!"
+      redirect_to cart_path
+      return
+    else
+      flash[:status] = :error
+      flash[:result_text] = "There was a problem with your request"
+      render_404
+      return
+    end
 
-    #Update quantity if item is already in the cart
-    # @cart.each do |item|
-    # if item["product_id"] == product.id && item["quantity"] < product.quantity
-    #   item["quantity"] += 1
-    #   flash[:status] = :success
-    #   flash[:result_text] = "Woohoo! Your N.E.O.P.E.T.S.Y item is in the cart!"
-    #   redirect_to cart_path
-    #   return
-    # elsif item["quantity"] > product.quantity
-    #   flash[:status] = :error
-    #   flash[:result_text] = "Oh no! Not enough inventory to fulfill your request!"
-    # end
-    # end
+    # Update quantity if item is already in the cart
+    @cart.each do |item|
+    if item["product_id"] == product.id && item["quantity"] < product.quantity
+      item["quantity"] += 1
+      flash[:status] = :success
+      flash[:result_text] = "Woohoo! Your N.E.O.P.E.T.S.Y item is in the cart!"
+      redirect_to cart_path
+      return
+    elsif item["quantity"] > product.quantity
+      flash[:status] = :error
+      flash[:result_text] = "Oh no! Not enough inventory to fulfill your request!"
+    end
+    end
   end
 
   def get_total
