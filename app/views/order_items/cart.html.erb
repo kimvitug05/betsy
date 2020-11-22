@@ -12,6 +12,8 @@
       <li>Description: <%= item.product.description %></li>
       <li>Price: $<%= item.product.price %></li>
       <li>Selected Quantity: <%= item.quantity %></li>
+      <%= link_to "add one", add_one_path(product: item.product), method: "post"%> |
+      <%= link_to "less one", less_one_path(product: item.product), method: "post"%>
     </ul>
    <% end  %>
 
