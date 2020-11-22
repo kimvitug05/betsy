@@ -13,10 +13,11 @@
       <li>Price: $<%= item.product.price %></li>
       <li>Selected Quantity: <%= item.quantity %></li>
       <%= link_to "add one", add_one_path(product: item.product), method: "post"%> |
-      <%= link_to "less one", less_one_path(product: item.product), method: "post"%>
+      <%= link_to "less one", less_one_path(product: item.product), method: "post"%> |
+      <%= link_to "remove item", remove_path(product: item.product), method: "post"%>
     </ul>
    <% end  %>
-
+  <%#= @cart %>
 
   Cart Total: <%= number_to_currency(@cart_total) %>
   <%= link_to "Clear Cart", clear_cart_path %>

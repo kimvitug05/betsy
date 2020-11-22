@@ -43,6 +43,17 @@ class OrderItemsController < ApplicationController
     redirect_to cart_path
   end
 
+  def remove
+    item_to_remove = params[:product].to_i
+    session[:cart].each do |item|
+      if item["product_id"] == item_to_remove
+        session[:cart].delete(item)
+      end
+    end
+
+    redirect_to cart_path
+  end
+
   def add_one
     product_id = params[:product].to_i
     product = Product.find_by(id: product_id)
