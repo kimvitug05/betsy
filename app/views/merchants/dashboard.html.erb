@@ -6,7 +6,7 @@
 
   <%= image_tag "shopkeeper_#{rand(1..8)}.gif" %>
   <div class="mb-4">
-    <p><%= @login_user.username %></p>
+    <h2><< <%= @login_user.username %> >></h2>
     <p><%= @login_user.email %></p>
     <u><b>Total Revenue:</u></b> $<%= @login_user.total_revenue %> |||
     <u><b>Pending Orders:</u></b> <%= @login_user.filter_orders("pending").count > 1 ? "0" : @login_user.filter_orders("pending").count %>

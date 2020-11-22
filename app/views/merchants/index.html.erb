@@ -3,6 +3,7 @@
     <%= image_tag("market_bazaar.gif", :alt => "marketplace banner") %>
   </div>
 
+  <h2 class="text-center"><< All Merchants >></h2>
   <% if @login_user %>
     <%= render partial: 'merchant-grid', locals: { merchants: @merchants.where.not(id: @login_user.id) } %>
   <% else %>

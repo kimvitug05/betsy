@@ -6,7 +6,7 @@
 
   <%= image_tag "shopkeeper_#{rand(1..8)}.gif" %>
   <div class="mb-4">
-    <p><b>Merchant: <%= @merchant.username %></b></p>
+    <h2><< <%= @merchant.username %> >></h2>
     <p>Joined On: <%= readable_date(@merchant.created_at) %></p>
   </div>
 
