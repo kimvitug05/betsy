@@ -1,7 +1,7 @@
 <div class="merchant-grid row">
   <% merchants.each do |merchant| %>
     <div class="col-6 col-md-4 py-3">
-      <%= render partial: 'merchant-card', locals: { merchant: merchant } %>
+      <%= render partial: 'merchants/merchant-card', locals: { merchant: merchant } %>
     </div>
   <% end %>
 </div>
