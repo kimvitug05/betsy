@@ -60,7 +60,7 @@ class OrderItemsController < ApplicationController
     product_id = params[:product].to_i
     session[:cart].each do |item|
       if item["product_id"] == product_id
-        if item["quantity"] > 0
+        if item["quantity"] > 1
           item["quantity"] = item["quantity"] - 1
         end
       end
