@@ -1,0 +1,9 @@
+<div class="top-banner">
+  <%= image_tag("userlookup.gif", :alt => "user banner") %>
+</div>
+
+<h2 class="text-center"><< My Products >></h2>
+
+<div class="container">
+  <%= render partial: 'products/product-grid', locals: { products: @login_user.products } %>
+</div>

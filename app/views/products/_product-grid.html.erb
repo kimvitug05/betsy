@@ -1,6 +1,6 @@
 <div class="product-grid row">
   <% products.each do |product| %>
-    <div class="col-6 col-md-4 py-3">
+    <div class="col-6 col-md-3 py-3">
       <%= render partial: 'products/product-card', locals: { product: product } %>
     </div>
   <% end %>
