@@ -6,6 +6,7 @@ class OrderItemsController < ApplicationController
 
     def cart
       @cart = session[:cart].map { |attributes| OrderItem.new(attributes)}
+      # @cart = session[:cart]
       @cart_total = get_total
     end
 
@@ -22,9 +23,35 @@ class OrderItemsController < ApplicationController
     end
 
     order_item = OrderItem.new(product_id: product.id, quantity: quantity)
-    session[:cart]  << order_item
+
+      # find the item in the cart
+      # update the quantity
+    if session[:cart].empty?
+      session[:cart]  << order_item
+    else
+      #cart is not empty
+      if cart_has_item (order_item)
+        session[:cart].each do |item|
+            if item["product_id"] == order_item.product_id
+             item["quantity"] = item["quantity"] + quantity
+            end
+        end
+      else
+        session[:cart]  << order_item
+      end
+    end
     redirect_to cart_path
   end
+
+  def cart_has_item(test_item)
+    session[:cart].each do |item|
+      if item["product_id"] == test_item.product_id
+        return true
+      end
+    end
+    return false
+  end
+
 
   def get_total
     total = 0.0

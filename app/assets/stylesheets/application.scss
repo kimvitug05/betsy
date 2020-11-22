@@ -16,3 +16,17 @@
 @import "bootstrap";
 
 @import "**/*";
+
+.navbar-nav{
+ margin-bottom:-8px
+}
+
+div.top-banner {
+ padding: 6px;
+ display: flex;
+ justify-content: center;
+}
+
+div.top-banner img {
+ opacity: 0.75;
+}

@@ -5,7 +5,6 @@
         <%= @cart %>
 <% else %>
 
-
   <% @cart.each do |item| %>
 
     <ul>
@@ -13,7 +12,6 @@
       <li>Description: <%= item.product.description %></li>
       <li>Price: $<%= item.product.price %></li>
       <li>Selected Quantity: <%= item.quantity %></li>
-
     </ul>
    <% end  %>
 

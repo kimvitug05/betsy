@@ -1,6 +1,31 @@
-<section>
-  <h2>View Products By Category</h2>
-  <% @categorizations.each do |category| %>
-    <h3><%= link_to category.name, categorization_path(category.id), :class => "badge badge-secondary badge-pill"%></h3>
-  <% end %>
-</section>
+<!--<section>-->
+<!--  <h2>View Products By Category</h2>-->
+  <%# @categorizations.each do |category| %>
+<!--    <h3><%#= link_to category.name, categorization_path(category.id), :class => "badge badge-secondary badge-pill"%></h3>-->
+  <%# end %>
+<!--</section>-->
+
+<div class="container">
+  <div class="top-banner">
+    <%= image_tag("market_bazaar.gif", :alt => "marketplace banner") %>
+  </div>
+</div>
+
+<div class="container">
+  <br>
+  <div class="row">
+      <% @categorizations.each do |category| %>
+      <div class="col-sm text-center">
+        <h3><%= link_to category.name, categorization_path(category.id), :class => "badge badge-secondary badge-pill"%></h3>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<br>
+
+<div class="container">
+  <div class="text-center">
+    <%= image_tag("welcome.gif", :alt => "neopian shopkeeper welcomes you") %>
+  </div>
+</div>
