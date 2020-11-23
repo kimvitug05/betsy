@@ -11,7 +11,7 @@
       <li>Product: <%= link_to item.product.name, products_path(item.product) %> </li>
       <li>Description: <%= item.product.description %></li>
       <li>Sold By: <%= item.product.merchant.username %></li>
-      <li>Price: $<%= item.product.price %></li>
+      <li>Price: <%= number_to_currency(item.product.price) %></li>
       <li>Selected Quantity: <%= item.quantity %></li>
       <%= link_to "add one", add_one_path(product: item.product), method: "post"%> |
       <%= link_to "less one", less_one_path(product: item.product), method: "post"%> |
