@@ -100,19 +100,25 @@
     </tbody>
   </table>
 
-<!--    TODO: If implementing toggle order status at some point?-->
-<!--    <div class="container">-->
-<!--      <div class="row">-->
-<!--        <div class="col-sm text-center">-->
-          <%#= button_to "Mark Paid", order_path(@order.id), params: {:order => { :id => @order.id, :status => "paid" }}, method: :put,  :class => 'btn btn-primary', data: { confirm: "Mark Paid? This will register the order as paid." } %>
-<!--        </div>-->
-<!--        <div class="col-sm text-center">-->
-          <%#= button_to "Mark Complete", order_path(@order.id), params: {:order => { :id => @order.id, :status => "complete" }}, method: :put,  :class => 'btn btn-primary', data: { confirm: "Mark Complete? This will register the order as complete." } %>
-<!--        </div>-->
-<!--        <div class="col-sm text-center">-->
-          <%#= button_to "Mark Cancelled", order_path(@order.id), params: {:order => { :id => @order.id, :status => "cancelled" }}, method: :put,  :class => 'btn btn-primary', data: { confirm: "Mark Cancelled? This will return the order inventory." } %>
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
+  <% if @login_user && @order.order_items.any? { |order_item| order_item.product.merchant_id == @login_user.id } %>
+    <div class="container">
+        <div class="row">
+          <div class="col-sm text-center">
+            <%= button_to "Mark Paid", order_path(@order.id), params: {:order => { :id => @order.id, :status => "paid" }}, method: :put,  :class => 'btn btn-primary', data: { confirm: "Mark Paid? This will register the order as paid." } %>
+          </div>
+          <div class="col-sm text-center">
+            <%= button_to "Mark Complete", order_path(@order.id), params: {:order => { :id => @order.id, :status => "complete" }}, method: :put,  :class => 'btn btn-primary', data: { confirm: "Mark Complete? This will register the order as complete." } %>
+          </div>
+          <div class="col-sm text-center">
+            <%= button_to "Mark Cancelled", order_path(@order.id), params: {:order => { :id => @order.id, :status => "cancelled" }}, method: :put,  :class => 'btn btn-primary', data: { confirm: "Mark Cancelled? This will return the order inventory." } %>
+          </div>
+          <div class="col-sm text-center">
+            <%= button_to 'Back To Dashboard', dashboard_path, method: :get, class: "btn btn-primary" %>
+          </div>
+        </div>
+      </div>
+  <% end %>
+
+  <br>
 
 </section>
