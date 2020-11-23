@@ -10,8 +10,6 @@
     <ul>
       <li>Product: <%= link_to item.product.name, products_path(item.product) %> </li>
       <li>Description: <%= item.product.description %></li>
-
-
       <li>Sold By: <%= item.product.merchant.username %></li>
       <li>Price: $<%= item.product.price %></li>
       <li>Selected Quantity: <%= item.quantity %></li>
