@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  before_action :find_product, only: [:show, :edit, :update]
+  before_action :find_product, only: [:show, :edit, :update, :archive]
   before_action :require_login, except: [:index, :show]
 
   def index
@@ -63,7 +63,11 @@ class ProductsController < ApplicationController
     end
   end
 
-  #TODO def retire?
+  # archive product
+  def archive
+    @product.active = false
+    @product.save
+  end
 
   private
 
