@@ -18,7 +18,17 @@ class Merchant < ApplicationRecord
   end
 
   def total_revenue
-    return self.total_revenue_by_status('fulfilled')
+    return 0 if self.products.empty?
+    result = 0
+
+    self.products.sum do |product|
+      product.order_items.each do |order_item|
+        result += (order_item.quantity * product.price)
+      end
+    end
+
+    return result
+#     return self.total_revenue_by_status('fulfilled')
   end
 
   def total_revenue_by_status(status)
@@ -28,7 +38,7 @@ class Merchant < ApplicationRecord
     self.products.each do |product|
       product.order_items.each do |order_item|
         if order_item.order.status == status
-          result += order_item.quantity * product.price
+          result += (order_item.quantity * product.price)
         end
       end
     end
@@ -36,21 +46,20 @@ class Merchant < ApplicationRecord
     return result
   end
 
-  #TODO is this a quantity or a list of orders?
-
   def total_num_orders_by_status(status)
     return 0 if self.products.empty?
-    result = []
+    # result = []
 
-    self.products.each do |product|
-      product.order_items.each do |order_item|
-        if order_item.order.status == status
-          result << order_item.order_id
-        end
-      end
-    end
+    # self.products.each do |product|
+    #   product.order_items.each do |order_item|
+    #     if order_item.order.status == status
+    #       result << order_item.order_id
+    #     end
+    #   end
+    # end
 
-    return result.uniq.length
+    # return result.uniq.length
+    return self.filter_orders(status).length
   end
 
   def filter_orders(status)
@@ -66,14 +75,6 @@ class Merchant < ApplicationRecord
     end
 
     return result.uniq
-  end
-
-  def order_total(order)
-    sum = 0
-    order.order_items.each do |order_item|
-      sum += order_item.product.price
-    end
-    return sum
   end
 end
 

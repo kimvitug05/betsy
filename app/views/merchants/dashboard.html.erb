@@ -6,10 +6,8 @@
 
   <%= image_tag "shopkeeper_#{rand(1..8)}.gif" %>
   <div class="mb-4">
-    <h2><< <%= @login_user.username %> >></h2>
-    <p><%= @login_user.email %></p>
-    <u><b>Total Revenue:</b></u> $<%= @login_user.total_revenue %> |||
-    <u><b>Pending Orders:</b></u> <%= @login_user.filter_orders("pending").count > 1 ? "0" : @login_user.filter_orders("pending").count %>
+    <h2><%= @login_user.username %></h2>
+    <h4>Total Revenue: $<%= @login_user.total_revenue %></h4>
   </div>
 
   <div class="container">
@@ -31,131 +29,31 @@
 
   <br>
 
-  <%= render partial: 'products/product-grid', locals: { products: @login_user.products } %>
+  <%#= render partial: 'products/product-grid', locals: { products: @login_user.products } %>
 
   <br><br>
 
-  <h3>Fulfilled Orders: <%= @login_user.total_num_orders_by_status("fulfilled") %></h3>
-  <%#= @login_user.filter_orders("fulfilled").empty? ? "Nothing to see here!" : @login_user.filter_orders("fulfilled") %>
+  <h4>Pending Orders: <%= @login_user.total_num_orders_by_status("pending") %></h4>
+  <h6>Revenue: $<%= @login_user.total_revenue_by_status("pending") %></h6>
+  <%= render partial: 'table', locals: { :orders => @login_user.filter_orders("pending") } %>
 
-  <% if @login_user.total_num_orders_by_status("fulfilled") > 0 %>
-    <table class="table table-hover">
-      <thead>
-      <tr class="table-active">
-        <th scope="col">Date Placed</th>
-        <th scope="col">Customer Name</th>
-        <th scope="col">Customer Email</th>
-        <th scope="col">Amount</th>
-        <th scope="col">Products</th>
-        <th scope="col">Status</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <% @login_user.filter_orders("fulfilled").each do |order| %>
-          <td><%= readable_date(order.created_at) %></td>
-          <th scope="row"><%= order.name %></th>
-          <td><%= order.email %></td>
-          <td>$<%= @login_user.order_total(order) %></td>
-          <td>
-            <% order.order_items.each do |order_item| %>
-              ∙ <%= order_item.quantity %> <%= link_to "#{order_item.product.name}", product_path(order_item.product.id) %> ∙
-            <% end %>
-          </td>
-          <td>
-            <%= button_to "Fulfill", order_path(order.id),
-                          params: {:ordert => { :id => order.id, :status => "fulfilled" }},
-                          method: :put,  :class => 'btn btn-primary', data: { confirm: "Mark Complete? This will register the order as fulfilled." } %>
-          </td>
-        <%end %>
-      </tr>
-      </tbody>
-    </table>
-  <% else %>
-    <table class="table table-hover">
-      <thead>
-      <tr class="table-active">
-        <th scope="col">Date Placed</th>
-        <th scope="col">Customer Name</th>
-        <th scope="col">Customer Email</th>
-        <th scope="col">Amount</th>
-        <th scope="col">Products</th>
-        <th scope="col">Status</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <td>--</td>
-        <td>--</td>
-        <td>--</td>
-        <td>--</td>
-        <td>--</td>
-        <td>--</td>
-      </tr>
-      </tbody>
-    </table>
-  <% end %>
-    <br><br>
+  <br><br>
 
-  <h3>Pending Orders: <%= @login_user.total_num_orders_by_status("pending") %></h3>
-  <%#= @login_user.filter_orders("pending").empty? ? "Nothing to see here!" : "Fulfill pending orders using the fulfill button" %>
+  <h4>Paid Orders: <%= @login_user.total_num_orders_by_status("paid") %></h4>
+  <h6>Revenue: $<%= @login_user.total_revenue_by_status("paid") %></h6>
+  <%= render partial: 'table', locals: { :orders => @login_user.filter_orders("paid") } %>
 
-  <% if @login_user.total_num_orders_by_status("pending") > 0 %>
-    <table class="table table-hover">
-      <thead>
-      <tr class="table-active">
-        <th scope="col">Date Placed</th>
-        <th scope="col">Customer Name</th>
-        <th scope="col">Customer Email</th>
-        <th scope="col">Amount</th>
-        <th scope="col">Products</th>
-        <th scope="col">Status</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <% @login_user.filter_orders("pending").each do |order| %>
-          <td><%= readable_date(order.created_at) %></td>
-          <th scope="row"><%= order.name %></th>
-          <td><%= order.email %></td>
-          <td>$<%= @login_user.order_total(order) %></td>
-          <td>
-            <% order.order_items.each do |order_item| %>
-              ∙ <%= order_item.quantity %> <%= link_to "#{order_item.product.name}", product_path(order_item.product.id) %> ∙
-            <% end %>
-          </td>
-          <td>
-            <%= button_to "Fulfill", order_path(order.id),
-                          params: {:ordert => { :id => order.id, :status => "fulfilled" }},
-                          method: :put,  :class => 'btn btn-primary', data: { confirm: "Mark Complete? This will register the order as fulfilled." } %>
-          </td>
-        <%end %>
-      </tr>
-      </tbody>
-    </table>
-  <% else %>
-    <table class="table table-hover">
-      <thead>
-      <tr class="table-active">
-        <th scope="col">Date Placed</th>
-        <th scope="col">Customer Name</th>
-        <th scope="col">Customer Email</th>
-        <th scope="col">Amount</th>
-        <th scope="col">Products</th>
-        <th scope="col">Status</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <td>--</td>
-        <td>--</td>
-        <td>--</td>
-        <td>--</td>
-        <td>--</td>
-        <td>--</td>
-      </tr>
-      </tbody>
-    </table>
-  <% end %>
+  <br><br>
+
+  <h4>Complete Orders: <%= @login_user.total_num_orders_by_status("complete") %></h4>
+  <h6>Revenue: $<%= @login_user.total_revenue_by_status("complete") %></h6>
+  <%= render partial: 'table', locals: { :orders => @login_user.filter_orders("complete") } %>
+
+  <br><br>
+
+  <h4>Cancelled Orders: <%= @login_user.total_num_orders_by_status("cancelled") %></h4>
+  <h6>Revenue: $<%= @login_user.total_revenue_by_status("cancelled") %></h6>
+  <%= render partial: 'table', locals: { :orders => @login_user.filter_orders("cancelled") } %>
+
 
 </section>
