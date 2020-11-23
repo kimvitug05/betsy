@@ -81,7 +81,9 @@ describe MerchantsController do
 
   # TODO
   describe "create" do
-    skip
+    it "should" do
+      skip
+    end
   end
 
   describe "logout" do
