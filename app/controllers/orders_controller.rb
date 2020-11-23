@@ -38,16 +38,20 @@ class OrdersController < ApplicationController
         if @order.extract_merchant_order_items(@login_user.id).any? { |order_item| order_item.quantity > order_item.product.quantity } #if filling order would bring product stock below 0
           flash[:status] = :failure
           flash[:result_text] = "Error: Not enough product stock to fill this order.  Please update stock first."
-          redirect_to order_path(@order)
+          redirect_to order_path(@order) #TODO: This code is not being executed when product stock is below order stock
           return
         else # otherwise, mark order complete and adjust inventory
           @order.extract_merchant_order_items(@login_user.id).each do |order_item|
-            order_item.product.quantity -= order_item.quantity # adjust quantity
+            order_item.product.quantity -= order_item.quantity # adjust quantity #TODO: This is not changing stock, though I have tested the code changes stock on a raise screen
           end
-        raise
           @order.extract_merchant_order_items(@login_user.id).each do |order_item|
             order_item.update!(status: "complete") # adjust status
           end
+
+          if @order.order_items.each { |order_item| order_item.status == params[:order][:status] } # if all order_items have the same status
+            @order.status = params[:order][:status] # then can change the order status officially to the customer as each merchant has marked the order at the same phase
+          end
+
           flash[:status] = :success
           flash[:result_text] = "Successfully updated order ##{@order.id}.  Inventory has been removed from stock."
           redirect_to order_path(@order)
@@ -56,6 +60,10 @@ class OrdersController < ApplicationController
       else # for all other statuses, don't need to adjust inventory, just status
         @order.extract_merchant_order_items(@login_user).each do |order_item|
           order_item.update(status: params[:order][:status]) # adjust status
+        end
+
+        if @order.order_items.each { |order_item| order_item.status == params[:order][:status] } # if all order_items have the same status
+          @order.status = params[:order][:status] # then can change the order status officially to the customer as each merchant has marked the order at the same phase
         end
 
         flash[:status] = :success
