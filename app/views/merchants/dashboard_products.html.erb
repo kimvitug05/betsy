@@ -2,8 +2,13 @@
   <%= image_tag("userlookup.gif", :alt => "user banner") %>
 </div>
 
-<h2 class="text-center"><< My Products >></h2>
+<h2 class="text-center"><< Manage Products >></h2>
 
 <div class="container">
   <%= render partial: 'products/product-grid', locals: { products: @login_user.products } %>
+</div>
+
+<br>
+<div class="text-center">
+  <%= button_to 'Back To Dashboard', dashboard_path, method: :get, class: "btn btn-primary" %>
 </div>
