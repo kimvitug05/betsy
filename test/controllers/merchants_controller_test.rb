@@ -57,21 +57,42 @@ describe MerchantsController do
       get merchant_path(merchants(:merchant1))
       must_respond_with :success
     end
-  end
 
-  describe "dashboard" do
-    it "must get the dashboard page" do
-      skip
+    it "must redirect if merchant does not exist" do
+      get merchant_path(-1)
+      must_respond_with :redirect
+      must_redirect_to merchants_path
     end
   end
 
-  describe "create" do
+  describe "dashboard" do
+    it "cannot get the dashboard page if not logged in" do
+      get dashboard_path
+      must_respond_with :redirect
+    end
 
+    it "can get the dashboard page if logged in" do
+      perform_login
+
+      get dashboard_path
+      must_respond_with :success
+    end
+  end
+
+  # TODO
+  describe "create" do
+    skip
   end
 
   describe "logout" do
+    it "must redirect to root path and clear session user_id" do
+      perform_login
 
+      post logout_path
+      must_respond_with :redirect
+      must_redirect_to root_path
+
+      expect(session[:user_id]).must_be_nil
+    end
   end
-
-
 end

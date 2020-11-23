@@ -54,7 +54,7 @@ class Merchant < ApplicationRecord
   end
 
   def filter_orders(status)
-    return 0 if self.products.empty?
+    return [] if self.products.empty?
     result = []
 
     self.products.each do |product|

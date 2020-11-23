@@ -39,7 +39,7 @@ class MerchantsController < ApplicationController
     @merchant = Merchant.find_by(id: merchant_id)
 
     if @merchant.nil?
-      render render_404
+      redirect_to merchants_path
       return
     end
   end
