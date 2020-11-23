@@ -40,15 +40,19 @@
                 </svg>
               </span>
             <% end %>
+              <hr>
           </p>
         </div>
       </div>
     <% end %>
     <hr>
+    <h3 class="text-right">Cart Total: <%=number_to_currency(@cart_total) %></h3>
   <% end %>
-  <%= link_to "Clear Cart", clear_cart_path %>
-  <%= link_to "Go Shopping", products_path %>
-  <%= link_to "Checkout", checkout_path %>
+  <div class="text-right">
+    <%= link_to "Clear Cart", clear_cart_path, class: "btn btn-secondary" %>
+    <%= link_to "Go Shopping", products_path, class: "btn btn-secondary" %>
+    <%= link_to "Checkout", checkout_path, class: "btn btn-secondary" %>
+  </div>
 </section>
 
 
