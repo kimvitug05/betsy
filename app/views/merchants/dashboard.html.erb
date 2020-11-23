@@ -6,10 +6,8 @@
 
   <%= image_tag "shopkeeper_#{rand(1..8)}.gif" %>
   <div class="mb-4">
-    <h2><< <%= @login_user.username %> >></h2>
-    <p><%= @login_user.email %></p>
-    <u><b>Total Revenue:</u></b> $<%= @login_user.total_revenue %> |||
-    <u><b>Pending Orders:</u></b> <%= @login_user.filter_orders("pending").count > 1 ? "0" : @login_user.filter_orders("pending").count %>
+    <h2><%= @login_user.username %></h2>
+    <h4>Total Revenue: $<%= @login_user.total_revenue %></h4>
   </div>
 
   <div class="container">
@@ -36,22 +34,25 @@
   <br><br>
 
   <h4>Pending Orders: <%= @login_user.total_num_orders_by_status("pending") %></h4>
+  <h6>Revenue: $<%= @login_user.total_revenue_by_status("pending") %></h6>
   <%= render partial: 'table', locals: { :orders => @login_user.filter_orders("pending") } %>
 
   <br><br>
 
   <h4>Paid Orders: <%= @login_user.total_num_orders_by_status("paid") %></h4>
+  <h6>Revenue: $<%= @login_user.total_revenue_by_status("paid") %></h6>
   <%= render partial: 'table', locals: { :orders => @login_user.filter_orders("paid") } %>
 
   <br><br>
 
   <h4>Complete Orders: <%= @login_user.total_num_orders_by_status("complete") %></h4>
+  <h6>Revenue: $<%= @login_user.total_revenue_by_status("complete") %></h6>
   <%= render partial: 'table', locals: { :orders => @login_user.filter_orders("complete") } %>
 
   <br><br>
 
   <h4>Cancelled Orders: <%= @login_user.total_num_orders_by_status("cancelled") %></h4>
-  <h5>Total Revenue</h5>
+  <h6>Revenue: $<%= @login_user.total_revenue_by_status("cancelled") %></h6>
   <%= render partial: 'table', locals: { :orders => @login_user.filter_orders("cancelled") } %>
 
 
