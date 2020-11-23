@@ -14,6 +14,12 @@ describe CategorizationsController do
       get categorization_path(categorizations(:kitchen))
       must_respond_with :success
     end
+
+    it "redirects if categorization does not exist" do
+      get categorization_path(-1)
+      must_respond_with :redirect
+      must_redirect_to categorizations_path
+    end
   end
 
   describe "new" do
@@ -31,7 +37,6 @@ describe CategorizationsController do
   end
 
   describe "create" do
-
     it "cannot create a new categorization as a guest user" do
       categorization_hash = {
         categorization: {
@@ -64,6 +69,22 @@ describe CategorizationsController do
 
       must_respond_with :redirect
       must_redirect_to categorization_path(new_category.id)
+    end
+
+    it "returns bad request if creating an invalid category" do
+      perform_login
+
+      categorization_hash = {
+          categorization: {
+              name: nil
+          },
+      }
+
+      expect {
+        post categorizations_path, params: categorization_hash
+      }.must_differ "Categorization.count", 0
+
+      must_respond_with :bad_request
     end
   end
 end

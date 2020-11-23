@@ -1,19 +1,19 @@
 blue_shoes:
   name: shoes
   price: 2.99
-  merchant_id: 1
+  merchant: merchant1
   quantity: 10
   active: true
 laptop:
   name: laptop
   price: 500.65
-  merchant_id: 1
+  merchant: merchant1
   quantity: 12
   active: true
 desktop:
   name: desktop computer
   price: 150.57
-  merchant_id: 1
+  merchant: merchant1
   quantity: 13
   active: true
 

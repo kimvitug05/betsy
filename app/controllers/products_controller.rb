@@ -1,22 +1,22 @@
 class ProductsController < ApplicationController
-  # before_action :require_login, only: [:new, :edit, :update, :create]
-  before_action :find_merchant
-  #, only: [:new, :edit, :update, :create]
   before_action :find_product, only: [:show, :edit, :update]
-
-  before_action :require_login, only: [:new, :edit, :retire]
+  before_action :require_login, except: [:index, :show]
 
   def index
     @products = Product.all
   end
 
   def show
-    # render_404 unless @product
+    if @product.nil?
+      redirect_to products_path
+      return
+    end
   end
 
   def new
     @product = Product.new
     @quantity = @product.quantity
+
     if @product.quantity.nil?
       @quantity = 0
     end
@@ -24,21 +24,15 @@ class ProductsController < ApplicationController
 
   def edit
     if @product.nil?
-      redirect_to product_path(@product.id)
+      redirect_to products_path
       return
     end
   end
 
   def create
-    unless session[:user_id]
-      flash[:status] = :failure
-      flash[:result_text] = "Only merchants can create a new product"
-      render :index, status: :forbidden
-      return
-    end
-
     @product = Product.new(product_params)
     @product.merchant_id = session[:user_id]
+
     if @product.save
       flash[:status] = :success
       flash[:result_text] = "Successfully created new product: #{@product.name}"
@@ -52,10 +46,8 @@ class ProductsController < ApplicationController
   end
 
   def update
-    unless session[:user_id]
-      flash[:status] = :failure
-      flash[:result_text] = "Only merchants can update a product"
-      render :index, status: :forbidden
+    if @product.nil?
+      redirect_to products_path
       return
     end
 
@@ -67,7 +59,7 @@ class ProductsController < ApplicationController
       flash.now[:status] = :failure
       flash.now[:result_text] = "Could not update #{@product}"
       flash.now[:messages] = @product.errors.messages
-      render :edit, status: :not_found
+      render :edit, status: :bad_request
     end
   end
 
@@ -75,22 +67,12 @@ class ProductsController < ApplicationController
 
   private
 
-  # def find_merchant
-  #   @merchant = Merchant.find_by(id: session[:user_id])
-  #
-  #   if @merchant.nil?
-  #     flash.now[:error] = "Merchant not found."
-  #     render :new, status: :bad_request
-  #   end
-  # end
-
   def product_params
     return params.require(:product).permit(:name, :price, :quantity, :active, :description, :photo, categorization_ids: []).with_defaults(merchant_id: @login_user.id)
   end
 
   def find_product
     @product = Product.find_by_id(params[:id])
-    return render_404 unless @product
   end
 
 end
