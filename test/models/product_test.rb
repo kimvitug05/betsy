@@ -28,13 +28,18 @@ describe Product do
     # end
 
     it "product has many categorizations" do
-      @categorizations = [Categorization.new(name: 'Clothes'), Categorization.new(name: 'Kitchen')]
-      @product.categorizations = @categorizations
+      laptop = products(:laptop)
+      computers = categorizations(:computers)
+      electronics = categorizations(:electronics)
 
-      @product.save
-      @product = Product.find_by(id: @product.id)
+      laptop.categorizations << computers
+      laptop.categorizations << electronics
 
-      expect(@product.categorizations.size).must_equal @categorizations.size
+      assert_operator laptop.categorizations.count, :>, 1
+
+      laptop.categorizations.each do |category|
+        expect(category).must_be_instance_of Categorization
+      end
     end
 
     # TODO: belongs to many categorizations

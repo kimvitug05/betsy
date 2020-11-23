@@ -1,0 +1,8 @@
+order_item1:
+  product: laptop
+  order: order1
+  quantity: 2
+order_item2:
+  product: blue_shoes
+  order: order1
+  quantity: 3

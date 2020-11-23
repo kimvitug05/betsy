@@ -1,30 +1,54 @@
-
-<h1>Your Shopping Cart:</h1>
-<%    if @cart.empty?
-        @cart = "Your cart is currently empty!" %>
-        <%= @cart %>
-<% else %>
-
-  <% @cart.each do |item| %>
-
-    <ul>
-      <li>Product: <%= link_to item.product.name, products_path(item.product) %> </li>
-      <li>Description: <%= item.product.description %></li>
-      <li>Sold By: <%= item.product.merchant.username %></li>
-      <li>Price: <%= number_to_currency(item.product.price) %></li>
-      <li>Selected Quantity: <%= item.quantity %></li>
-      <%= link_to "add one", add_one_path(product: item.product), method: "post"%> |
-      <%= link_to "less one", less_one_path(product: item.product), method: "post"%> |
-      <%= link_to "remove item", remove_path(product: item.product), method: "post"%>
-    </ul>
-   <% end  %>
-  <%#= @cart %>
-
-  Cart Total: <%= number_to_currency(@cart_total) %>
+<section class="container">
+  <h2>Your Shopping Cart:</h2>
+  <% if @cart.empty? %>
+    Your cart is currently empty!
+  <% else %>
+    <% @cart.each do |item| %>
+      <div class="row">
+        <div class="col-6">
+          <div class="container">
+            <div
+              alt="product image"
+              class="cart-product-image-preview"
+              style="background-image: url(<%= item.product.photo || 'https://cdn.vox-cdn.com/thumbor/Jq3naM5KuOopHANRXQ1-2wGogbA=/67x29:1609x1518/1400x933/filters:focal(500x431:766x697):no_upscale()/cdn.vox-cdn.com/uploads/chorus_image/image/59451115/neopets.0.jpg' %>)"
+            ></div>
+          </div>
+        </div>
+        <div class="col-6 my-auto">
+          <h3 class="card-title">
+            <%= link_to item.product.name, products_path(item.product) %>
+          </h3>
+          <p class="card-text mb-3">
+            Sold By: <%= item.product.merchant.username %>
+          </p>
+          <% unless current_page?('/dashboard') %>
+            <p class="card-text">
+              <%= item.product.description %>
+            </p>
+          <% end %>
+          <h5 class="card-text text-success">
+            <%= number_to_currency(item.product.price) %>
+          </h5>
+          <p class="card-text">
+            <%= link_to "-", less_one_path(product: item.product), method: "post", class: "btn btn-secondary btn-decrement" %><!--
+            --><span class="cart-product-quantity d-inline-block h-100 px-2 text-success"><%= item.quantity %></span><!--
+            --><%= link_to "+", add_one_path(product: item.product), method: "post", class: "btn btn-secondary btn-increment" %>
+            <%= link_to remove_path(product: item.product), method: "post" do %>
+              <span class="btn btn-secondary ml-4">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
+                </svg>
+              </span>
+            <% end %>
+          </p>
+        </div>
+      </div>
+    <% end %>
+    <hr>
+  <% end %>
   <%= link_to "Clear Cart", clear_cart_path %>
-<% end %>
-<%= link_to "Go Shopping", products_path %>
-<%= link_to "Checkout", checkout_path %>
-
+  <%= link_to "Go Shopping", products_path %>
+  <%= link_to "Checkout", checkout_path %>
+</section>
 
 
