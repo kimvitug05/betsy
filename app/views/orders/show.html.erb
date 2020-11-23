@@ -1,76 +1,84 @@
 <section class="container text-center">
 
-<!--IF VIEWER IS THE ORDER'S MERCHANT-->
   <% if @login_user && @order.order_items.any? { |order_item| order_item.product.merchant_id == @login_user.id } %>
-
     <div class="top-banner">
       <%= image_tag("userlookup.gif", :alt => "user banner") %>
     </div>
-
-    <br><br>
-
+  <% else %>
     <div class="top-banner">
-      <%= image_tag("inventory_warehouse.png", :alt => "grundo with clipboard in a warehouse") %>
+      <%= image_tag("market_banner.gif", :alt => "marketplace banner") %>
     </div>
+  <% end %>
 
-    <br><br>
+  <br><br>
 
-    <h2 class="text-center"><< Order Details >></h2>
+  <div class="top-banner">
+    <%= image_tag("inventory_warehouse.png", :alt => "grundo with clipboard in a warehouse") %>
+  </div>
 
-    <br><br>
+  <br><br>
 
-    <table class="table table-hover">
-      <thead>
-      <tr class="table-active">
-        <th scope="col">Merchant Earnings</th>
-        <th scope="col">Purchase Date</th>
-        <th scope="col">Current Status</th>
-      </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>$<%= @order.order_total(@login_user.id) %></td>
-          <td><%= readable_date(@order.created_at) %></td>
-          <td><%= @order.status.capitalize %></td>
-        </tr>
-      </tbody>
-    </table>
+  <h4 class="text-center">Order Summary</h4>
+  <table class="table table-hover">
+    <thead>
+    <tr class="table-active">
+      <th scope="col">Order Total</th>
+      <th scope="col">Purchase Date</th>
+      <th scope="col">Current Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <% if @login_user && @order.order_items.any? { |order_item| order_item.product.merchant_id == @login_user.id } %>
+        <td>$<%= @order.order_total(@login_user.id) %></td>
+      <% else %>
+        <td>$<%= @order.order_total %></td>
+      <% end %>
+      <td><%= readable_date(@order.created_at) %></td>
+      <td><%= @order.status.capitalize %></td>
+    </tr>
+    </tbody>
+  </table>
 
-    <br><br>
+  <br><br>
 
-    <table class="table table-hover">
-      <thead>
-      <tr class="table-active">
-        <th scope="col">Customer Name</th>
-        <th scope="col">Address</th>
-        <th scope="col">Zip</th>
-        <th scope="col">Credit Card</th>
-        <th scope="col">Expiration</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <td><%= @order.name %></td>
-        <td><%= @order.address %></td>
-        <td><%= @order.zip_code %></td>
-        <td><%= @order.credit_card_end(@order.credit_card) %></td>
-        <td><%= @order.exp_date %></td>
-      </tr>
-      </tbody>
-    </table>
+  <h4 class="text-center">Billing Information</h4>
+  <table class="table table-hover">
+    <thead>
+    <tr class="table-active">
+      <th scope="col">Customer Name</th>
+      <th scope="col">Address</th>
+      <th scope="col">Zip</th>
+      <th scope="col">Credit Card</th>
+      <th scope="col">Expiration</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td><%= @order.name %></td>
+      <td><%= @order.address %></td>
+      <td><%= @order.zip_code %></td>
+      <td><%= @order.credit_card_end(@order.credit_card) %></td>
+      <td><%= @order.exp_date %></td>
+    </tr>
+    </tbody>
+  </table>
 
-    <br><br>
+  <br><br>
 
-    <table class="table table-hover">
-      <thead>
-      <tr class="table-active">
-        <th scope="col">Name</th>
-        <th scope="col">Price</th>
-        <th scope="col">Quantity</th>
-        <th scope="col">Item Total</th>
-      </tr>
-      </thead>
-      <tbody>
+  <h4 class="text-center">Products Purchased</h4>
+  <table class="table table-hover">
+    <thead>
+    <tr class="table-active">
+      <th scope="col">Name</th>
+      <th scope="col">Price</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Item Total</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <% if @login_user && @order.order_items.any? { |order_item| order_item.product.merchant_id == @login_user.id } %>
       <% @order.extract_merchant_order_items(@login_user.id).each do |order_item| %>
         <tr>
           <td><%= link_to "#{order_item.product.name}", product_path(order_item.product.id) %></td>
@@ -79,10 +87,18 @@
           <td>$<%= @order.order_item_total_cost(order_item) %></td>
         </tr>
       <% end %>
-      </tbody>
-    </table>
-
-    <br>
+    <% else %>
+      <% @order.order_items.each do |order_item| %>
+        <tr>
+          <td><%= link_to "#{order_item.product.name}", product_path(order_item.product.id) %></td>
+          <td>$<%= order_item.product.price %></td>
+          <td><%= order_item.quantity %></td>
+          <td>$<%= @order.order_item_total_cost(order_item) %></td>
+        </tr>
+      <% end %>
+    <% end %>
+    </tbody>
+  </table>
 
 <!--    TODO: If implementing toggle order status at some point?-->
 <!--    <div class="container">-->
@@ -98,90 +114,5 @@
 <!--        </div>-->
 <!--      </div>-->
 <!--    </div>-->
-
-    <br>
-
-<!--IF VIEWER IS SOMEONE ELSE, IT'S CONFIRMATION SCREEN-->
-  <% else %>
-
-    <div class="top-banner">
-      <%= image_tag("market_banner.gif", :alt => "marketplace banner") %>
-    </div>
-
-    <br><br>
-
-    <div class="top-banner">
-      <%= image_tag("inventory_warehouse.png", :alt => "grundo with clipboard in a warehouse") %>
-    </div>
-
-    <br><br>
-
-    <h4 class="text-center">Order Summary</h4>
-    <table class="table table-hover">
-      <thead>
-      <tr class="table-active">
-        <th scope="col">Order Total</th>
-        <th scope="col">Purchase Date</th>
-        <th scope="col">Current Status</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <td>$<%= @order.order_total %></td>
-        <td><%= readable_date(@order.created_at) %></td>
-        <td><%= @order.status.capitalize %></td>
-      </tr>
-      </tbody>
-    </table>
-
-    <br><br>
-
-    <h4 class="text-center">Billing Information</h4>
-    <table class="table table-hover">
-      <thead>
-      <tr class="table-active">
-        <th scope="col">Customer Name</th>
-        <th scope="col">Address</th>
-        <th scope="col">Zip</th>
-        <th scope="col">Credit Card</th>
-        <th scope="col">Expiration</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr>
-        <td><%= @order.name %></td>
-        <td><%= @order.address %></td>
-        <td><%= @order.zip_code %></td>
-        <td><%= @order.credit_card_end(@order.credit_card) %></td>
-        <td><%= @order.exp_date %></td>
-      </tr>
-      </tbody>
-    </table>
-
-    <br><br>
-
-    <h4 class="text-center">Products Purchased</h4>
-    <table class="table table-hover">
-      <thead>
-      <tr class="table-active">
-        <th scope="col">Name</th>
-        <th scope="col">Price</th>
-        <th scope="col">Quantity</th>
-        <th scope="col">Item Total</th>
-      </tr>
-      </thead>
-      <tbody>
-      <% @order.order_items.each do |order_item| %>
-        <tr>
-          <td><%= link_to "#{order_item.product.name}", product_path(order_item.product.id) %></td>
-          <td>$<%= order_item.product.price %></td>
-          <td><%= order_item.quantity %></td>
-          <td>$<%= @order.order_item_total_cost(order_item) %></td>
-        </tr>
-      <% end %>
-      </tbody>
-    </table>
-
-  <% end %>
 
 </section>
