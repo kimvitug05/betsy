@@ -6,3 +6,7 @@ order_item2:
   product: blue_shoes
   order: order1
   quantity: 3
+order_item3:
+  product: laptop
+  order: order2
+  quantity: 1

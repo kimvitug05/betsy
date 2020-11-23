@@ -6,3 +6,11 @@ order1:
   credit_card: 5674643345345
   exp_date: 12/2020
   zip_code: 90374
+order2:
+  address: 569 Melrose Avenue
+  name: Hannah Montana
+  status: pending
+  email: hannah@montana.com
+  credit_card: 3245464345
+  exp_date: 02/2021
+  zip_code: 45342
