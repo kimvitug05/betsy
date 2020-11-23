@@ -17,7 +17,8 @@
     <h5 class="card-text text-success text-center">
       <%= number_to_currency(product.price) %>
     </h5>
-    <% unless current_page?('/dashboard') %>
+<!--    HIDE UNNECESSARY DESCRIPTION FROM @login_user DASH-->
+    <% unless current_page?('/dashboard') || current_page?('/dashboard/products') %>
       <p class="card-text text-center">
         <%= product.description %>
       </p>
@@ -26,7 +27,8 @@
 
   <div class="container">
     <div class="row text-center">
-      <% if current_page?('/dashboard') %>
+<!--      IF VIEWING FROM PRODUCT MANAGE PAGE ON DASH-->
+      <% if current_page?('/dashboard/products') %>
         <div class="col-sm">
           <%= button_to 'View Product', product_path(product.id), method: :get, :class => 'btn btn-primary' %>
           <br>
@@ -50,6 +52,7 @@
             <br>
           <% end %>
         </div>
+<!--        OTHERWISE, DISPLAY VIEW BUTTON-->
       <% else %>
         <div class="col-sm text-center">
           <%= button_to 'View Product', product_path(product.id), method: :get, :class => 'btn btn-primary' %>
