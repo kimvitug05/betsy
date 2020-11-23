@@ -1,12 +1,13 @@
 class CategorizationsController < ApplicationController
 
+  before_action :find_categorization, only: [:show]
+  before_action :require_login, only: [:new, :create]
+
   def index
     @categorizations = Categorization.all
   end
 
   def show
-    @categorization = Categorization.find_by(id: params[:id])
-
     if @categorization.nil?
       redirect_to categorizations_path
       return
