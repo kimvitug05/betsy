@@ -35,6 +35,21 @@ describe ProductsController do
     end
   end
 
+  describe "show" do
+    it "should get the product show page" do
+      get product_path(products(:laptop))
+
+      must_respond_with :success
+    end
+
+    it "should redirect if the product does not exist" do
+      get product_path(-1)
+
+      must_respond_with :redirect
+      must_redirect_to products_path
+    end
+  end
+
   describe "new" do
     it "succeeds" do
       get new_product_path
@@ -69,26 +84,6 @@ describe ProductsController do
     end
   end
 
-  describe "show" do
-    # used fixture
-    it "shows a product" do
-      # product = products(:blue_shoes)
-      get products_path(@product.id)
-
-      must_respond_with :success
-    end
-
-    it "renders 404 not_found for a invalid product ID" do
-      # product = products(:blue_shoes)
-      # destroyed_id = product.id
-      # product.destroy
-
-      get product_path(-99)
-
-      must_respond_with :not_found
-    end
-  end
-
   describe "edit" do
     it "succeeds in editing existing product" do
       get edit_product_path(@product[:id])
@@ -96,9 +91,11 @@ describe ProductsController do
       must_respond_with :success
     end
 
-    it "renders 404 not_found for an invalid product ID" do
-      get edit_product_path(-99)
-      must_respond_with :not_found
+    it "should redirect if the product does not exist" do
+      get edit_product_path(-1)
+
+      must_respond_with :redirect
+      must_redirect_to products_path
     end
   end
 
@@ -109,6 +106,7 @@ describe ProductsController do
       expect {
         put product_path(@product), params: updates
       }.wont_change "Product.count"
+
       updated_product = Product.find_by(id: @product.id)
 
       expect(updated_product.name).must_equal "fries"
@@ -116,24 +114,21 @@ describe ProductsController do
       must_redirect_to product_path(@product.id)
     end
 
-    # it "renders bad_request for invalid data" do
-    #   product = { product: { name: "Shoes", price: 3.99, merchant_id: 1, quantity: 10, category_id: 1 } }
+    it "responds with bad request if updated product is invalid" do
+      updates = { product: { name: nil } }
 
-    #   expect {
-    #     put product_path(product), params: product
-    #   }.wont_change "Product.count"
+      expect {
+        put product_path(@product), params: updates
+      }.wont_change "Product.count"
 
-    #   bad_product = Product.find_by(id: product.id)
+      must_respond_with :bad_request
+    end
 
-    #   must_respond_with :not_found
-    # end
+    it "should redirect if the product does not exist" do
+      put product_path(-1)
 
-    # it "renders 404 not_found for a invalid product ID" do
-
-
-    #   put product_path(-99), params: { product: { name: "Test" } }
-
-    #   must_respond_with :not_found
-    # end
+      must_respond_with :redirect
+      must_redirect_to products_path
+    end
   end
 end

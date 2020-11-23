@@ -1,6 +1,30 @@
 blue_shoes:
   name: shoes
   price: 2.99
-  merchant_id: 1
+  merchant: merchant1
   quantity: 10
+  active: true
+laptop:
+  name: laptop
+  price: 500.65
+  merchant: merchant1
+  quantity: 12
+  active: true
+desktop:
+  name: desktop computer
+  price: 150.57
+  merchant: merchant1
+  quantity: 13
+  active: true
+fork:
+  name: fork
+  price: 34.50
+  merchant: merchant2
+  quantity: 13
+  active: true
+spoon:
+  name: spoon
+  price: 23.70
+  merchant: merchant2
+  quantity: 13
   active: true

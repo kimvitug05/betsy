@@ -28,6 +28,7 @@ class Merchant < ApplicationRecord
     end
 
     return result
+#     return self.total_revenue_by_status('fulfilled')
   end
 
   def total_revenue_by_status(status)
@@ -62,7 +63,7 @@ class Merchant < ApplicationRecord
   end
 
   def filter_orders(status)
-    return 0 if self.products.empty?
+    return [] if self.products.empty?
     result = []
 
     self.products.each do |product|

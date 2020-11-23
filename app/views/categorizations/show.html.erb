@@ -18,5 +18,5 @@
   </div>
 
   <h2 class="text-center"><< <%= @categorization.name %> >></h2>
-  <%= render partial: 'products/product-grid', locals: { products: @categorization.products.where.not(active: false, merchant_id: @login_user.id) } %>
+  <%= render partial: 'products/product-grid', locals: { products: @categorization.products.where(active: true) } %>
 </section>
