@@ -1,16 +1,24 @@
-<div class="product-title"><h1><%= @product.name %></h1></div>
-<%#= image_tag @product.photo, :alt => "#{@product.name} image", :class => "product-photo" %>
-<div class="product-merch"><p>Sold by <%=  @product.merchant.username %> </p></div>
-<div class="product-desc"><p>Price: <%=  number_to_currency(@product.price) %> </p></div>
-<div class="product-desc"><p>Description: <%=  @product.description %> </p></div>
-<!--    <div class="product-desc"><p>Price: $<%#=  @product.categorizations_products %> </p></div>-->
-<hr>
-<%= form_with model: @order_items, url: add_to_cart_path(@product), method: :post do |f| %>
-  <%= f.select :selected_quantity, (1..@product.quantity) %>
-  <%= f.hidden_field :product_id, value: @product.id %>
-  <%= f.submit "Add to cart", class:"btn btn-primary" %>
-<%end%>
-<div class="product-stock"> <%= @quantity %> In Stock</div>
+<section class="container">
+  <h2><%= @product.name %></h2>
+  <%= image_tag @product.photo, :alt => "#{@product.name} image", :class => "product-photo" %>
+  <div class="product-merch"><p>Sold by <%=  @product.merchant.username %> </p></div>
+  <div class="product-desc">
+    <h5 class="card-text text-success">
+      <%= number_to_currency(@product.price) %>
+    </h5>
+  </div>
+  <!--    <div class="product-desc"><p>Price: $<%#=  @product.categorizations_products %> </p></div>-->
+  <hr>
+  <%= form_with model: @order_items, url: add_to_cart_path(@product), method: :post do |f| %>
+    <div class="form-group">
+      <%= f.select(:selected_quantity, (1..@product.quantity), {}, { :class => 'form-control' }) %>
+      <%= f.hidden_field :product_id, value: @product.id %>
+      <br>
+      <%= f.submit "Add to cart", class:"btn btn-primary" %>
+    </div>
+  <%end%>
+  <%= link_to "Back To Products", products_path, class:"btn btn-primary" %>
+</section>
 
 
 

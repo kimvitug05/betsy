@@ -35,3 +35,36 @@ div.top-banner img {
   left: unset;
   right: 0;
 }
+
+.cart-product-image-preview {
+  background-repeat: no-repeat;
+  background-position: center center;
+  padding-bottom: 100%;
+  position: relative;
+  background-size: cover;
+  margin-left: 25px;
+  margin-top: 20px;
+}
+
+.btn-increment, .btn-decrement {
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 24px;
+}
+
+.btn-increment {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+
+.btn-decrement {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.cart-product-quantity {
+  border-bottom: 1px solid #f3969a;
+  border-top: 1px solid #f3969a;
+  padding-bottom: 7px;
+  padding-top: 5px;
+}
