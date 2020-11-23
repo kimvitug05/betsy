@@ -1,6 +1,6 @@
 <section class="container text-center">
 
-  <% if @login_user && @order.order_items.any? { |order_item| order_item.product.merchant_id == @login_user.id } %>
+  <% if @login_user && @order.extract_merchant_order_items(@login_user.id).any? %>
     <div class="top-banner">
       <%= image_tag("userlookup.gif", :alt => "user banner") %>
     </div>
@@ -29,13 +29,19 @@
     </thead>
     <tbody>
     <tr>
-      <% if @login_user && @order.order_items.any? { |order_item| order_item.product.merchant_id == @login_user.id } %>
+      <% if @login_user && @order.extract_merchant_order_items(@login_user.id).any? %>
         <td>$<%= @order.order_total(@login_user.id) %></td>
       <% else %>
         <td>$<%= @order.order_total %></td>
       <% end %>
+
       <td><%= readable_date(@order.created_at) %></td>
-      <td><%= @order.status.capitalize %></td>
+
+      <% if @login_user && @order.extract_merchant_order_items(@login_user.id).any? %>
+        <td><%= @order.extract_merchant_order_items(@login_user.id).first.status.capitalize %></td>
+      <% else %>
+        <td><%= @order.status.capitalize %></td>
+      <% end %>
     </tr>
     </tbody>
   </table>
@@ -78,7 +84,7 @@
     </thead>
     <tbody>
 
-    <% if @login_user && @order.order_items.any? { |order_item| order_item.product.merchant_id == @login_user.id } %>
+    <% if @login_user && @order.extract_merchant_order_items(@login_user.id).any? %>
       <% @order.extract_merchant_order_items(@login_user.id).each do |order_item| %>
         <tr>
           <td><%= link_to "#{order_item.product.name}", product_path(order_item.product.id) %></td>
@@ -100,17 +106,17 @@
     </tbody>
   </table>
 
-  <% if @login_user && @order.order_items.any? { |order_item| order_item.product.merchant_id == @login_user.id } %>
+  <% if @login_user && @order.extract_merchant_order_items(@login_user.id).any? %>
     <div class="container">
         <div class="row">
           <div class="col-sm text-center">
             <%= button_to "Mark Paid", order_path(@order.id), params: {:order => { :id => @order.id, :status => "paid" }}, method: :put,  :class => 'btn btn-primary', data: { confirm: "Mark Paid? This will register the order as paid." } %>
           </div>
           <div class="col-sm text-center">
-            <%= button_to "Mark Complete", order_path(@order.id), params: {:order => { :id => @order.id, :status => "complete" }}, method: :put,  :class => 'btn btn-primary', data: { confirm: "Mark Complete? This will register the order as complete." } %>
+            <%= button_to "Mark Complete", order_path(@order.id), params: {:order => { :id => @order.id, :status => "complete" }}, method: :put,  :class => 'btn btn-primary', data: { confirm: "Mark Complete? This will remove the order items from your inventory." } %>
           </div>
           <div class="col-sm text-center">
-            <%= button_to "Mark Cancelled", order_path(@order.id), params: {:order => { :id => @order.id, :status => "cancelled" }}, method: :put,  :class => 'btn btn-primary', data: { confirm: "Mark Cancelled? This will return the order inventory." } %>
+            <%= button_to "Mark Cancelled", order_path(@order.id), params: {:order => { :id => @order.id, :status => "cancelled" }}, method: :put,  :class => 'btn btn-primary', data: { confirm: "Mark Cancelled? This will register the order status as cancelled." } %>
           </div>
           <div class="col-sm text-center">
             <%= button_to 'Back To Dashboard', dashboard_path, method: :get, class: "btn btn-primary" %>

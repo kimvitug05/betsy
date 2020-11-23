@@ -42,17 +42,22 @@ class OrdersController < ApplicationController
           return
         else # otherwise, mark order complete and adjust inventory
           @order.extract_merchant_order_items(@login_user.id).each do |order_item|
-            order_item.product.quantity -= order_item.quantity
+            order_item.product.quantity -= order_item.quantity # adjust quantity
           end
-
-          @order.update(order_params)
+        raise
+          @order.extract_merchant_order_items(@login_user.id).each do |order_item|
+            order_item.update!(status: "complete") # adjust status
+          end
           flash[:status] = :success
           flash[:result_text] = "Successfully updated order ##{@order.id}.  Inventory has been removed from stock."
           redirect_to order_path(@order)
         end
 
-      else # don't need to adjust inventory, just status
-        @order.update(order_params)
+      else # for all other statuses, don't need to adjust inventory, just status
+        @order.extract_merchant_order_items(@login_user).each do |order_item|
+          order_item.update(status: params[:order][:status]) # adjust status
+        end
+
         flash[:status] = :success
         flash[:result_text] = "Successfully updated order ##{@order.id}"
         redirect_to order_path(@order)
