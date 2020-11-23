@@ -65,7 +65,7 @@ class ProductsController < ApplicationController
       redirect_to product_path(@product)
     else
       flash.now[:status] = :failure
-      flash.now[:result_text] = "Could not update #{@product}"
+      flash.now[:result_text] = "Something went wrong.  Could not update #{@product.name}"
       flash.now[:messages] = @product.errors.messages
       render :edit, status: :not_found
     end

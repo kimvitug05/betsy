@@ -9,11 +9,11 @@ class OrdersController < ApplicationController
     @order.order_items = session[:cart].map { |attributes| OrderItem.new(attributes)}
     if @order.save
       flash[:status] = :success
-      flash[:result_text] = "Successfully ordered: #{@order.id}"
+      flash[:result_text] = "Your order has been processed. Thank you for your purchase! Your confirmation no. is ##{@order.id}"
       redirect_to order_path(@order)
     else
       flash[:status] = :failure
-      flash[:result_text] = "Could not create #{@order}"
+      flash[:result_text] = "Something went wrong. Could not create order ##{@order.id}"
       flash[:messages] = @order.errors.messages
       render :new, status: :bad_request
     end
