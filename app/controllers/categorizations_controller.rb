@@ -21,10 +21,12 @@ class CategorizationsController < ApplicationController
     @categorization = Categorization.new(categorization_params)
 
     if @categorization.save
-      flash[:success] = "Successfully created #{@categorization.name} #{@categorization.id}"
+      flash[:status] = :success
+      flash[:result_text] = "Successfully created category: #{@categorization.name}"
       redirect_to categorization_path(@categorization.id)
     else
-      flash.now[:warning] = "A problem occurred: Could not create #{@categorization.name}"
+      flash[:status] = :failure
+      flash.now[:result_text] = "Please enter a valid category name."
       render :new, status: :bad_request
     end
   end

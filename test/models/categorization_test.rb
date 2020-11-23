@@ -26,14 +26,27 @@ describe Categorization do
     end
   end
 
-  #TODO: validations
   describe "validations" do
     it "categorization is valid if name is present" do
-      skip
+      new_category = Categorization.new(name: "taxidermy")
+
+      expect(new_category.valid?).must_equal true
     end
 
     it "categorization is invalid if name is nil" do
-      skip
+      new_category = Categorization.new(name: nil)
+
+      expect(new_category.valid?).must_equal false
+      expect(new_category.errors.messages).must_include :name
+      expect(new_category.errors.messages[:name]).must_equal ["can't be blank"]
+    end
+
+    it "categorization must have a unique name" do
+      new_category = Categorization.new(name: "kitchen")
+
+      expect(new_category.valid?).must_equal false
+      expect(new_category.errors.messages).must_include :name
+      expect(new_category.errors.messages[:name]).must_equal ["has already been taken"]
     end
   end
 
