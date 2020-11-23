@@ -7,6 +7,18 @@
       <%= image_tag("userlookup.gif", :alt => "user banner") %>
     </div>
 
+    <br><br>
+
+    <div class="top-banner">
+      <%= image_tag("inventory_warehouse.png", :alt => "grundo with clipboard in a warehouse") %>
+    </div>
+
+    <br><br>
+
+    <h2 class="text-center"><< Order Details >></h2>
+
+    <br><br>
+
     <table class="table table-hover">
       <thead>
       <tr class="table-active">
@@ -19,10 +31,12 @@
         <tr>
           <td>$<%= @order.order_total(@login_user.id) %></td>
           <td><%= readable_date(@order.created_at) %></td>
-          <td><%= @order.status %></td>
+          <td><%= @order.status.capitalize %></td>
         </tr>
       </tbody>
     </table>
+
+    <br><br>
 
     <table class="table table-hover">
       <thead>
@@ -36,7 +50,7 @@
       </thead>
       <tbody>
       <tr>
-        <td>$<%= @order.name %></td>
+        <td><%= @order.name %></td>
         <td><%= @order.address %></td>
         <td><%= @order.zip_code %></td>
         <td><%= @order.credit_card_end(@order.credit_card) %></td>
@@ -44,6 +58,48 @@
       </tr>
       </tbody>
     </table>
+
+    <br><br>
+
+    <table class="table table-hover">
+      <thead>
+      <tr class="table-active">
+        <th scope="col">Name</th>
+        <th scope="col">Price</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Item Total</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @order.extract_merchant_order_items(@login_user.id).each do |order_item| %>
+        <tr>
+          <td><%= link_to "#{order_item.product.name}", product_path(order_item.product.id) %></td>
+          <td>$<%= order_item.product.price %></td>
+          <td><%= order_item.quantity %></td>
+          <td>$<%= @order.order_item_total_cost(order_item) %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+
+    <br>
+
+<!--    TODO: If implementing toggle order status at some point?-->
+<!--    <div class="container">-->
+<!--      <div class="row">-->
+<!--        <div class="col-sm text-center">-->
+          <%#= button_to "Mark Paid", order_path(@order.id), params: {:order => { :id => @order.id, :status => "paid" }}, method: :put,  :class => 'btn btn-primary', data: { confirm: "Mark Paid? This will register the order as paid." } %>
+<!--        </div>-->
+<!--        <div class="col-sm text-center">-->
+          <%#= button_to "Mark Complete", order_path(@order.id), params: {:order => { :id => @order.id, :status => "complete" }}, method: :put,  :class => 'btn btn-primary', data: { confirm: "Mark Complete? This will register the order as complete." } %>
+<!--        </div>-->
+<!--        <div class="col-sm text-center">-->
+          <%#= button_to "Mark Cancelled", order_path(@order.id), params: {:order => { :id => @order.id, :status => "cancelled" }}, method: :put,  :class => 'btn btn-primary', data: { confirm: "Mark Cancelled? This will return the order inventory." } %>
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+
+    <br>
 
 <!--IF VIEWER IS SOMEONE ELSE, IT'S CONFIRMATION SCREEN-->
   <% else %>

@@ -35,23 +35,24 @@
 
   <br><br>
 
-  <h3>Pending Orders: <%= @login_user.total_num_orders_by_status("pending") %></h3>
+  <h4>Pending Orders: <%= @login_user.total_num_orders_by_status("pending") %></h4>
   <%= render partial: 'table', locals: { :orders => @login_user.filter_orders("pending") } %>
 
-<!--  <br><br>-->
+  <br><br>
 
-<!--  <h3>Paid Orders: <%#= @login_user.total_num_orders_by_status("paid") %></h3>-->
-  <%#= render partial: 'table', locals: { :orders => @login_user.filter_orders("paid") } %>
+  <h4>Paid Orders: <%= @login_user.total_num_orders_by_status("paid") %></h4>
+  <%= render partial: 'table', locals: { :orders => @login_user.filter_orders("paid") } %>
 
-<!--  <br><br>-->
+  <br><br>
 
-<!--  <h3>Complete Orders: <%#= @login_user.total_num_orders_by_status("complete") %></h3>-->
-  <%#= render partial: 'table', locals: { :orders => @login_user.filter_orders("complete") } %>
+  <h4>Complete Orders: <%= @login_user.total_num_orders_by_status("complete") %></h4>
+  <%= render partial: 'table', locals: { :orders => @login_user.filter_orders("complete") } %>
 
-<!--  <br><br>-->
+  <br><br>
 
-<!--  <h3>Cancelled Orders: <%#= @login_user.total_num_orders_by_status("cancelled") %></h3>-->
-  <%#= render partial: 'table', locals: { :orders => @login_user.filter_orders("cancelled") } %>
+  <h4>Cancelled Orders: <%= @login_user.total_num_orders_by_status("cancelled") %></h4>
+  <h5>Total Revenue</h5>
+  <%= render partial: 'table', locals: { :orders => @login_user.filter_orders("cancelled") } %>
 
 
 </section>
