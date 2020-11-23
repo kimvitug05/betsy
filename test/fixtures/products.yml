@@ -16,4 +16,15 @@ desktop:
   merchant: merchant1
   quantity: 13
   active: true
-
+fork:
+  name: fork
+  price: 34.50
+  merchant: merchant2
+  quantity: 13
+  active: true
+spoon:
+  name: spoon
+  price: 23.70
+  merchant: merchant2
+  quantity: 13
+  active: true

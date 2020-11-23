@@ -1,7 +1,12 @@
 require "test_helper"
 
 describe OrderItem do
-  # it "does a thing" do
-  #   value(1+1).must_equal 2
-  # end
+  describe "instatiation" do
+  end
+
+  describe "validation" do
+  end
+
+  describe "relations" do
+  end
 end

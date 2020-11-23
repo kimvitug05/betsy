@@ -1,0 +1,8 @@
+order1:
+  address: 123 Front Street
+  name: Old McDonald
+  status: pending
+  email: old@mcdonald.com
+  credit_card: 5674643345345
+  exp_date: 12/2020
+  zip_code: 90374

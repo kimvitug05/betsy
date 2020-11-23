@@ -4,3 +4,9 @@ merchant1:
   uid: 12345
   provider: github
   avatar: nil
+merchant2:
+  username: linda_belcher
+  email: linda@linda.com
+  uid: 25437
+  provider: github
+  avatar: nil
