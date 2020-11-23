@@ -1,8 +1,8 @@
 class OrdersController < ApplicationController
 
-    def new
-    @order = Order.new
-    end
+  def new
+  @order = Order.new
+  end
 
   def create
     @order = Order.new(order_params)
@@ -19,9 +19,19 @@ class OrdersController < ApplicationController
     end
   end
 
-    def edit
-      @order = Order.new
+  def edit
+    @order = Order.new
+  end
+
+  def show
+    order_id = params[:id].to_i
+    @order = Order.find_by(id: order_id)
+
+    if @order.nil?
+      render render_404
+      return
     end
+  end
 
   private
 

@@ -10,6 +10,9 @@
     <p>Joined On: <%= readable_date(@merchant.created_at) %></p>
   </div>
 
+  <% if @merchant.id == @login_user.id %>
+  <h5><i>This is what your merchant page looks like to viewers!</i></h5>
+  <% end %>
   <br>
 
   <%= render partial: 'products/product-grid', locals: { products: @merchant.products } %>

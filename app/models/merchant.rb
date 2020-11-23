@@ -76,13 +76,5 @@ class Merchant < ApplicationRecord
 
     return result.uniq
   end
-
-  def order_total(order)
-    sum = 0
-    order.order_items.each do |order_item|
-      sum += order_item.product.price
-    end
-    return sum
-  end
 end
 
