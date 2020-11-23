@@ -22,22 +22,34 @@ class OrderItemsController < ApplicationController
       quantity = product.quantity #if more is added than is available, add remaining
     end
 
+    #verify merchant is not buying own product
+    if !can_purchase(product)
+      redirect_to products_path
+      return
+    end
+
     order_item = OrderItem.new(product_id: product.id, quantity: quantity)
 
       # find the item in the cart
       # update the quantity
     if session[:cart].empty?
       session[:cart]  << order_item
+        flash[:status] = :success
+        flash[:result_text] = "Awesome! Your N.E.O.P.E.T.S.Y #{product.name} item is in the cart!"
     else
       #cart is not empty
-      if cart_has_item (order_item)
+      if cart_has_item(order_item)
         session[:cart].each do |item|
             if item["product_id"] == order_item.product_id
              item["quantity"] = item["quantity"] + quantity
             end
+            flash[:status] = :success
+            flash[:result_text] = "Awesome! Your N.E.O.P.E.T.S.Y #{product.name} quantity has been updated!"
         end
       else
         session[:cart]  << order_item
+        flash[:status] = :success
+        flash[:result_text] = "Great choice! We've added another N.E.O.P.E.T.S.Y. item to your cart!"
       end
     end
     redirect_to cart_path
@@ -88,6 +100,14 @@ class OrderItemsController < ApplicationController
     return false
   end
 
+  def can_purchase(product)
+    if session[:user_id] == product.merchant_id
+      flash[:status] = :failure
+      flash[:result_text] = "Merchants cannot buy their own products."
+      return false
+    end
+    true
+  end
 
   def get_total
     total = 0.0
