@@ -46,8 +46,6 @@
     <% end %>
     <hr>
   <% end %>
-
-  <h3>Cart Total: <%= number_to_currency(@cart_total) %></h3>
   <%= link_to "Clear Cart", clear_cart_path %>
   <%= link_to "Go Shopping", products_path %>
   <%= link_to "Checkout", checkout_path %>
