@@ -5,16 +5,16 @@
   <% else %>
     <% @cart.each do |item| %>
       <div class="row">
-        <div class="col-6">
+        <div class="col-3">
           <div class="container">
             <div
               alt="product image"
               class="cart-product-image-preview"
-              style="background-image: url(<%= item.product.photo || 'https://cdn.vox-cdn.com/thumbor/Jq3naM5KuOopHANRXQ1-2wGogbA=/67x29:1609x1518/1400x933/filters:focal(500x431:766x697):no_upscale()/cdn.vox-cdn.com/uploads/chorus_image/image/59451115/neopets.0.jpg' %>)"
+              style="background-image: url(<%= item.product.photo && item.product.photo != '' ? item.product.photo : 'https://i.imgur.com/voPUjQv.png' %>)"
             ></div>
           </div>
         </div>
-        <div class="col-6 my-auto">
+        <div class="col-9 my-auto">
           <h3 class="card-title">
             <%= link_to item.product.name, products_path(item.product) %>
           </h3>
@@ -40,12 +40,11 @@
                 </svg>
               </span>
             <% end %>
-              <hr>
           </p>
         </div>
       </div>
+      <hr>
     <% end %>
-    <hr>
     <h3 class="text-right">Cart Total: <%=number_to_currency(@cart_total) %></h3>
   <% end %>
   <div class="text-right">

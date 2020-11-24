@@ -42,11 +42,38 @@ describe Product do
       end
     end
 
-    # TODO: belongs to many categorizations
+    it "product belongs to many categorizations" do
+      computers = categorizations(:computers)
+      electronics = categorizations(:electronics)
+      
+      laptop = products(:laptop)
 
-    # TODO: has many order items
+      laptop.categorizations << computers
+      laptop.categorizations << electronics
 
-    # TODO: has many orders
+      expect(computers.products).must_include laptop
+      expect(electronics.products).must_include laptop
+    end
+
+    it "product has many order items" do
+      laptop = products(:laptop)
+
+      assert_operator laptop.order_items.count, :>, 1
+
+      laptop.order_items.each do |order_item|
+        expect(order_item).must_be_instance_of OrderItem
+      end
+    end
+
+    it "product has many order items" do
+      laptop = products(:laptop)
+
+      assert_operator laptop.orders.count, :>, 1
+
+      laptop.orders.each do |order|
+        expect(order).must_be_instance_of Order
+      end
+    end
   end
 
   describe 'validations' do
@@ -99,8 +126,18 @@ describe Product do
       expect(@product.errors.messages.include?(:price)).must_equal true
       expect(@product.errors.messages[:price].include?("must be greater than 0")).must_equal true
 
+    end
+
+    it "fails validation when the price is not a number" do
+
+      #Act/Assert
+      @product.price = "hello!"
+      expect(@product.valid?).must_equal false
+      expect(@product.errors.messages.include?(:price)).must_equal true
+      expect(@product.errors.messages[:price].include?("is not a number")).must_equal true
 
     end
+
     it "fails validation when the product name already exists" do
 
       #Act

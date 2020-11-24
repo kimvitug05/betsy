@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  before_action :find_product, only: [:show, :edit, :update]
+  before_action :find_product, only: [:show, :edit, :update, :retire, :restore]
   before_action :require_login, except: [:index, :show]
 
   def index
@@ -23,7 +23,7 @@ class ProductsController < ApplicationController
   end
 
   def edit
-    if @product.nil?
+    if @product.nil? || @product.merchant_id != @login_user.id
       redirect_to products_path
       return
     end
@@ -46,7 +46,7 @@ class ProductsController < ApplicationController
   end
 
   def update
-    if @product.nil?
+    if @product.nil? || @product.merchant_id != @login_user.id
       redirect_to products_path
       return
     end
@@ -63,7 +63,43 @@ class ProductsController < ApplicationController
     end
   end
 
-  #TODO def retire?
+  def retire
+    if @product.nil? || @product.merchant_id != @login_user.id
+      redirect_to dashboard_products_path
+      return
+    end
+
+    @product.active = false
+
+    if @product.save
+      flash[:status] = :success
+      flash[:result_text] = "Successfully retired #{@product.id}"
+      redirect_to dashboard_products_path
+    else
+      flash.now[:status] = :failure
+      flash.now[:result_text] = "Something went wrong. Could not retire #{@product.name}"
+      render :index, status: :bad_request
+    end
+  end
+
+  def restore
+    if @product.nil? || @product.merchant_id != @login_user.id
+      redirect_to dashboard_products_path
+      return
+    end
+
+    @product.active = true
+
+    if @product.save
+      flash[:status] = :success
+      flash[:result_text] = "Successfully restored #{@product.id}"
+      redirect_to dashboard_products_path
+    else
+      flash.now[:status] = :failure
+      flash.now[:result_text] = "Something went wrong. Could not restore #{@product.name}"
+      render :index, status: :bad_request
+    end
+  end
 
   private
 
@@ -74,5 +110,4 @@ class ProductsController < ApplicationController
   def find_product
     @product = Product.find_by_id(params[:id])
   end
-
 end
