@@ -5,7 +5,7 @@
   <% else %>
     <% @cart.each do |item| %>
       <div class="row">
-        <div class="col-6">
+        <div class="col-3">
           <div class="container">
             <div
               alt="product image"
@@ -14,7 +14,7 @@
             ></div>
           </div>
         </div>
-        <div class="col-6 my-auto">
+        <div class="col-9 my-auto">
           <h3 class="card-title">
             <%= link_to item.product.name, products_path(item.product) %>
           </h3>
