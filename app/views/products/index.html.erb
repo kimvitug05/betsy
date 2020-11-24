@@ -1,10 +1,30 @@
 <div class="container">
 
-  <div class="top-banner">
-    <%= image_tag("market_banner.gif", :alt => "marketplace banner") %>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm text-center">
+        <div class="top-banner">
+          <%= image_tag("market_banner.gif", :alt => "marketplace banner") %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm text-center">
+        <div class="top-banner">
+          <%= image_tag("grey_faerie.png", :alt => "the grey faerie welcomes you", :class => "w-50 rounded") %>
+        </div>
+        <br>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm text-center">
+        <div class="text-center">
+          <%= image_tag("products_title.png", :alt => "reads all products", :class => "w-50") %>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <h2 class="text-center"><< All Products >></h2>
   <% if @login_user %>
     <%= render partial: 'product-grid', locals: { products: @products.where.not(merchant_id: @login_user.id, active: false) } %>
   <% else %>
