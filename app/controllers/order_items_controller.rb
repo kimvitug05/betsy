@@ -7,7 +7,7 @@ class OrderItemsController < ApplicationController
     initialize_session
     product = Product.find_by(id: params["product_id"])
     quantity = params["selected_quantity"].to_i
-    if product.quantity.nil?
+    if product.quantity.nil? || product.quantity < 0
       product.quantity = 0
       product.save
     end
@@ -21,67 +21,60 @@ class OrderItemsController < ApplicationController
       return
     end
     order = session[:order_id]? Order.find_by(id: session[:order_id]) : create_order
-    order_item = OrderItem.new(product_id: product.id,order_id: order.id, quantity: quantity)
-    if order_item.save
-      session[:cart] << order_item
+
+    if !order.order_items.find_by(product_id:product.id).nil?
+      order_item = order.order_items.find_by(product_id:product.id)
+      already_in_cart = order_item.quantity
+      available = product.quantity -  already_in_cart
+      if quantity <= available
+        order_item.quantity += quantity
+      end
+      order_item.save
+              flash[:status] = :success
+              flash[:result_text] = "Awesome! Your N.E.O.P.E.T.S.Y #{product.name} quantity has been updated!"
+    else
+      order_item = OrderItem.new(product_id: product.id,order_id: order.id, quantity: quantity)
+      if order_item.save
+        order.order_items << order_item
+            flash[:status] = :success
+            flash[:result_text] = "Awesome! Your N.E.O.P.E.T.S.Y #{product.name} item is in the cart!"
+      end
     end
-      # find the item in the cart
-      # update the quantity
-    # if session[:cart].empty?
-    #   session[:cart]  << order_item
-    #     flash[:status] = :success
-    #     flash[:result_text] = "Awesome! Your N.E.O.P.E.T.S.Y #{product.name} item is in the cart!"
-    # else
-    #   #cart is not empty
-    #   if cart_has_item(order_item)
-    #     session[:cart].each do |item|
-    #         if item["product_id"] == order_item.product_id
-    #          item["quantity"] = item["quantity"] + quantity
-    #         end
-    #         flash[:status] = :success
-    #         flash[:result_text] = "Awesome! Your N.E.O.P.E.T.S.Y #{product.name} quantity has been updated!"
-    #     end
-    #   else
-    #     session[:cart]  << order_item
-    #     flash[:status] = :success
-    #     flash[:result_text] = "Great choice! We've added another N.E.O.P.E.T.S.Y. item to your cart!"
-    #   end
-    # end
+    product.quantity -= quantity
+    product.save
     redirect_to cart_path
   end
 
-  def remove
-    item_to_remove = params[:product].to_i
-    session[:cart].each do |item|
-      if item["product_id"] == item_to_remove
-        session[:cart].delete(item)
-      end
-    end
 
+  def remove
+    order_item_id = params[:order_item].to_i
+    order_item = OrderItem.find_by(id: order_item_id)
+    order_item.product.quantity += order_item.quantity
+    order_item.product.save
+    order_item.destroy
     redirect_to cart_path
   end
 
   def add_one
-    product_id = params[:product].to_i
-    product = Product.find_by(id: product_id)
-    session[:cart].each do |item|
-      if item["product_id"] == product_id
-        if item["quantity"] < product.quantity
-          item["quantity"] = item["quantity"] + 1
-        end
-      end
+    order_item_id = params[:order_item].to_i
+    order_item = OrderItem.find_by(id: order_item_id)
+    if order_item.quantity < order_item.product.quantity
+      order_item.quantity += 1
+      order_item.product.quantity -= 1
+      order_item.save
+      order_item.product.save
     end
     redirect_to cart_path
   end
 
   def less_one
-    product_id = params[:product].to_i
-    session[:cart].each do |item|
-      if item["product_id"] == product_id
-        if item["quantity"] > 1
-          item["quantity"] = item["quantity"] - 1
-        end
-      end
+    order_item_id = params[:order_item].to_i
+    order_item = OrderItem.find_by(id: order_item_id)
+    if order_item.quantity > 1
+      order_item.quantity -= 1
+      order_item.product.quantity += 1
+      order_item.save
+      order_item.product.save
     end
     redirect_to cart_path
   end

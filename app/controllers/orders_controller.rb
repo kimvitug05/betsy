@@ -4,6 +4,11 @@ class OrdersController < ApplicationController
     @order = Order.new
   end
 
+  def checkout
+    @order = Order.find_by(id: session[:order_id])
+    @cart_total = get_total
+  end
+
   # def create
   #   @order = Order.new(order_params)
   #   @order.order_items = session[:cart].map { |attributes| OrderItem.new(attributes)}
@@ -20,18 +25,16 @@ class OrdersController < ApplicationController
   # end
 
   def cart
-    # @order = current_order
-    # @cart = session[:cart].map { |attributes| OrderItem.new(attributes)}
-    #
     @order = Order.find_by(id: session[:order_id])
-
     @cart_total = get_total
   end
 
   def get_total
     total = 0.0
-    @order.order_items.each do |item|
-      total = total + item.product.price * item.quantity
+    if !@order.nil?
+      @order.order_items.each do |item|
+        total = total + item.product.price * item.quantity
+      end
     end
     return total.to_f
   end
@@ -42,15 +45,21 @@ class OrdersController < ApplicationController
 
 
   def clear_cart
-    session[:cart] = []
-
+    if !@order.nil?
+      @order.order_items.each do |item|
+        item.product.quantity += item.quantity
+        item.product.save
+        item.destroy
+      end
+    end
+    session[:order_id] = nil
     redirect_to cart_path
   end
 
   # def edit
   #   @order = Order.new
   # end
-
+  #
   # def update #TODO: If we want to be able to change order status
   #   unless @login_user
   #     flash[:status] = :failure
@@ -91,7 +100,7 @@ class OrdersController < ApplicationController
   #   return params.require(:order).permit(:name, :email, :address, :zip_code, :credit_card, :exp_date)
   # end
 
-  # def find_order
-  #   @order = Order.find_by_id(id: params[:id])
-  # end
+  def find_order
+    @order = Order.find_by_id(id: params[:id])
+  end
 end
