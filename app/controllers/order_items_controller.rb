@@ -1,6 +1,6 @@
 class OrderItemsController < ApplicationController
 
-
+  ##delete this when you see it. 
 
 
   def add_to_cart
@@ -24,6 +24,7 @@ class OrderItemsController < ApplicationController
 
     if !order.order_items.find_by(product_id:product.id).nil?
       order_item = order.order_items.find_by(product_id:product.id)
+      if quantity <= order_item.product.quantity
       if quantity <= order_item.product.quantity
         order_item.quantity += quantity
         # order_item.product.quantity -= quantity
