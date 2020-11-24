@@ -1,12 +1,12 @@
 <section class="container text-center">
 
   <div class="top-banner">
-    <%= image_tag("market_banner.gif", :alt => "marketplace banner") %>
+    <%= image_tag("userlookup.gif", :alt => "user banner") %>
   </div>
 
   <%= image_tag "shopkeeper_#{rand(1..8)}.gif" %>
   <div class="mb-4">
-    <h2><< <%= @merchant.username %> >></h2>
+    <h2><%= @merchant.username %>'s Shop</h2>
     <p>Joined On: <%= readable_date(@merchant.created_at) %></p>
   </div>
 

@@ -1,6 +1,6 @@
 <% if logged_in_merchant_has_order_items %>
   <div class="top-banner">
-    <%= image_tag("userlookup.gif", :alt => "user banner") %>
+    <%= image_tag("user_info.gif", :alt => "user banner") %>
   </div>
 <% else %>
   <div class="top-banner">
@@ -8,10 +8,8 @@
   </div>
 <% end %>
 
-<br><br>
-
 <div class="top-banner">
-  <%= image_tag("inventory_warehouse.png", :alt => "grundo with clipboard in a warehouse") %>
+  <%= image_tag("inventory_warehouse.png", :alt => "grundo with clipboard in a warehouse", :class => "rounded") %>
 </div>
 
 <br><br>
@@ -117,7 +115,9 @@
 <br>
 
 <% if logged_in_merchant_has_order_items %>
-<%= button_to 'Back To Dashboard', dashboard_path, method: :get, class: "btn btn-primary" %>
+  <div class="container text-center">
+<%= button_to '<< Back To Dashboard', dashboard_path, method: :get, class: "btn btn-primary" %>
+  </div>
 <% end %>
 
 <br>
