@@ -3,7 +3,7 @@
     <div
       alt="product image"
       class="card-img-top product-image-preview"
-      style="background-image: url(<%= product.photo || 'https://lh3.googleusercontent.com/TLHeat_L-_RQmmqGg4esJwvpUBHNH9ekapbAT13q78CrCrKNYIGdnYEb1MFJZwR1_k98s_g=s85' %>)"
+      style="background-image: url(<%= product.photo && product.photo != '' ? product.photo : 'https://i.imgur.com/voPUjQv.png' %>)"
     ></div>
   </div>
 
@@ -41,16 +41,14 @@
       <div class="row text-center">
         <div class="col-sm">
           <% if product.active %>
-          <%= button_to "Retire Product", product_path(product.id),
-                        params: {:product => { :id => product.id, :active => false }},
-                        method: :put,  :class => 'btn btn-primary', data: { confirm: "Retire this item?  This will hide it from customers' view." } %>
+            <%= button_to "Retire Product", retire_product_path(product.id), method: :put,
+                          :class => 'btn btn-primary', data: { confirm: "Retire this item?  This will hide it from customers' view." } %>
           <br>
           <% else %>
-            <%= button_to "Restore Product", product_path(product.id),
-                          params: {:product => { :id => product.id, :active => true }},
-                          method: :put,  :class => 'btn btn-primary', data: { confirm: "Restore this item?  This make it visible to customers." } %>
-            <br>
+            <%= button_to "Restore Product", restore_product_path(product.id), method: :put,
+                          :class => 'btn btn-primary', data: { confirm: "Restore this item?  This will show it in customers' view." } %>
           <% end %>
+          <br>
         </div>
 <!--        OTHERWISE, DISPLAY VIEW BUTTON-->
       <% else %>
