@@ -1,7 +1,9 @@
 <section class="container">
   <h2><%= @product.name %></h2>
   <%= image_tag @product.photo, :alt => "#{@product.name} image", :class => "product-photo" %>
-  <div class="product-merch"><p>Sold by <%=  @product.merchant.username %> </p></div>
+  <div class="product-merch">Sold by: <%=  @product.merchant.username %></div>
+  <div class="product-quantity">In Stock: <%= @product.quantity %></div>
+  <br>
   <div class="product-desc">
     <h5 class="card-text text-success">
       <%= number_to_currency(@product.price) %>
