@@ -1,6 +1,6 @@
 <section class="container">
   <h2><%= @product.name %></h2>
-  <%= image_tag @product.photo, :alt => "#{@product.name} image", :class => "product-photo" %>
+  <%= image_tag @product.photo && @product.photo != '' ? @product.photo : 'https://i.imgur.com/voPUjQv.png', :alt => "#{@product.name} image", :class => "product-photo" %>
   <div class="product-merch">Sold by: <%=  @product.merchant.username %></div>
   <div class="product-quantity">In Stock: <%= @product.quantity %></div>
   <br>
