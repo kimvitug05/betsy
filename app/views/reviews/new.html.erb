@@ -1,0 +1,23 @@
+<!--<section class="container">-->
+
+  <%= form_with model: @review do |f| %>
+    <div class="form-group">
+      <%= f.label :rating %>
+<!--      <br>-->
+
+      <%#= radio_button_tag(:rating, 5) %>
+      <%#= label_tag(:rating, "test") %>
+      <%#= radio_button_tag(:rating, 4) %>
+      <%#= label_tag(:rating, "test") %>
+<!--    </div>-->
+
+    <div class="form-group">
+      <%= f.label :description %>
+      <br>
+      <%= f.text_area :description, :class => "form-control" %>
+    </div>
+
+<!--</section>-->
+
+      <%= f.submit "Create Review", class: "" %>
+<% end %>
