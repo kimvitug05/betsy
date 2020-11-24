@@ -10,11 +10,11 @@ describe ProductsController do
     get auth_callback_path(:github)
 
     @product = Product.create!(
-      name: "sleds",
-      price: 2.99,
-      merchant_id: @merchant.id,
-      quantity: 10,
-      active: true)
+        name: "sleds",
+        price: 2.99,
+        merchant_id: @merchant.id,
+        quantity: 10,
+        active: true)
   end
 
   describe "index" do
@@ -61,7 +61,7 @@ describe ProductsController do
   describe "create" do
     it "creates a product with valid data" do
 
-      new_product = { product: {name: "Shoes", price: 2.99, merchant_id: @merchant[:id], quantity: 10 }}
+      new_product = {product: {name: "Shoes", price: 2.99, merchant_id: @merchant[:id], quantity: 10}}
 
       expect {
         post "/products", params: new_product
@@ -74,7 +74,7 @@ describe ProductsController do
     end
 
     it "renders bad_request and does not update the DB for invalid data" do
-      bad_product = { product: { name: "Shoes", price: nil, merchant_id: @merchant[:id], quantity: 10 } }
+      bad_product = {product: {name: "Shoes", price: nil, merchant_id: @merchant[:id], quantity: 10}}
 
       expect {
         post products_path, params: bad_product
@@ -101,7 +101,7 @@ describe ProductsController do
 
   describe "update" do
     it "succeeds for updating" do
-      updates = { product: { name: "fries" } }
+      updates = {product: {name: "fries"}}
 
       expect {
         put product_path(@product), params: updates
@@ -115,7 +115,7 @@ describe ProductsController do
     end
 
     it "responds with bad request if updated product is invalid" do
-      updates = { product: { name: nil } }
+      updates = {product: {name: nil}}
 
       expect {
         put product_path(@product), params: updates
@@ -150,6 +150,27 @@ describe ProductsController do
 
     it "retires product fails with invalid id" do
       put retire_product_path(-9)
+
+      must_respond_with :redirect
+    end
+
+    it "restores product" do
+      food = Product.create!(
+          name: "coffee",
+          price: 29.99,
+          merchant_id: @merchant.id,
+          quantity: 1,
+          active: false)
+
+      expect {
+        put restore_product_path(food.id)
+      }.must_change "Product.find_by(id: food.id).active", true
+
+      must_respond_with :redirect
+    end
+
+    it "restores product fails with invalid id" do
+      put restore_product_path(-99)
 
       must_respond_with :redirect
     end

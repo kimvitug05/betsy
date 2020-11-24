@@ -41,11 +41,14 @@
       <div class="row text-center">
         <div class="col-sm">
           <% if product.active %>
-          <%= button_to "Retire Product", retire_product_path(product.id), method: :put,
+            <%= button_to "Retire Product", retire_product_path(product.id), method: :put,
                           :class => 'btn btn-primary', data: { confirm: "Retire this item?  This will hide it from customers' view." } %>
           <br>
-
+          <% else %>
+            <%= button_to "Restore Product", restore_product_path(product.id), method: :put,
+                          :class => 'btn btn-primary', data: { confirm: "Restore this item?  This will show it in customers' view." } %>
           <% end %>
+          <br>
         </div>
 <!--        OTHERWISE, DISPLAY VIEW BUTTON-->
       <% else %>
