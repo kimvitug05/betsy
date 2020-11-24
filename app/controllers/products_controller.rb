@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  before_action :find_product, only: [:show, :edit, :update, :retire]
+  before_action :find_product, only: [:show, :edit, :update, :retire, :restore]
   before_action :require_login, except: [:index, :show]
 
   def index
@@ -63,7 +63,6 @@ class ProductsController < ApplicationController
     end
   end
 
-  # archive product
   def retire
     if @product.nil?
       redirect_to dashboard_products_path
@@ -79,6 +78,26 @@ class ProductsController < ApplicationController
     else
       flash.now[:status] = :failure
       flash.now[:result_text] = "Something went wrong. Could not retire #{@product.name}"
+      flash.now[:messages] = @product.errors.messages
+      render :index, status: :bad_request
+    end
+  end
+
+  def restore
+    if @product.nil?
+      redirect_to dashboard_products_path
+      return
+    end
+
+    @product.active = true
+
+    if @product.save
+      flash[:status] = :success
+      flash[:result_text] = "Successfully restored #{@product.id}"
+      redirect_to dashboard_products_path
+    else
+      flash.now[:status] = :failure
+      flash.now[:result_text] = "Something went wrong. Could not restore #{@product.name}"
       flash.now[:messages] = @product.errors.messages
       render :index, status: :bad_request
     end
