@@ -13,13 +13,13 @@ class Order < ApplicationRecord
     sum = 0
     if merchant_id
       self.extract_merchant_order_items(merchant_id).each do |order_item|
-        sum += order_item.product.price
+        sum += order_item.product.price * order_item.quantity
       end
       return sum
 
     else
       self.order_items.each do |order_item|
-        sum += order_item.product.price
+        sum += order_item.product.price * order_item.quantity
       end
       return sum
     end
