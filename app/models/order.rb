@@ -1,5 +1,10 @@
 class Order < ApplicationRecord
-  #TODO validations?
+  validates :name, presence: true
+  validates :address, presence: true
+  validates :email, presence: true, format: {with: /@/}
+  validates :credit_card, presence: true, length: {minimum: 16, maximum: 16}
+  validates :exp_date, presence: true
+  validates :zip_code, presence: true
 
   has_many :order_items
   has_many :products, through: :order_items
