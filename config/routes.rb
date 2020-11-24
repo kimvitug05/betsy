@@ -19,6 +19,8 @@ Rails.application.routes.draw do
   root to: "homepages#index"
 
   resources :homepages, only: [:index]
+  get "/about_us", to: "homepages#about_us", as: "about_us"
+  get "/contact_us", to: "homepages#contact_us", as: "contact_us"
 
   resources :merchants, only: [:create, :index, :show]
   resources :merchants do

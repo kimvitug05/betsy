@@ -1,9 +1,17 @@
 <div class="container">
   <div class="top-banner">
-    <%= image_tag("market_bazaar.gif", :alt => "marketplace banner") %>
+    <%= image_tag("market_banner.gif", :alt => "marketplace banner") %>
   </div>
 
-  <h2 class="text-center"><< All Merchants >></h2>
+  <div class="text-center top-banner">
+    <%= image_tag("pillsbury_chia.gif", :alt => "marketplace vendor", :class => "rounded") %>
+  </div>
+
+  <div class="text-center">
+    <%= image_tag("merchants_title.png", :alt => "reads all categories", :class => "w-50") %>
+  </div>
+
+  <br>
   <% if @login_user %>
     <%= render partial: 'merchant-grid', locals: { merchants: @merchants.where.not(id: @login_user.id) } %>
   <% else %>
