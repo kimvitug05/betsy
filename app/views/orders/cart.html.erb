@@ -1,12 +1,12 @@
 <section class="container">
-<<<<<<< HEAD:app/views/orders/cart.html.erb
-  <h2>Your Shopping Cart:</h2>
+<!--<<<<<<< HEAD:app/views/orders/cart.html.erb-->
+<!--  <h2>Your Shopping Cart:</h2>-->
   <% if !@order || @order.order_items.empty? %>
-    Your cart is currently empty!
-  <% else %>
-    <% @order.order_items.each do |item| %>
-=======
-  <% if @cart.empty? %>
+<!--    Your cart is currently empty!-->
+  <%# else %>
+    <%# @order.order_items.each do |item| %>
+<!--=======-->
+  <%# if @cart.empty? %>
 
     <div class="row align-items-center justify-content-center">
       <%= image_tag("star.gif", :alt => "a star") %>
@@ -14,7 +14,10 @@
       <%= image_tag("star.gif", :alt => "a star") %>
     </div>
 
+    <br><br>
     <h6 class="text-center">Your cart is currently empty! How sad. Wouldn't you like to support all those starving pounded Neopets??</h6>
+    <br><br>
+
     <div class="text-center">
       <%= link_to "Clear Cart", clear_cart_path, class: "btn btn-secondary disabled" %>
       <%= link_to "Go Shopping!", products_path, class: "btn btn-secondary" %>
@@ -29,7 +32,6 @@
     </div>
 
     <% @cart.each do |item| %>
->>>>>>> master-copy:app/views/order_items/cart.html.erb
       <div class="row">
         <div class="col-3">
           <div class="container">
@@ -79,16 +81,16 @@
     </div>
     <br>
   <% end %>
-<<<<<<< HEAD:app/views/orders/cart.html.erb
-  <div class="text-right">
-    <%= link_to "Clear Cart", clear_cart_path, class: "btn btn-secondary" %>
-    <%= link_to "Go Shopping", products_path, class: "btn btn-secondary" %>
-    <%if @cart_total > 0 %>
-      <%= link_to "Checkout", checkout_path, class: "btn btn-secondary" %>
-      <%end %>
-  </div>
-=======
->>>>>>> master-copy:app/views/order_items/cart.html.erb
+<!--<<<<<<< HEAD:app/views/orders/cart.html.erb-->
+<!--  <div class="text-right">-->
+    <%#= link_to "Clear Cart", clear_cart_path, class: "btn btn-secondary" %>
+    <%#= link_to "Go Shopping", products_path, class: "btn btn-secondary" %>
+    <%#if @cart_total > 0 %>
+      <%#= link_to "Checkout", checkout_path, class: "btn btn-secondary" %>
+      <%#end %>
+<!--  </div>-->
+<!--=======-->
+
 </section>
 
 
