@@ -1,9 +1,10 @@
 class ReviewsController < ApplicationController
-  before_action :find_product, only: [:index, :create]
+  before_action :find_product
+  #, only: [:index, :new, :create]
 
   def index
-    if params[:id]
-      product = Product.find_by(id: params[:id])
+    if params[:product_id]
+      product = Product.find_by(id: params[:product_id])
       @reviews = product.reviews
     else
       @reviews = Review.all
@@ -40,10 +41,10 @@ class ReviewsController < ApplicationController
     private
 
     def find_product
-      @product = Product.find_by_id(params[:id])
+      @product = Product.find_by_id(params[:product_id])
     end
 
     def review_params
-      return params.require(:review).permit(:rating, :description, product_id: @product)
+      return params.require(:review).permit(:rating, :description).with_defaults(product_id: @product.id)
     end
   end

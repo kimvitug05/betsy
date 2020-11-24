@@ -5,8 +5,10 @@ Rails.application.routes.draw do
   get "/auth/:provider/callback", to: "merchants#create", as: "auth_callback" #OmniAuth Github callback
   post "/logout", to: "merchants#logout", as: "logout"
 
-  resources :products, except: [:delete] do
-    resources :reviews
+  resources :products, except: [:delete]
+
+  resources :products do
+    resources :reviews, only: [:index, :show, :new, :create]
   end
 
   get "/checkout", to: "orders#checkout", as: "checkout"

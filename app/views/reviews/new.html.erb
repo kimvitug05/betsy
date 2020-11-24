@@ -1,15 +1,27 @@
 <!--<section class="container">-->
+<div class="form-group">
+
+<!--<span class="star-rating star-5">-->
 
   <%= form_with model: @review do |f| %>
-    <div class="form-group">
       <%= f.label :rating %>
-<!--      <br>-->
+    <br>
+      <%= radio_button_tag(:rating, 5) %>
+      <%= label_tag(:rating, "test") %>
 
-      <%#= radio_button_tag(:rating, 5) %>
-      <%#= label_tag(:rating, "test") %>
-      <%#= radio_button_tag(:rating, 4) %>
-      <%#= label_tag(:rating, "test") %>
-<!--    </div>-->
+     <%= radio_button_tag(:rating, 4) %>
+      <%= label_tag(:rating, "test") %>
+
+      <%= radio_button_tag(:rating, 3) %>
+      <%= label_tag(:rating, "test") %>
+
+      <%= radio_button_tag(:rating, 2) %>
+      <%= label_tag(:rating, "test") %>
+
+      <%= radio_button_tag(:rating, 1) %>
+      <%= label_tag(:rating, "test") %>
+<!--      </span>-->
+    </div>
 
     <div class="form-group">
       <%= f.label :description %>
