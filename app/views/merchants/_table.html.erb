@@ -19,9 +19,9 @@
         <td>$<%= order.order_total(@login_user.id) %></td>
         <td><%= order.id %></td>
         <td>
-          <%= button_to "Manage", order_path(order.id),
+          <%= button_to "Expand", order_path(order.id),
                         params: {:order => { :id => order.id }},
-                        method: :get,  :class => 'btn btn-primary' %>
+                        method: :get,  :class => 'btn btn-secondary' %>
         </td>
       </tr>
       <%end %>
