@@ -96,7 +96,7 @@ class OrderItemsController < ApplicationController
 
   def create_order
     order = Order.new
-    unless order.save
+    unless order.save(:validate => false)
       flash[:error] = "Something went wrong: #{order.errors.messages}"
     end
     session[:order_id] = order.id
@@ -105,31 +105,27 @@ class OrderItemsController < ApplicationController
   end
 
   def update
-    redirect_to cart_path
-  end
+    unless @login_user
+      flash[:status] = :failure
+      flash[:result_text] = "Only merchants can update an order item."
+      redirect_to root_path
+      return
+    end
 
-  # def update #TODO: Please leave me here, this is for updating status on merchant dash
-  #   unless @login_user
-  #         flash[:status] = :failure
-  #         flash[:result_text] = "Only merchants can update an order item."
-  #         redirect_to root_path
-  #         return
-  #   end
-  #
-  #   @order_item = OrderItem.find_by(id: params[:id])
-  #
-  #     if order_item_update_params.permitted? #if strong params
-  #       @order_item.update(status: "shipped") # adjust status
-  #
-  #       if @order_item.order.order_items.all? { |order_item| order_item.status == "shipped" } #all items in order now shipped, update order status
-  #         @order_item.order.update(status: "complete")
-  #       end
-  #
-  #       flash[:status] = :success
-  #       flash[:result_text] = "Successfully updated #{@order_item.product.name} order item(s)."
-  #       redirect_to order_path(@order_item.order.id)
-  #     end
-  # end
+    @order_item = OrderItem.find_by(id: params[:id])
+
+    if order_item_update_params.permitted? # if strong params
+      @order_item.update(status: "shipped") # adjust status
+
+      if @order_item.order.order_items.all? { |order_item| order_item.status == "shipped" } # all items in order now shipped, update order status
+        @order_item.order.update(status: "complete")
+      end
+
+      flash[:status] = :success
+      flash[:result_text] = "Successfully updated #{@order_item.product.name} order item(s)."
+      redirect_to order_path(@order_item.order.id)
+    end
+  end
 
   private
 

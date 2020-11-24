@@ -121,11 +121,6 @@ class OrdersController < ApplicationController
     return total.to_f
   end
 
-  # def checkout
-  #   redirect_to root_path
-  # end
-
-
   def clear_cart
     if !@order.nil?
       @order.order_items.each do |item|
@@ -164,10 +159,10 @@ class OrdersController < ApplicationController
       session[:order_id] = nil
       redirect_to order_path(@order)
     else
-      flash.now[:status] = :failure
-      flash.now[:result_text] = "Could not update order ##{@order.id}"
-      flash.now[:messages] = @order.errors.messages
-      redirect_to dashboard_path
+      flash[:status] = :failure
+      flash[:result_text] = "Could not update order ##{@order.id}"
+      flash[:messages] = @order.errors.messages
+      redirect_to checkout_path(@order)
     end
   end
 

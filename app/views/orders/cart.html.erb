@@ -1,13 +1,5 @@
 <section class="container">
-<!--<<<<<<< HEAD:app/views/orders/cart.html.erb-->
-<!--  <h2>Your Shopping Cart:</h2>-->
   <% if !@order || @order.order_items.empty? %>
-<!--    Your cart is currently empty!-->
-  <%# else %>
-    <%# @order.order_items.each do |item| %>
-<!--=======-->
-  <%# if @cart.empty? %>
-
     <div class="row align-items-center justify-content-center">
       <%= image_tag("star.gif", :alt => "a star") %>
       <h2>Your Shopping Cart</h2>
@@ -31,7 +23,7 @@
       <%= image_tag("star.gif", :alt => "a star") %>
     </div>
 
-    <% @cart.each do |item| %>
+    <% @order.order_items.each do |item| %>
       <div class="row">
         <div class="col-3">
           <div class="container">

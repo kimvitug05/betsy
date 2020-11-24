@@ -92,7 +92,7 @@
         <td>$<%= @order.order_item_total_cost(order_item) %></td>
         <% if logged_in_merchant_has_order_items %>
           <% if order_item.status == "pending" %>
-            <td><%= button_to "Ship!", order_item_path(order_item.id), params: {:order_item => { :id => order_item.id, :status => "shipped" }}, method: :put,  :class => 'btn btn-secondary', data: { confirm: "Are you sure? This cannot be undone." } %></td>
+            <td><%= button_to "Ship!", order_item_path(order_item.id), params: { :order_item => { :id => order_item.id, :status => "shipped" }}, method: :put, :class => 'btn btn-secondary', data: { confirm: "Are you sure? This cannot be undone." } %></td>
           <% else %>
             <td><%= link_to "Shipped", order_path(order_item.id), method: :get, class: "btn btn-secondary disabled" %></td>
           <% end %>
