@@ -80,6 +80,7 @@ class OrdersController < ApplicationController
     if @order.update(order_params)
       flash[:status] = :success
       flash[:result_text] = "Successfully updated order ##{@order.id}"
+      session[:order_id] = nil
       redirect_to order_path(@order)
     else
       flash.now[:status] = :failure
