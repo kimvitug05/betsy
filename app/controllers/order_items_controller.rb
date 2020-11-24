@@ -1,14 +1,7 @@
 class OrderItemsController < ApplicationController
 
-  def create
-    @order_items = current_order
-  end
 
-    def cart
-      @cart = session[:cart].map { |attributes| OrderItem.new(attributes)}
-      # @cart = session[:cart]
-      @cart_total = get_total
-    end
+
 
   def add_to_cart
     initialize_session
@@ -27,31 +20,33 @@ class OrderItemsController < ApplicationController
       redirect_to products_path
       return
     end
-
-    order_item = OrderItem.new(product_id: product.id, quantity: quantity)
-
+    order = session[:order_id]? Order.find_by(id: session[:order_id]) : create_order
+    order_item = OrderItem.new(product_id: product.id,order_id: order.id, quantity: quantity)
+    if order_item.save
+      session[:cart] << order_item
+    end
       # find the item in the cart
       # update the quantity
-    if session[:cart].empty?
-      session[:cart]  << order_item
-        flash[:status] = :success
-        flash[:result_text] = "Awesome! Your N.E.O.P.E.T.S.Y #{product.name} item is in the cart!"
-    else
-      #cart is not empty
-      if cart_has_item(order_item)
-        session[:cart].each do |item|
-            if item["product_id"] == order_item.product_id
-             item["quantity"] = item["quantity"] + quantity
-            end
-            flash[:status] = :success
-            flash[:result_text] = "Awesome! Your N.E.O.P.E.T.S.Y #{product.name} quantity has been updated!"
-        end
-      else
-        session[:cart]  << order_item
-        flash[:status] = :success
-        flash[:result_text] = "Great choice! We've added another N.E.O.P.E.T.S.Y. item to your cart!"
-      end
-    end
+    # if session[:cart].empty?
+    #   session[:cart]  << order_item
+    #     flash[:status] = :success
+    #     flash[:result_text] = "Awesome! Your N.E.O.P.E.T.S.Y #{product.name} item is in the cart!"
+    # else
+    #   #cart is not empty
+    #   if cart_has_item(order_item)
+    #     session[:cart].each do |item|
+    #         if item["product_id"] == order_item.product_id
+    #          item["quantity"] = item["quantity"] + quantity
+    #         end
+    #         flash[:status] = :success
+    #         flash[:result_text] = "Awesome! Your N.E.O.P.E.T.S.Y #{product.name} quantity has been updated!"
+    #     end
+    #   else
+    #     session[:cart]  << order_item
+    #     flash[:status] = :success
+    #     flash[:result_text] = "Great choice! We've added another N.E.O.P.E.T.S.Y. item to your cart!"
+    #   end
+    # end
     redirect_to cart_path
   end
 
@@ -109,24 +104,27 @@ class OrderItemsController < ApplicationController
     true
   end
 
-  def get_total
-    total = 0.0
-    @cart.each do |item|
-      total = total + item.product.price * item.quantity
+  def create_order
+    order = Order.new
+    unless order.save
+      flash[:error] = "Something went wrong: #{order.errors.messages}"
     end
-    return total
+    session[:order_id] = order.id
+    order.reload
+    return order
   end
 
-  def clear_cart
-    session[:cart] = []
 
-    redirect_to cart_path
-  end
   def update
 
   end
 
   private
+
+  def order_items_params
+    return params.require(:order_items).permit(:product_id, :order_id, :quantity)
+  end
+
 
   def initialize_session
     return session[:cart] ||= []

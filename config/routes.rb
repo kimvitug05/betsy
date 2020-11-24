@@ -7,14 +7,14 @@ Rails.application.routes.draw do
 
   resources :products, except: [:delete]
 
-  get "/checkout", to: "orders#edit", as: "checkout"
-  get "/cart", to:"order_items#cart", as: "cart"
+  # get "/checkout", to: "orders#checkout", as: "checkout"
+  get "/cart", to:"orders#cart", as: "cart"
 
   post "cart/add_one/:product", to:"order_items#add_one", as: "add_one"
   post "cart/less_one/:product", to:"order_items#less_one", as: "less_one"
   post "cart/remove/:product", to:"order_items#remove", as: "remove"
   post "/add_to_cart", to:"order_items#add_to_cart", as: "add_to_cart"
-  get "/clear_cart", to:"order_items#clear_cart", as: "clear_cart"
+  get "/clear_cart", to:"orders#clear_cart", as: "clear_cart"
 
   root to: "homepages#index"
 
