@@ -131,4 +131,27 @@ describe ProductsController do
       must_redirect_to products_path
     end
   end
+
+  describe "change active status of product" do
+    it "retires product" do
+      product = Product.create!(
+          name: "dog",
+          price: 29.99,
+          merchant_id: @merchant.id,
+          quantity: 1,
+          active: true)
+
+      expect {
+        put retire_product_path(product.id)
+      }.must_change "Product.find_by(id: product.id).active", false
+
+      must_respond_with :redirect
+    end
+
+    it "retires product fails with invalid id" do
+      put retire_product_path(-9)
+
+      must_respond_with :redirect
+    end
+  end
 end

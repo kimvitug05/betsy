@@ -27,6 +27,7 @@ Rails.application.routes.draw do
 
   get "/dashboard", to: "merchants#dashboard", as: "dashboard"
   get "/dashboard/products", to: "merchants#dashboard_products", as: "dashboard_products"
+  put "/dashboard/products/retire/:id", to: "products#retire", as: "retire_product"
 
   resources :categorizations
   # resources :order_items
