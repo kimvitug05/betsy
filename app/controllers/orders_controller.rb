@@ -1,5 +1,6 @@
 class OrdersController < ApplicationController
 
+  # before_action :find_order
   def new
     @order = Order.new
   end
@@ -66,47 +67,47 @@ class OrdersController < ApplicationController
   #   @order = Order.new
   # end
   #
-  # def update #TODO: If we want to be able to change order status
-  #   unless @login_user
-  #     flash[:status] = :failure
-  #     flash[:result_text] = "Only merchants can update an order"
-  #     render :index, status: :forbidden
-  #     return
-  #   end
-  #
-  #   find_order
-  #
-  #   if @order.update(order_params)
-  #     flash[:status] = :success
-  #     flash[:result_text] = "Successfully updated order ##{@order.id}"
-  #     redirect_to order_path(@order)
-  #   else
-  #     flash.now[:status] = :failure
-  #     flash.now[:result_text] = "Could not update order ##{@order.id}"
-  #     flash.now[:messages] = @order.errors.messages
-  #     redirect_to dashboard_path
-  #   end
-  # end
+  def update #TODO: If we want to be able to change order status
+    # unless @login_user
+    #   flash[:status] = :failure
+    #   flash[:result_text] = "Only merchants can update an order"
+    #   render :index, status: :forbidden
+    #   return
+    # end
 
-  # def show
-  #   order_id = params[:id].to_i
-  #   @order = Order.find_by(id: order_id)
-  #
-  #   if @order.nil?
-  #     render render_404
-  #     return
-  #   end
-  # end
+    @order = Order.find_by(id: session[:order_id])
+
+    if @order.update(order_params)
+      flash[:status] = :success
+      flash[:result_text] = "Successfully updated order ##{@order.id}"
+      redirect_to order_path(@order)
+    else
+      flash.now[:status] = :failure
+      flash.now[:result_text] = "Could not update order ##{@order.id}"
+      flash.now[:messages] = @order.errors.messages
+      redirect_to dashboard_path
+    end
+  end
+
+  def show
+    order_id = params[:id].to_i
+    @order = Order.find_by(id: order_id)
+
+    if @order.nil?
+      render render_404
+      return
+    end
+  end
 
 
 
   private
 
-  # def order_params
-  #   return params.require(:order).permit(:name, :email, :address, :zip_code, :credit_card, :exp_date)
-  # end
+  def order_params
+    return params.require(:order).permit(:name, :email, :address, :zip_code, :credit_card, :exp_date)
+  end
 
   def find_order
-    @order = Order.find_by_id(id: params[:id])
+    @order = Order.find_by(id: params[:id])
   end
 end

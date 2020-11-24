@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   post "cart/less_one/:order_item", to:"order_items#less_one", as: "less_one"
   post "cart/remove/:order_item", to:"order_items#remove", as: "remove"
   post "/add_to_cart", to:"order_items#add_to_cart", as: "add_to_cart"
-  post "/orders/submit", to:"orders#submit", as:"submit_order"
+  post "/orders/submit", to:"orders#update", as:"submit_order"
   get "/clear_cart", to:"orders#clear_cart", as: "clear_cart"
 
   root to: "homepages#index"
