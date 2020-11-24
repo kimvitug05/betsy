@@ -41,15 +41,10 @@
       <div class="row text-center">
         <div class="col-sm">
           <% if product.active %>
-          <%= button_to "Retire Product", product_path(product.id),
-                        params: {:product => { :id => product.id, :active => false }},
-                        method: :put,  :class => 'btn btn-primary', data: { confirm: "Retire this item?  This will hide it from customers' view." } %>
+          <%= button_to "Retire Product", retire_product_path(product.id), method: :put,
+                          :class => 'btn btn-primary', data: { confirm: "Retire this item?  This will hide it from customers' view." } %>
           <br>
-          <% else %>
-            <%= button_to "Restore Product", product_path(product.id),
-                          params: {:product => { :id => product.id, :active => true }},
-                          method: :put,  :class => 'btn btn-primary', data: { confirm: "Restore this item?  This make it visible to customers." } %>
-            <br>
+
           <% end %>
         </div>
 <!--        OTHERWISE, DISPLAY VIEW BUTTON-->
