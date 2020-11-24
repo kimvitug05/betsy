@@ -122,14 +122,38 @@ class OrderItemsController < ApplicationController
 
     redirect_to cart_path
   end
-  def update
 
+  def update #TODO: Please leave me here, this is for updating status on merchant dash
+    unless @login_user
+          flash[:status] = :failure
+          flash[:result_text] = "Only merchants can update an order item."
+          redirect_to root_path
+          return
+    end
+
+    @order_item = OrderItem.find_by(id: params[:id])
+
+      if order_item_update_params.permitted? #if strong params
+        @order_item.update(status: "shipped") # adjust status
+
+        if @order_item.order.order_items.all? { |order_item| order_item.status == "shipped" } #all items in order now shipped, update order status
+          @order_item.order.update(status: "complete")
+        end
+
+        flash[:status] = :success
+        flash[:result_text] = "Successfully updated #{@order_item.product.name} order item(s)."
+        redirect_to order_path(@order_item.order.id)
+      end
   end
 
   private
 
   def initialize_session
     return session[:cart] ||= []
+  end
+
+  def order_item_update_params #TODO: This is also for updating status on merchant dash
+    return params.require(:order_item).permit(:status)
   end
 
 end

@@ -31,7 +31,7 @@ Rails.application.routes.draw do
   put "/dashboard/products/restore/:id", to: "products#restore", as: "restore_product"
 
   resources :categorizations
-  # resources :order_items
+  resources :order_items #TODO: If you don't need all of these, I just need to be able to update order_item
   resources :orders
   resources :reviews
 end
