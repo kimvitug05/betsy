@@ -1,5 +1,5 @@
 <section class="container">
-  <h2><%= edit ? "Update #{@product.name}" : "Create New Product" %></h2>
+<!--  <h2><%#= edit ? "Update #{@product.name}" : "Create New Product" %></h2>-->
 
   <%= form_with model: @product do |f| %>
     <div class="form-group">
@@ -32,7 +32,8 @@
       <br>
       <div class="custom-checkbox"><%= collection_check_boxes(:product, :categorization_ids, Categorization.all, :id, :name) %></div>
     </div>
-    <%= f.submit (edit ? "Update" : "Create"), :class => "btn btn-primary"%>
+    <%= f.submit (edit ? "Update!" : "Create!"), :class => "btn btn-secondary"%>
   <% end %>
+  <br>
 </section>
 

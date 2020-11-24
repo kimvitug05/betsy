@@ -1,1 +1,26 @@
+<section class="container">
+  <div class="row">
+    <div class="col-sm text-center">
+      <div class="top-banner">
+        <%= image_tag("market_banner.gif", :alt => "marketplace banner") %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm text-center">
+      <div class="top-banner">
+        <%= image_tag("toysrus.gif", :alt => "a kyrie welcomes you to a toystore", :class => "rounded") %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm text-center">
+      <div class="text-center">
+        <%= image_tag("edit_product.png", :alt => "reads edit products", :class => "w-50") %>
+      </div>
+    </div>
+  </div>
+
 <%= render partial: 'product-form', locals: { edit: true } %>
+
+</section>
