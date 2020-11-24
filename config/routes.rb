@@ -20,6 +20,8 @@ Rails.application.routes.draw do
   root to: "homepages#index"
 
   resources :homepages, only: [:index]
+  get "/about_us", to: "homepages#about_us", as: "about_us"
+  get "/contact_us", to: "homepages#contact_us", as: "contact_us"
 
   resources :merchants, only: [:create, :index, :show]
   resources :merchants do
@@ -32,6 +34,7 @@ Rails.application.routes.draw do
   put "/dashboard/products/restore/:id", to: "products#restore", as: "restore_product"
 
   resources :categorizations
+  resources :order_items #TODO: If you don't need all of these, I just need to be able to update order_item
   resources :orders
   resources :reviews
 end

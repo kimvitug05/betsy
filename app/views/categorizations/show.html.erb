@@ -17,6 +17,13 @@
     </div>
   </div>
 
-  <h2 class="text-center"><< <%= @categorization.name %> >></h2>
+  <div class="container text-center">
+    <div class="row align-items-center justify-content-center">
+      <%= image_tag("star.gif", :alt => "a star") %>
+      <h2 class="text-center">All <%= @categorization.name %></h2>
+      <%= image_tag("star.gif", :alt => "a star") %>
+    </div>
+  </div>
+
   <%= render partial: 'products/product-grid', locals: { products: @categorization.products.where(active: true) } %>
 </section>

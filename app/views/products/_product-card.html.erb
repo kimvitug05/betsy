@@ -18,44 +18,43 @@
       <%= number_to_currency(product.price) %>
     </h5>
 <!--    HIDE UNNECESSARY DESCRIPTION FROM @login_user DASH-->
-    <% unless current_page?('/dashboard') || current_page?('/dashboard/products') %>
+    <% if merchant_view %>
+      <p class="text-center">In Stock: <%= product.quantity %></p>
+    <% else %>
       <p class="card-text text-center">
         <%= product.description %>
       </p>
     <% end %>
   </div>
 
+  <!--      IF VIEWING FROM PRODUCT MANAGE PAGE ON DASH-->
+<!--  <p class="card-text text-center">In Stock: <%#= product.quantity %></p>-->
   <div class="container">
     <div class="row text-center">
-<!--      IF VIEWING FROM PRODUCT MANAGE PAGE ON DASH-->
-      <% if current_page?('/dashboard/products') %>
-        <div class="col-sm">
-          <%= button_to 'View Product', product_path(product.id), method: :get, :class => 'btn btn-primary' %>
-          <br>
-        </div>
+      <% if merchant_view %>
         <div class="col-sm">
           <%= button_to 'Edit Product', edit_product_path(product.id), method: :get, :class => 'btn btn-primary' %>
           <br>
         </div>
     </div>
-      <div class="row text-center">
-        <div class="col-sm">
-          <% if product.active %>
-            <%= button_to "Retire Product", retire_product_path(product.id), method: :put,
-                          :class => 'btn btn-primary', data: { confirm: "Retire this item?  This will hide it from customers' view." } %>
-          <br>
-          <% else %>
-            <%= button_to "Restore Product", restore_product_path(product.id), method: :put,
-                          :class => 'btn btn-primary', data: { confirm: "Restore this item?  This will show it in customers' view." } %>
-          <% end %>
-          <br>
-        </div>
+    <div class="row text-center">
+      <div class="col-sm">
+        <% if product.active %>
+          <%= button_to "Retire Product", retire_product_path(product.id), method: :put,
+                        :class => 'btn btn-primary', data: { confirm: "Retire this item?  This will hide it from customers' view." } %>
+        <br>
+        <% else %>
+          <%= button_to "Restore Product", restore_product_path(product.id), method: :put,
+                        :class => 'btn btn-primary', data: { confirm: "Restore this item?  This will show it in customers' view." } %>
+        <% end %>
+        <br>
+      </div>
 <!--        OTHERWISE, DISPLAY VIEW BUTTON-->
       <% else %>
-        <div class="col-sm text-center">
-          <%= button_to 'View Product', product_path(product.id), method: :get, :class => 'btn btn-primary' %>
-          <br>
-        </div>
+      <div class="col-sm text-center">
+        <%= button_to 'View Product', product_path(product.id), method: :get, :class => 'btn btn-primary' %>
+        <br>
+      </div>
       <% end %>
     </div>
   </div>
