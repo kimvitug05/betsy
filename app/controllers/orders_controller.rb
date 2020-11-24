@@ -56,6 +56,12 @@ class OrdersController < ApplicationController
     redirect_to cart_path
   end
 
+  def submit
+    @order = Order.find_by(id: params[:order])
+    @order.name = order['name']
+
+  end
+
   # def edit
   #   @order = Order.new
   # end

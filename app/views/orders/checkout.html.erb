@@ -1,7 +1,7 @@
 
 
 <% if @cart_total > 0 %>
-<%= render partial: "form", locals: { action_name: "Submit Order" } %>
+<%= render partial: "form", locals: { action_name: "Submit Order", method: "post", url: submit_order_path } %>
 <% else %>
 
   <p>There is nothing to checkout yet. <%= link_to "Go Shopping", products_path %></p>
