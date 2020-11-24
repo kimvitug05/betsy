@@ -78,7 +78,6 @@ class ProductsController < ApplicationController
     else
       flash.now[:status] = :failure
       flash.now[:result_text] = "Something went wrong. Could not retire #{@product.name}"
-      flash.now[:messages] = @product.errors.messages
       render :index, status: :bad_request
     end
   end
@@ -98,7 +97,6 @@ class ProductsController < ApplicationController
     else
       flash.now[:status] = :failure
       flash.now[:result_text] = "Something went wrong. Could not restore #{@product.name}"
-      flash.now[:messages] = @product.errors.messages
       render :index, status: :bad_request
     end
   end
