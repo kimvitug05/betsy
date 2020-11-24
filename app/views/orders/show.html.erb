@@ -80,6 +80,9 @@
       <th scope="col">Price</th>
       <th scope="col">Quantity</th>
       <th scope="col">Item Total</th>
+      <% if @login_user && @order.extract_merchant_order_items(@login_user.id).any? %>
+        <th scope="col">Update Status</th>
+      <% end %>
     </tr>
     </thead>
     <tbody>
@@ -91,6 +94,10 @@
           <td>$<%= order_item.product.price %></td>
           <td><%= order_item.quantity %></td>
           <td>$<%= @order.order_item_total_cost(order_item) %></td>
+          <% if @login_user && @order.extract_merchant_order_items(@login_user.id).any? %>
+            <td><%= button_to "Ship", order_item_path(order_item.id), params: {:order_item => { :id => order_item.id, :status => "shipped" }}, method: :put,  :class => 'btn btn-primary', data: { confirm: "Are you sure? This cannot be undone." } %>
+            </td>
+          <% end %>
         </tr>
       <% end %>
     <% else %>
@@ -106,24 +113,24 @@
     </tbody>
   </table>
 
-  <% if @login_user && @order.extract_merchant_order_items(@login_user.id).any? %>
-    <div class="container">
-        <div class="row">
-          <div class="col-sm text-center">
-            <%= button_to "Mark Paid", order_path(@order.id), params: {:order => { :id => @order.id, :status => "paid" }}, method: :put,  :class => 'btn btn-primary', data: { confirm: "Mark Paid? This will register the order as paid." } %>
-          </div>
-          <div class="col-sm text-center">
-            <%= button_to "Mark Complete", order_path(@order.id), params: {:order => { :id => @order.id, :status => "complete" }}, method: :put,  :class => 'btn btn-primary', data: { confirm: "Mark Complete? This will remove the order items from your inventory." } %>
-          </div>
-          <div class="col-sm text-center">
-            <%= button_to "Mark Cancelled", order_path(@order.id), params: {:order => { :id => @order.id, :status => "cancelled" }}, method: :put,  :class => 'btn btn-primary', data: { confirm: "Mark Cancelled? This will register the order status as cancelled." } %>
-          </div>
-          <div class="col-sm text-center">
-            <%= button_to 'Back To Dashboard', dashboard_path, method: :get, class: "btn btn-primary" %>
-          </div>
-        </div>
-      </div>
-  <% end %>
+  <%# if @login_user && @order.extract_merchant_order_items(@login_user.id).any? %>
+<!--    <div class="container">-->
+<!--        <div class="row">-->
+<!--          <div class="col-sm text-center">-->
+            <%#= button_to "Mark Paid", order_path(@order.id), params: {:order => { :id => @order.id, :status => "paid" }}, method: :put,  :class => 'btn btn-primary', data: { confirm: "Mark Paid? This will register the order as paid." } %>
+<!--          </div>-->
+<!--          <div class="col-sm text-center">-->
+            <%#= button_to "Mark Complete", order_path(@order.id), params: {:order => { :id => @order.id, :status => "complete" }}, method: :put,  :class => 'btn btn-primary', data: { confirm: "Mark Complete? This will remove the order items from your inventory." } %>
+<!--          </div>-->
+<!--          <div class="col-sm text-center">-->
+            <%#= button_to "Mark Cancelled", order_path(@order.id), params: {:order => { :id => @order.id, :status => "cancelled" }}, method: :put,  :class => 'btn btn-primary', data: { confirm: "Mark Cancelled? This will register the order status as cancelled." } %>
+<!--          </div>-->
+<!--          <div class="col-sm text-center">-->
+            <%#= button_to 'Back To Dashboard', dashboard_path, method: :get, class: "btn btn-primary" %>
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+  <%# end %>
 
   <br>
 

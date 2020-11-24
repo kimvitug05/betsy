@@ -29,7 +29,7 @@ Rails.application.routes.draw do
   get "/dashboard/products", to: "merchants#dashboard_products", as: "dashboard_products"
 
   resources :categorizations
-  # resources :order_items
+  resources :order_items #TODO: If you don't need all of these, I just need to be able to update order_item
   resources :orders
   resources :reviews
 end
