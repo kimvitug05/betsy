@@ -3,7 +3,7 @@
     <div
       alt="product image"
       class="card-img-top product-image-preview"
-      style="background-image: url(<%= product.photo || 'http://images.neopets.com/games/aaa/dailydare/2012/mall/book/prize-3-4jyu93vb.png' %>)"
+      style="background-image: url(<%= product.photo && product.photo != '' ? product.photo : 'https://i.imgur.com/voPUjQv.png' %>)"
     ></div>
   </div>
 
