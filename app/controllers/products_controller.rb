@@ -23,7 +23,7 @@ class ProductsController < ApplicationController
   end
 
   def edit
-    if @product.nil?
+    if @product.nil? || @product.merchant_id != @login_user.id
       redirect_to products_path
       return
     end
@@ -46,7 +46,7 @@ class ProductsController < ApplicationController
   end
 
   def update
-    if @product.nil?
+    if @product.nil? || @product.merchant_id != @login_user.id
       redirect_to products_path
       return
     end
@@ -64,7 +64,7 @@ class ProductsController < ApplicationController
   end
 
   def retire
-    if @product.nil?
+    if @product.nil? || @product.merchant_id != @login_user.id
       redirect_to dashboard_products_path
       return
     end
@@ -83,7 +83,7 @@ class ProductsController < ApplicationController
   end
 
   def restore
-    if @product.nil?
+    if @product.nil? || @product.merchant_id != @login_user.id
       redirect_to dashboard_products_path
       return
     end
