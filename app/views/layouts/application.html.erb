@@ -68,7 +68,8 @@
           <% else %>
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><%= image_tag("portal.gif", :alt => "portal icon") %></a>
             <div class="dropdown-menu">
-              <%= link_to "Log In", github_login_path, class: "dropdown-item" %>
+              <%= link_to "Log In", github_login_path,
+                :class => 'dropdown-item', data: { confirm: "Login is authenticated through Github.  New users will be redirected to enter a GitHub login." } %>
             </div>
           <% end %>
         </li>
