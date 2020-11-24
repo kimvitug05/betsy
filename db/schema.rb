@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(version: 2020_11_24_071915) do
     t.integer "product_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "description"
   end
 
   add_foreign_key "order_items", "orders"
