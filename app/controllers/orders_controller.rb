@@ -122,6 +122,7 @@ class OrdersController < ApplicationController
   end
 
   def clear_cart
+    @order = Order.find_by(id: session[:order_id])
     if !@order.nil?
       @order.order_items.each do |item|
         item.product.quantity += item.quantity
