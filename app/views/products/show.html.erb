@@ -28,6 +28,9 @@
       <%= f.submit "Add to cart", class:"btn btn-primary" %>
     </div>
   <%end%>
+
+  <%= link_to 'Write a review', new_product_review_path(@product), class:"btn btn-primary" %>
+
   <%#= link_to "Back To Products", products_path, class:"btn btn-primary" %>
   <%= link_to '<< Back', :back, class:"btn btn-primary" %>
   <br><br>
