@@ -1,7 +1,14 @@
 require "test_helper"
 
 describe OrdersController do
-  # it "does a thing" do
-  #   value(1+1).must_equal 2
-  # end
+
+  it "validates customer information when trying to pay for order" do
+
+  end
+
+  it "changes status to paid once order is submitted" do
+
+  end
+
+
 end
