@@ -1,8 +1,28 @@
-<div class="top-banner">
-  <%= image_tag("userlookup.gif", :alt => "user banner") %>
-</div>
+<section class="container">
+  <div class="row">
+    <div class="col-sm text-center">
+      <div class="top-banner">
+        <%= image_tag("userlookup.gif", :alt => "user banner") %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm text-center">
+      <div class="top-banner">
+        <%= image_tag("usukiland.gif", :alt => "an offical Usuki(TM) merchant", :class => "rounded w-50") %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm text-center">
+      <div class="text-center">
+        <%= image_tag("my_products.png", :alt => "reads my products", :class => "w-50") %>
+      </div>
+    </div>
+  </div>
+</section>
 
-<h2 class="text-center"><< Manage Products >></h2>
+<!--<h2 class="text-center"><< Manage Products >></h2>-->
 
 <div class="container">
   <%= render partial: 'products/product-grid', locals: { products: @login_user.products } %>
