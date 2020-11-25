@@ -72,3 +72,42 @@ div.top-banner img {
 .even-larger-badge {
     font-size: 1em;
 }
+
+.caption-img-container {
+  position: relative;
+  text-align: center;
+  color: white;
+}
+
+.caption-img-container img {
+  width:100%;
+  opacity: 0.75;
+}
+
+.caption-img-container:hover img {
+  opacity: 0.95;
+}
+
+// .over-img-text {
+//   position: absolute;
+//   top: 50%;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+//   text-shadow:
+//   -1px -1px 0 #000,
+//   1px -1px 0 #000;
+//
+//   color: white;
+//   font-size: 20px;
+//   position: absolute;
+//   top: 50%;
+//   left: 50%;
+//   -webkit-transform: translate(-50%, -50%);
+//   -ms-transform: translate(-50%, -50%);
+//   transform: translate(-50%, -50%);
+//   text-align: center;
+// }
+//
+// .over-img-text:hover {
+//       display: none;
+// }
