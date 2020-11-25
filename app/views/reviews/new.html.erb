@@ -1,26 +1,28 @@
 <!--<section class="container">-->
 <div class="form-group">
 
-<!--<span class="star-rating star-5">-->
+  <!--<span class="star-rating star-5">-->
 
-  <%= form_with model: @review do |f| %>
-      <%= f.label :rating %>
+  <%= form_with model: [@product, @review] do |f| %>
+    <%= f.label :rating %>
     <br>
-      <%= radio_button_tag(:rating, 5) %>
-      <%= label_tag(:rating, "test") %>
+    <%= f.radio_button(:rating, 5) %>
+    <%= label_tag(:rating, 5) %>
 
-     <%= radio_button_tag(:rating, 4) %>
-      <%= label_tag(:rating, "test") %>
+    <%= f.radio_button(:rating, 4) %>
+    <%= label_tag(:rating, 4) %>
 
-      <%= radio_button_tag(:rating, 3) %>
-      <%= label_tag(:rating, "test") %>
+    <%= f.radio_button(:rating, 3) %>
+    <%= label_tag(:rating, 3) %>
 
-      <%= radio_button_tag(:rating, 2) %>
-      <%= label_tag(:rating, "test") %>
+    <%= f.radio_button(:rating, 2) %>
+    <%= label_tag(:rating, 2) %>
 
-      <%= radio_button_tag(:rating, 1) %>
-      <%= label_tag(:rating, "test") %>
-<!--      </span>-->
+    <%= f.radio_button(:rating, 1) %>
+    <%= label_tag(:rating, 1) %>
+
+    <%= hidden_field(:product_id, :value => @product.id) %>
+
     </div>
 
     <div class="form-group">
@@ -29,7 +31,7 @@
       <%= f.text_area :description, :class => "form-control" %>
     </div>
 
-<!--</section>-->
+    <!--</section>-->
 
-      <%= f.submit "Create Review", class: "" %>
-<% end %>
+    <%= f.submit "Create Review", class: "" %>
+  <% end %>
