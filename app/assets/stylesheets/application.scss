@@ -111,3 +111,8 @@ div.top-banner img {
 // .over-img-text:hover {
 //       display: none;
 // }
+
+.form-control::placeholder {
+  color: #d2cccc;
+  opacity: 1;
+}
