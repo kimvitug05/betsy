@@ -1,3 +1,26 @@
+<section class="container">
+  <div class="row">
+    <div class="col-sm text-center">
+      <div class="top-banner">
+        <%= image_tag("market_banner.gif", :alt => "marketplace banner") %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm text-center">
+      <div class="top-banner">
+        <%= image_tag("chocolate_chai.gif", :alt => "a neopian chocolate shop", :class => "rounded") %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm text-center">
+      <div class="text-center">
+        <%= image_tag("new_review.png", :alt => "reads new review", :class => "w-50") %>
+      </div>
+    </div>
+  </div>
+
 <%= form_with model: [@product, @review] do |f| %>
   <div class="form-group">
     <%= f.label :rating %>
@@ -18,5 +41,5 @@
     <br>
     <%= f.text_area :description, :class => "form-control" %>
   </div>
-  <%= f.submit "Create Review", class: "" %>
+  <%= f.submit "Create Review", class: "btn btn-secondary" %>
 <% end %>
