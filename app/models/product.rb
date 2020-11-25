@@ -8,5 +8,17 @@ class Product < ApplicationRecord
   validates :name, presence: true, uniqueness: true
   validates :price, presence: true, numericality: { greater_than: 0 }
 
+  def average_rating
+    ratings = self.reviews.map { |review| review[:rating] }
 
+    ratings.compact!
+
+    if ratings.length == 0
+      mean = 0
+    else
+      mean = (ratings.sum.to_f) / (ratings.length)
+    end
+
+    return mean
+  end
 end

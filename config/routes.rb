@@ -7,6 +7,10 @@ Rails.application.routes.draw do
 
   resources :products, except: [:delete]
 
+  resources :products do
+    resources :reviews, only: [:index, :show, :new, :create]
+  end
+
   get "/checkout", to: "orders#checkout", as: "checkout"
   get "/cart", to:"orders#cart", as: "cart"
 
