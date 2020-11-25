@@ -27,6 +27,9 @@
 
   <% if @login_user %>
     <%= render partial: 'product-grid', locals: { products: @products.where.not(merchant_id: @login_user.id, active: false) } %>
+  <% elsif @products.nil? %>
+    <br><br>
+    <h4><i>Eep! No products have been added yet! Sad day.</i></h4>
   <% else %>
     <%= render partial: 'product-grid', locals: { products: @products.where(active: true) } %>
   <% end %>

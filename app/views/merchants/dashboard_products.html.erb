@@ -25,7 +25,12 @@
 <!--<h2 class="text-center"><< Manage Products >></h2>-->
 
 <div class="container">
-  <%= render partial: 'products/product-grid', locals: { products: @login_user.products } %>
+  <% if @login_user.products.any? %>
+    <%= render partial: 'products/product-grid', locals: { products: @login_user.products } %>
+  <% else %>
+    <br><br>
+    <h4><i>Eep! No products have been added yet! Sad day.</i></h4>
+  <% end %>
 </div>
 
 <br>
