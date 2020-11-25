@@ -54,4 +54,14 @@
   <h5 class="text-center">
       Join our amazing merchant team to invest your profits into community care! Sign into your Github account to join the fun!
   </h5>
+
+  <br>
+
+  <div class="text-center">
+    <%= image_tag("hot_items.png", :alt => "reads hot items", :class => "w-25") %>
+  </div>
+
+  <br>
+
+  <%= render partial: 'products/product-grid', locals: { products: Product.spotlight } %>
 </div>

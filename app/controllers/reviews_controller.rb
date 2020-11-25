@@ -39,7 +39,8 @@ class ReviewsController < ApplicationController
         if @product.merchant_id == @login_user.id
         flash[:status] = :failure
         flash[:result_text] = "Cannot review your own product!"
-        render :new, status: :bad_request
+        redirect_to dashboard_path
+        return
         end
       end
 

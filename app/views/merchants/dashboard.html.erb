@@ -4,7 +4,20 @@
     <%= image_tag("userlookup.gif", :alt => "user banner") %>
   </div>
 
-  <%= image_tag "shopkeeper_#{rand(1..8)}.gif" %>
+  <div class="container">
+    <div class="row d-flex align-items-center justify-content-center">
+      <div>
+        <%= image_tag("shield.gif", :alt => "user shield") %>
+      </div>
+      <div>
+        <%= image_tag "shopkeeper_#{rand(1..8)}.gif" %>
+      </div>
+      <div>
+        <%= image_tag("clipboard.gif", :alt => "clipboard") %>
+      </div>
+    </div>
+  </div>
+
   <div class="mb-4">
     <h2><%= @login_user.username %></h2>
     <h4>Total Revenue: <%= number_to_currency(@login_user.total_revenue) %></h4>
@@ -33,27 +46,28 @@
 
   <br><br>
 
-  <h4>Pending Orders: <%= @login_user.total_num_orders_by_status("pending") %></h4>
-  <h6>Revenue: <%= number_to_currency(@login_user.total_revenue_by_status("pending")) %></h6>
-  <%= render partial: 'table', locals: { :orders => @login_user.filter_orders("pending") } %>
+ <div class="container">
+    <h4>Pending Orders: <%= @login_user.total_num_orders_by_status("pending") %></h4>
+    <h6>Revenue: <%= number_to_currency(@login_user.total_revenue_by_status("pending")) %></h6>
+    <%= render partial: 'table', locals: { :orders => @login_user.filter_orders("pending") } %>
 
-  <br><br>
+    <br><br>
 
-  <h4>Paid Orders: <%= @login_user.total_num_orders_by_status("paid") %></h4>
-  <h6>Revenue: <%= number_to_currency(@login_user.total_revenue_by_status("paid")) %></h6>
-  <%= render partial: 'table', locals: { :orders => @login_user.filter_orders("paid") } %>
+    <h4>Paid Orders: <%= @login_user.total_num_orders_by_status("paid") %></h4>
+    <h6>Revenue: <%= number_to_currency(@login_user.total_revenue_by_status("paid")) %></h6>
+    <%= render partial: 'table', locals: { :orders => @login_user.filter_orders("paid") } %>
 
-  <br><br>
+    <br><br>
 
-  <h4>Complete Orders: <%= @login_user.total_num_orders_by_status("complete") %></h4>
-  <h6>Revenue: <%= number_to_currency(@login_user.total_revenue_by_status("complete")) %></h6>
-  <%= render partial: 'table', locals: { :orders => @login_user.filter_orders("complete") } %>
+    <h4>Complete Orders: <%= @login_user.total_num_orders_by_status("complete") %></h4>
+    <h6>Revenue: <%= number_to_currency(@login_user.total_revenue_by_status("complete")) %></h6>
+    <%= render partial: 'table', locals: { :orders => @login_user.filter_orders("complete") } %>
 
-  <br><br>
+    <br><br>
 
-  <h4>Cancelled Orders: <%= @login_user.total_num_orders_by_status("cancelled") %></h4>
-  <h6>Revenue: <%= number_to_currency(@login_user.total_revenue_by_status("cancelled")) %></h6>
-  <%= render partial: 'table', locals: { :orders => @login_user.filter_orders("cancelled") } %>
-
+    <h4>Cancelled Orders: <%= @login_user.total_num_orders_by_status("cancelled") %></h4>
+    <h6>Revenue: <%= number_to_currency(@login_user.total_revenue_by_status("cancelled")) %></h6>
+    <%= render partial: 'table', locals: { :orders => @login_user.filter_orders("cancelled") } %>
+ </div>
 
 </section>

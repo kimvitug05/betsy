@@ -14,6 +14,9 @@
   <br>
   <% if @login_user %>
     <%= render partial: 'merchant-grid', locals: { merchants: @merchants.where.not(id: @login_user.id) } %>
+  <% elsif @merchants.nil? %>
+    <br><br>
+    <h4><i>Eep! No merchants have joined the team yet! Depressing.</i></h4>
   <% else %>
     <%= render partial: 'merchant-grid', locals: { merchants: @merchants } %>
   <% end %>
