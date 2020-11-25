@@ -1,37 +1,22 @@
-<!--<section class="container">-->
-<div class="form-group">
-
-  <!--<span class="star-rating star-5">-->
-
-  <%= form_with model: [@product, @review] do |f| %>
+<%= form_with model: [@product, @review] do |f| %>
+  <div class="form-group">
     <%= f.label :rating %>
     <br>
-    <%= f.radio_button(:rating, 5) %>
-    <%= label_tag(:rating, 5) %>
+    <span class="star-rating star-5">
+      <%= f.radio_button(:rating, 1) %><i></i>
+      <%= f.radio_button(:rating, 2) %><i></i>
+      <%= f.radio_button(:rating, 3) %><i></i>
+      <%= f.radio_button(:rating, 4) %><i></i>
+      <%= f.radio_button(:rating, 5) %><i></i>
+      </span>
+  </div>
 
-    <%= f.radio_button(:rating, 4) %>
-    <%= label_tag(:rating, 4) %>
+  <%= hidden_field(:product_id, :value => @product.id) %>
 
-    <%= f.radio_button(:rating, 3) %>
-    <%= label_tag(:rating, 3) %>
-
-    <%= f.radio_button(:rating, 2) %>
-    <%= label_tag(:rating, 2) %>
-
-    <%= f.radio_button(:rating, 1) %>
-    <%= label_tag(:rating, 1) %>
-
-    <%= hidden_field(:product_id, :value => @product.id) %>
-
-    </div>
-
-    <div class="form-group">
-      <%= f.label :description %>
-      <br>
-      <%= f.text_area :description, :class => "form-control" %>
-    </div>
-
-    <!--</section>-->
-
-    <%= f.submit "Create Review", class: "" %>
-  <% end %>
+  <div class="form-group">
+    <%= f.label :description %>
+    <br>
+    <%= f.text_area :description, :class => "form-control" %>
+  </div>
+  <%= f.submit "Create Review", class: "" %>
+<% end %>

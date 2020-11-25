@@ -29,7 +29,19 @@ class ReviewsController < ApplicationController
     def create
       @review = Review.new(review_params)
 
-      if @review.save || @product.merchant_id != @login_user.id
+      if @review.nil?
+        flash[:status] = :failure
+        flash[:result_text] = "Could not review #{@product}"
+        render :new, status: :bad_request
+      end
+
+      if @product.merchant_id == @login_user.id
+        flash[:status] = :failure
+        flash[:result_text] = "Could not review your own product."
+        render :new, status: :bad_request
+      end
+
+      if @review.save
         flash[:status] = :success
         flash[:result_text] = "Successfully reviewed product: #{@product.name}"
         redirect_to product_path(@product.id)
