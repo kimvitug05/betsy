@@ -6,20 +6,20 @@ class Order < ApplicationRecord
   validates :exp_date, presence: true
   validates :zip_code, presence: true
 
-  has_many :order_items
+  has_many :order_items, dependent: :destroy
   has_many :products, through: :order_items
 
   def order_total(merchant_id = nil)
     sum = 0
     if merchant_id
       self.extract_merchant_order_items(merchant_id).each do |order_item|
-        sum += order_item.product.price
+        sum += order_item.product.price * order_item.quantity
       end
       return sum
 
     else
       self.order_items.each do |order_item|
-        sum += order_item.product.price
+        sum += order_item.product.price * order_item.quantity
       end
       return sum
     end

@@ -62,6 +62,19 @@ class Merchant < ApplicationRecord
     return self.filter_orders(status).length
   end
 
+  def all_orders
+    return [] if self.products.empty?
+    result = []
+
+    self.products.each do |product|
+      product.order_items.each do |order_item|
+        result << order_item.order
+      end
+    end
+
+    return result.uniq
+  end
+
   def filter_orders(status)
     return [] if self.products.empty?
     result = []

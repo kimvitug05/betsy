@@ -1,13 +1,15 @@
 <section class="container">
-  <% if @cart.empty? %>
-
+  <% if !@order || @order.order_items.empty? %>
     <div class="row align-items-center justify-content-center">
       <%= image_tag("star.gif", :alt => "a star") %>
       <h2>Your Shopping Cart</h2>
       <%= image_tag("star.gif", :alt => "a star") %>
     </div>
 
+    <br><br>
     <h6 class="text-center">Your cart is currently empty! How sad. Wouldn't you like to support all those starving pounded Neopets??</h6>
+    <br><br>
+
     <div class="text-center">
       <%= link_to "Clear Cart", clear_cart_path, class: "btn btn-secondary disabled" %>
       <%= link_to "Go Shopping!", products_path, class: "btn btn-secondary" %>
@@ -21,7 +23,7 @@
       <%= image_tag("star.gif", :alt => "a star") %>
     </div>
 
-    <% @cart.each do |item| %>
+    <% @order.order_items.each do |item| %>
       <div class="row">
         <div class="col-3">
           <div class="container">
@@ -48,10 +50,10 @@
             <%= number_to_currency(item.product.price) %>
           </h5>
           <p class="card-text">
-            <%= link_to "-", less_one_path(product: item.product), method: "post", class: "btn btn-secondary btn-decrement" %><!--
-            --><span class="cart-product-quantity d-inline-block h-100 px-2 text-success"><%= item.quantity %></span><!--
-            --><%= link_to "+", add_one_path(product: item.product), method: "post", class: "btn btn-secondary btn-increment" %>
-            <%= link_to remove_path(product: item.product), method: "post" do %>
+            <%= link_to "-", less_one_path(order_item: item), method: "post", class: "btn btn-secondary btn-decrement" %>
+          <span class="cart-product-quantity d-inline-block h-100 px-2 text-success"><%= item.quantity %></span>
+           <%= link_to "+", add_one_path(order_item: item), method: "post", class: "btn btn-secondary btn-increment" %>
+            <%= link_to remove_path(order_item: item), method: "post" do %>
               <span class="btn btn-secondary ml-4">
                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                   <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
@@ -71,6 +73,16 @@
     </div>
     <br>
   <% end %>
+<!--<<<<<<< HEAD:app/views/orders/cart.html.erb-->
+<!--  <div class="text-right">-->
+    <%#= link_to "Clear Cart", clear_cart_path, class: "btn btn-secondary" %>
+    <%#= link_to "Go Shopping", products_path, class: "btn btn-secondary" %>
+    <%#if @cart_total > 0 %>
+      <%#= link_to "Checkout", checkout_path, class: "btn btn-secondary" %>
+      <%#end %>
+<!--  </div>-->
+<!--=======-->
+
 </section>
 
 

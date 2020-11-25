@@ -10,3 +10,9 @@ merchant2:
   uid: 25437
   provider: github
   avatar: nil
+merchant3:
+  username: tina_belcher
+  email: tina@jj.com
+  uid: 34567
+  provider: github
+  avatar: nil

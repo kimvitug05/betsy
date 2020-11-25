@@ -9,6 +9,14 @@ order1:
 order2:
   address: 569 Melrose Avenue
   name: Hannah Montana
+  status: complete
+  email: hannah@montana.com
+  credit_card: 3245464345444455
+  exp_date: 02/2021
+  zip_code: 45342
+order3:
+  address: 123 Neopet Ave
+  name: Miley Cyrus
   status: pending
   email: hannah@montana.com
   credit_card: 3245464345444455

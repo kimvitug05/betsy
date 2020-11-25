@@ -1,20 +1,11 @@
 class OrderItemsController < ApplicationController
-
-  def create
-    @order_items = current_order
-  end
-
-    def cart
-      @cart = session[:cart].map { |attributes| OrderItem.new(attributes)}
-      # @cart = session[:cart]
-      @cart_total = get_total
-    end
+  # TODO: Does this need any validations?
 
   def add_to_cart
     initialize_session
     product = Product.find_by(id: params["product_id"])
     quantity = params["selected_quantity"].to_i
-    if product.quantity.nil?
+    if product.quantity.nil? || product.quantity < 0
       product.quantity = 0
       product.save
     end
@@ -27,66 +18,60 @@ class OrderItemsController < ApplicationController
       redirect_to products_path
       return
     end
+    order = session[:order_id]? Order.find_by(id: session[:order_id]) : create_order
 
-    order_item = OrderItem.new(product_id: product.id, quantity: quantity)
-
-      # find the item in the cart
-      # update the quantity
-    if session[:cart].empty?
-      session[:cart]  << order_item
+    if !order.order_items.find_by(product_id:product.id).nil?
+      order_item = order.order_items.find_by(product_id:product.id)
+      already_in_cart = order_item.quantity
+      available = product.quantity -  already_in_cart
+      if quantity <= available
+        order_item.quantity += quantity
+      end
+      order_item.save
+      flash[:status] = :success
+      flash[:result_text] = "Awesome! Your N.E.O.P.E.T.S.Y #{product.name} quantity has been updated!"
+    else
+      order_item = OrderItem.new(product_id: product.id,order_id: order.id, quantity: quantity)
+      if order_item.save
+        order.order_items << order_item
         flash[:status] = :success
         flash[:result_text] = "Awesome! Your N.E.O.P.E.T.S.Y #{product.name} item is in the cart!"
-    else
-      #cart is not empty
-      if cart_has_item(order_item)
-        session[:cart].each do |item|
-            if item["product_id"] == order_item.product_id
-             item["quantity"] = item["quantity"] + quantity
-            end
-            flash[:status] = :success
-            flash[:result_text] = "Awesome! Your N.E.O.P.E.T.S.Y #{product.name} quantity has been updated!"
-        end
-      else
-        session[:cart]  << order_item
-        flash[:status] = :success
-        flash[:result_text] = "Great choice! We've added another N.E.O.P.E.T.S.Y. item to your cart!"
       end
     end
+    product.quantity -= quantity
+    product.save
     redirect_to cart_path
   end
 
   def remove
-    item_to_remove = params[:product].to_i
-    session[:cart].each do |item|
-      if item["product_id"] == item_to_remove
-        session[:cart].delete(item)
-      end
-    end
-
+    order_item_id = params[:order_item].to_i
+    order_item = OrderItem.find_by(id: order_item_id)
+    order_item.product.quantity += order_item.quantity
+    order_item.product.save
+    order_item.destroy
     redirect_to cart_path
   end
 
   def add_one
-    product_id = params[:product].to_i
-    product = Product.find_by(id: product_id)
-    session[:cart].each do |item|
-      if item["product_id"] == product_id
-        if item["quantity"] < product.quantity
-          item["quantity"] = item["quantity"] + 1
-        end
-      end
+    order_item_id = params[:order_item].to_i
+    order_item = OrderItem.find_by(id: order_item_id)
+    if order_item.product.quantity >= 1
+      order_item.quantity += 1
+      order_item.product.quantity -= 1
+      order_item.save
+      order_item.product.save
     end
     redirect_to cart_path
   end
 
   def less_one
-    product_id = params[:product].to_i
-    session[:cart].each do |item|
-      if item["product_id"] == product_id
-        if item["quantity"] > 1
-          item["quantity"] = item["quantity"] - 1
-        end
-      end
+    order_item_id = params[:order_item].to_i
+    order_item = OrderItem.find_by(id: order_item_id)
+    if order_item.quantity > 1
+      order_item.quantity -= 1
+      order_item.product.quantity += 1
+      order_item.save
+      order_item.product.save
     end
     redirect_to cart_path
   end
@@ -109,44 +94,45 @@ class OrderItemsController < ApplicationController
     true
   end
 
-  def get_total
-    total = 0.0
-    @cart.each do |item|
-      total = total + item.product.price * item.quantity
+  def create_order
+    order = Order.new
+    unless order.save(:validate => false)
+      flash[:error] = "Something went wrong: #{order.errors.messages}"
     end
-    return total
+    session[:order_id] = order.id
+    order.reload
+    return order
   end
 
-  def clear_cart
-    session[:cart] = []
-
-    redirect_to cart_path
-  end
-
-  def update #TODO: Please leave me here, this is for updating status on merchant dash
+  def update
     unless @login_user
-          flash[:status] = :failure
-          flash[:result_text] = "Only merchants can update an order item."
-          redirect_to root_path
-          return
+      flash[:status] = :failure
+      flash[:result_text] = "Only merchants can update an order item."
+      redirect_to root_path
+      return
     end
 
     @order_item = OrderItem.find_by(id: params[:id])
 
-      if order_item_update_params.permitted? #if strong params
-        @order_item.update(status: "shipped") # adjust status
+    if order_item_update_params.permitted? # if strong params
+      @order_item.update(status: "shipped") # adjust status
 
-        if @order_item.order.order_items.all? { |order_item| order_item.status == "shipped" } #all items in order now shipped, update order status
-          @order_item.order.update(status: "complete")
-        end
-
-        flash[:status] = :success
-        flash[:result_text] = "Successfully updated #{@order_item.product.name} order item(s)."
-        redirect_to order_path(@order_item.order.id)
+      if @order_item.order.order_items.all? { |order_item| order_item.status == "shipped" } # all items in order now shipped, update order status
+        @order_item.order.update(status: "complete")
       end
+
+      flash[:status] = :success
+      flash[:result_text] = "Successfully updated #{@order_item.product.name} order item(s)."
+      redirect_to order_path(@order_item.order.id)
+    end
   end
 
   private
+
+  def order_items_params
+    return params.require(:order_items).permit(:product_id, :order_id, :quantity)
+  end
+
 
   def initialize_session
     return session[:cart] ||= []
