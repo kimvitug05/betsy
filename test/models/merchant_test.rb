@@ -70,10 +70,28 @@ describe Merchant do
     it "can calculate the total revenue by status" do
       merchant = merchants(:merchant1)
 
-      expect(merchant.total_revenue_by_status("pending")).must_be_close_to 1510.92
+      expect(merchant.total_revenue_by_status("pending")).must_equal 1010.27
       expect(merchant.total_revenue_by_status("paid")).must_equal 0
-      expect(merchant.total_revenue_by_status("complete")).must_equal 0
+      expect(merchant.total_revenue_by_status("complete")).must_equal 500.65
       expect(merchant.total_revenue_by_status("cancelled")).must_equal 0
+    end
+
+    it "can list all orders from a merchant" do
+      merchant = merchants(:merchant1)
+
+      expect(merchant.all_orders.length).must_equal 2
+    end
+
+    it "all orders from a merchant are unique" do
+      merchant = merchants(:merchant1)
+
+      expect(merchant.all_orders.length).must_equal merchant.all_orders.uniq.length
+    end
+
+    it "no orders from a merchant with no orders" do
+      merchant = merchants(:merchant3)
+
+      expect(merchant.all_orders.length).must_equal 0
     end
   end
 end
