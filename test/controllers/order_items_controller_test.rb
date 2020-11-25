@@ -1,6 +1,6 @@
 require "test_helper"
 
-describe OrderItemsController do
+describe OrderItemsController do ##not sure how to feed database the product info into shopping cart. =S
   before do
     @merchant = merchants(:merchant1)
     @product = products(:blue_shoes)
