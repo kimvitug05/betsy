@@ -155,6 +155,8 @@ class OrdersController < ApplicationController
     @order = Order.find_by(id: session[:order_id])
 
     if @order.update(order_params)
+      @order.status = "paid"
+      @order.save
       flash[:status] = :success
       flash[:result_text] = "Successfully updated order ##{@order.id}"
       session[:order_id] = nil
