@@ -11,7 +11,10 @@
   <br>
   <div class="product-desc">
     <h5 class="card-text text-success">
-      <%= number_to_currency(@product.price) %>
+      Rating: <%= @product.average_rating %>
+    </h5>
+    <h5 class="card-text text-success">
+      Price: <%= number_to_currency(@product.price) %>
     </h5>
     <br>
     <h5 class="product-desc">
