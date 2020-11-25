@@ -17,6 +17,16 @@
     <h5 class="card-text text-success text-center">
       <%= number_to_currency(product.price) %>
     </h5>
+    <p class="card-text text-center">
+    <% if product.reviews.any? %>
+      <% product.average_rating.round.times do  %>
+        <span class="card-text text-center text-secondary">★</span>
+      <% end %>
+      <% product.calculate_empty_stars.round.times do %>
+        <span class="card-text text-center text-secondary">☆</span>
+      <% end %>
+    <% end %>
+    </p>
 <!--    HIDE UNNECESSARY DESCRIPTION FROM @login_user DASH-->
     <% if merchant_view %>
       <p class="text-center">In Stock: <%= product.quantity %></p>

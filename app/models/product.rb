@@ -21,4 +21,8 @@ class Product < ApplicationRecord
 
     return mean
   end
+
+  def calculate_empty_stars
+    return (5 - self.average_rating)
+  end
 end
