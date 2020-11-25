@@ -10,8 +10,16 @@
   <div class="product-quantity">In Stock: <%= @product.quantity %></div>
   <br>
   <div class="product-desc">
-    <h5 class="card-text text-success">
-      Rating: <%= @product.average_rating %>
+    <h5 class="card-text text-secondary">
+      <% if @product.reviews.any? %>
+        <% @product.average_rating.round.times do  %>
+          <span>★</span>
+        <% end %>
+        <% @product.calculate_empty_stars.round.times do %>
+          <span>☆</span>
+        <% end %>
+      <% end %>
+<!--      Rating: <%#= @product.average_rating %>-->
     </h5>
     <h5 class="card-text text-success">
       Price: <%= number_to_currency(@product.price) %>
@@ -34,14 +42,28 @@
 
   <%= link_to 'Write a review', new_product_review_path(@product), class:"btn btn-primary" %>
 
-  <div>
+  <br><br><br>
+  <% if @product.reviews.any? %>
+    <div>
+      <%= image_tag("reviews.png", :alt => "reads reviews", :class => "w-25") %>
+    </div>
 
-    <% @product.reviews.each do |review| %>
-      <%= review.rating %>
-      <%= review.description %>
-      <br>
-    <% end %>
-  </div>
+    <br>
+
+    <div>
+      <% @product.reviews.each do |review| %>
+        <% review.rating.to_i.times do  %>
+          <span class="text-secondary">★</span>
+        <% end %>
+        <% review.calculate_empty_stars.to_i.times do %>
+          <span class="text-secondary">☆</span>
+        <% end %>
+
+        <%= review.description %>
+        <br><br>
+      <% end %>
+    </div>
+  <% end %>
 
 
 

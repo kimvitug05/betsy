@@ -73,11 +73,11 @@ class ProductsController < ApplicationController
 
     if @product.save
       flash[:status] = :success
-      flash[:result_text] = "Successfully retired #{@product.id}"
+      flash[:result_text] = "Successfully retired #{@product.name}."
       redirect_to dashboard_products_path
     else
       flash.now[:status] = :failure
-      flash.now[:result_text] = "Something went wrong. Could not retire #{@product.name}"
+      flash.now[:result_text] = "Something went wrong. Could not retire #{@product.name}."
       render :index, status: :bad_request
     end
   end
@@ -92,11 +92,11 @@ class ProductsController < ApplicationController
 
     if @product.save
       flash[:status] = :success
-      flash[:result_text] = "Successfully restored #{@product.id}"
+      flash[:result_text] = "Successfully restored #{@product.name}."
       redirect_to dashboard_products_path
     else
       flash.now[:status] = :failure
-      flash.now[:result_text] = "Something went wrong. Could not restore #{@product.name}"
+      flash.now[:result_text] = "Something went wrong. Could not restore #{@product.name}."
       render :index, status: :bad_request
     end
   end

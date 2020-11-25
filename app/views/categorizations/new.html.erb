@@ -1,10 +1,29 @@
 <section class="container">
 
-  <div class="top-banner">
-    <%= image_tag("faerie_merchant.gif", :alt => "a faerie bookkeeper stacks books", :class => "rounded") %>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm text-center">
+        <div class="top-banner">
+          <%= image_tag("market_banner.gif", :alt => "marketplace banner") %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm text-center">
+        <div class="top-banner">
+          <%= image_tag("uni_clothing_shop.gif", :alt => "a uni clothes merchant", :class => "rounded") %>
+        </div>
+        <br>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm text-center">
+        <div class="text-center">
+          <%= image_tag("new_category.png", :alt => "reads new category", :class => "w-50") %>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <h2>Create New Category</h2>
 
   <%= form_with model: @categorization do |f| %>
     <div class="form-group">

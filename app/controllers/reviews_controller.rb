@@ -35,10 +35,13 @@ class ReviewsController < ApplicationController
         render :new, status: :bad_request
       end
 
-      if @product.merchant_id == @login_user.id
+      if @login_user
+        if @product.merchant_id == @login_user.id
         flash[:status] = :failure
-        flash[:result_text] = "Could not review your own product."
-        render :new, status: :bad_request
+        flash[:result_text] = "Cannot review your own product!"
+        redirect_to dashboard_path
+        return
+        end
       end
 
       if @review.save

@@ -21,4 +21,12 @@ class Product < ApplicationRecord
 
     return mean
   end
+
+  def calculate_empty_stars
+    return (5 - self.average_rating.round)
+  end
+
+  def self.spotlight
+    return self.order('RANDOM()').limit(4)
+  end
 end
