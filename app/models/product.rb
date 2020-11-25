@@ -23,7 +23,7 @@ class Product < ApplicationRecord
   end
 
   def calculate_empty_stars
-    return (5 - self.average_rating)
+    return (5 - self.average_rating.round)
   end
 
   def self.spotlight
