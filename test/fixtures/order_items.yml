@@ -10,3 +10,11 @@ order_item3:
   product: laptop
   order: order2
   quantity: 1
+order_item4:
+  product: fork
+  order: order2
+  quantity: 1
+order_item5:
+  product: fork
+  order: order3
+  quantity: 1
