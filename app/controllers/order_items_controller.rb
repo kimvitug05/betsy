@@ -55,7 +55,7 @@ class OrderItemsController < ApplicationController
   def add_one
     order_item_id = params[:order_item].to_i
     order_item = OrderItem.find_by(id: order_item_id)
-    if order_item.quantity < order_item.product.quantity
+    if order_item.product.quantity > 0
       order_item.quantity += 1
       order_item.product.quantity -= 1
       order_item.save
