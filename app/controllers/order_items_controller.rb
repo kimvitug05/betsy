@@ -22,20 +22,20 @@ class OrderItemsController < ApplicationController
 
     if !order.order_items.find_by(product_id:product.id).nil?
       order_item = order.order_items.find_by(product_id:product.id)
-      if quantity <= order_item.product.quantity
+      already_in_cart = order_item.quantity
+      available = product.quantity -  already_in_cart
+      if quantity <= available
         order_item.quantity += quantity
-        # order_item.product.quantity -= quantity
       end
       order_item.save
-      order_item.product.save
-              flash[:status] = :success
-              flash[:result_text] = "Awesome! Your N.E.O.P.E.T.S.Y #{product.name} quantity has been updated!"
+      flash[:status] = :success
+      flash[:result_text] = "Awesome! Your N.E.O.P.E.T.S.Y #{product.name} quantity has been updated!"
     else
       order_item = OrderItem.new(product_id: product.id,order_id: order.id, quantity: quantity)
       if order_item.save
         order.order_items << order_item
-            flash[:status] = :success
-            flash[:result_text] = "Awesome! Your N.E.O.P.E.T.S.Y #{product.name} item is in the cart!"
+        flash[:status] = :success
+        flash[:result_text] = "Awesome! Your N.E.O.P.E.T.S.Y #{product.name} item is in the cart!"
       end
     end
     product.quantity -= quantity
@@ -55,7 +55,7 @@ class OrderItemsController < ApplicationController
   def add_one
     order_item_id = params[:order_item].to_i
     order_item = OrderItem.find_by(id: order_item_id)
-    if order_item.product.quantity > 0
+    if order_item.product.quantity >= 1
       order_item.quantity += 1
       order_item.product.quantity -= 1
       order_item.save
