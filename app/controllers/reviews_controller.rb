@@ -1,6 +1,5 @@
 class ReviewsController < ApplicationController
   before_action :find_product
-  #, only: [:index, :new, :create]
 
   def index
     if params[:product_id]
@@ -30,7 +29,7 @@ class ReviewsController < ApplicationController
     def create
       @review = Review.new(review_params)
 
-      if @review.save
+      if @review.save || @product.merchant_id != @login_user.id
         flash[:status] = :success
         flash[:result_text] = "Successfully reviewed product: #{@product.name}"
         redirect_to product_path(@product.id)
