@@ -91,12 +91,22 @@ describe Order do
 
   describe "custom methods" do
     it "can calculate the order total" do
+      order = orders(:order1)
+
+      expect(order.order_total).must_equal 1010.27
     end
 
     it "can grab the last 4 of a credit card number" do
+      order = orders(:order1)
+
+      credit_card_num = '1111222233334444'
+      expect(order.credit_card_end(credit_card_num)).must_equal '4444'
     end
 
     it "can calculate the total cost of a particular order item" do
+      order = orders(:order1)
+
+      expect(order.order_item_total_cost(order.order_items[0].id)).must_equal 1001.3
     end
   end
 end

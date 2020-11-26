@@ -1,0 +1,12 @@
+review1:
+  rating: 5
+  product: desktop
+  description: nil
+review2:
+  rating: 3
+  product: desktop
+  description: nil
+review3:
+  rating: 1
+  product: laptop
+  description: nil

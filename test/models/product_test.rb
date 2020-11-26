@@ -16,16 +16,16 @@ describe Product do
       expect(@product.merchant).must_equal @merchant
     end
 
-    # TODO: has many reviews
-    # it "product has many reviews" do
-    #   @reviews = [Review.new(rating: 5), Review.new(rating: 4)]
-    #   @product.reviews = @reviews
-    #
-    #   @product.save
-    #   @product = Product.find_by(id: @product.id)
-    #
-    #   expect(@product.reviews.size).must_equal @reviews.size
-    # end
+    it "product has many reviews" do
+      @reviews = [Review.create(rating: 5), Review.create(rating: 4)]
+      @product.merchant = @merchant
+      @product.reviews = @reviews
+
+      @product.save
+      @product = Product.find_by(id: @product.id)
+
+      expect(@product.reviews.size).must_equal @reviews.size
+    end
 
     it "product has many categorizations" do
       laptop = products(:laptop)
