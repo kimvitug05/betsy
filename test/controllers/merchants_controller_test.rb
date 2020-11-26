@@ -79,13 +79,6 @@ describe MerchantsController do
     end
   end
 
-  # TODO
-  describe "create" do
-    it "should" do
-      skip
-    end
-  end
-
   describe "logout" do
     it "must redirect to root path and clear session user_id" do
       perform_login
