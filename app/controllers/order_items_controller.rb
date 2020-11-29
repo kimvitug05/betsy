@@ -1,8 +1,9 @@
 class OrderItemsController < ApplicationController
   # TODO: Does this need any validations?
 
+  #CART REFACTOR --- Kayla knows that a ton of this should go in the model, but hesitant to add because betsy is almost due and things are working.
   def add_to_cart
-    initialize_session
+    initialize_session #start empty array or add to it
     product = Product.find_by(id: params["product_id"])
     quantity = params["selected_quantity"].to_i
     if product.quantity.nil? || product.quantity < 0
@@ -18,7 +19,8 @@ class OrderItemsController < ApplicationController
       redirect_to products_path
       return
     end
-    order = session[:order_id]? Order.find_by(id: session[:order_id]) : create_order
+
+    order = session[:order_id]? Order.find_by(id: session[:order_id]) : create_order #calling helper method
 
     if !order.order_items.find_by(product_id:product.id).nil?
       order_item = order.order_items.find_by(product_id:product.id)
@@ -43,6 +45,7 @@ class OrderItemsController < ApplicationController
     redirect_to cart_path
   end
 
+  #Note: These should probably be in order_items model, but it's late in the game and I'm hesitant to move anything since things are working fine.
   def remove
     order_item_id = params[:order_item].to_i
     order_item = OrderItem.find_by(id: order_item_id)
@@ -94,12 +97,12 @@ class OrderItemsController < ApplicationController
     true
   end
 
-  def create_order
+  def create_order #Order is created at the time a product is placed in cart
     order = Order.new
     unless order.save(:validate => false)
       flash[:error] = "Something went wrong: #{order.errors.messages}"
     end
-    session[:order_id] = order.id
+    session[:order_id] = order.id #Order_item is created
     order.reload
     return order
   end
