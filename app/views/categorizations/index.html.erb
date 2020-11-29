@@ -1,11 +1,4 @@
-<!--<section>-->
-<!--  <h2>View Products By Category</h2>-->
-  <%# @categorizations.each do |category| %>
-<!--    <h3><%#= link_to category.name, categorization_path(category.id), :class => "badge badge-secondary badge-pill"%></h3>-->
-  <%# end %>
-<!--</section>-->
-
-<div class="container">
+<section class="header-images container">
   <div class="row">
     <div class="col-sm text-center">
       <div class="top-banner">
@@ -28,27 +21,29 @@
         </div>
       </div>
     </div>
-</div>
+</section>
 
-<div class="container">
+<section class="page-body container">
   <br>
-  <div class="row">
-    <% if @categorizations.any? %>
-        <% @categorizations.each do |category| %>
-        <div class="col-sm text-center">
-          <h3><%= link_to category.name, categorization_path(category.id), :class => "badge badge-secondary badge-pill even-larger-badge"%></h3>
-        </div>
-      <% end %>
-    <% else %>
-      <% if @login_user %>
-        <h4><i>No categories have been added yet! Why not create one??</i></h4>
-        <br><br>
-        <%= button_to 'Make A Category', new_categorization_path, method: :get, class: "btn btn-primary" %>
+  <section class="categorizations">
+    <div class="row">
+      <% if @categorizations.any? %>
+          <% @categorizations.each do |category| %>
+          <div class="col-sm text-center">
+            <h3><%= link_to category.name, categorization_path(category.id), :class => "badge badge-secondary badge-pill even-larger-badge"%></h3>
+          </div>
+        <% end %>
       <% else %>
-        <h4><i>Eep! No categories have been added yet! Sad day.</i></h4>
+        <% if @login_user %>
+          <h4><i>No categories have been added yet! Why not create one??</i></h4>
+          <br><br>
+          <%= button_to 'Make A Category', new_categorization_path, method: :get, class: "btn btn-primary" %>
+        <% else %>
+          <h4><i>Eep! No categories have been added yet! Sad day.</i></h4>
+        <% end %>
       <% end %>
-    <% end %>
-  </div>
-</div>
+    </div>
+  </section>
+</section>
 
 <br>

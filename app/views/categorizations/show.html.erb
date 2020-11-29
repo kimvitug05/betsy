@@ -1,13 +1,12 @@
-<section class="container">
-<!--  <h2>Browse All Products In <%#= @categorization.name.capitalize %></h2>-->
+<section class="wrapper container">
 
-  <div class="container">
+  <section class="header-images container">
     <div class="top-banner">
       <%= image_tag("market_bazaar.gif", :alt => "marketplace banner") %>
     </div>
-  </div>
+  </section>
 
-  <div class="container">
+  <section class="categories-list container">
     <div class="row">
       <% Categorization.print_categories.each do |category| %>
         <div class="col-sm text-center">
@@ -15,15 +14,17 @@
         </div>
       <% end %>
     </div>
-  </div>
+  </section>
 
-  <div class="container text-center">
+  <section class="category container text-center">
     <div class="row align-items-center justify-content-center">
       <%= image_tag("star.gif", :alt => "a star") %>
       <h2 class="text-center">All <%= @categorization.name %></h2>
       <%= image_tag("star.gif", :alt => "a star") %>
     </div>
-  </div>
+  </section>
 
-  <%= render partial: 'products/product-grid', locals: { products: @categorization.products.where(active: true) } %>
+  <section class="display-products-container">
+    <%= render partial: 'products/product-grid', locals: { products: @categorization.products.where(active: true) } %>
+  </section>
 </section>
