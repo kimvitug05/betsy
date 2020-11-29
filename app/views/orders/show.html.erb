@@ -1,7 +1,7 @@
-<div class="container">
+<section class="order-display container">
     <%= render partial: 'order_display', locals: {
         order: @order,
         logged_in_merchant_has_order_items: @login_user && @order.extract_merchant_order_items(@login_user.id).any?,
         merchant_items: @login_user ? @order.extract_merchant_order_items(@login_user.id) : []
     } %>
-</div>
+</section>

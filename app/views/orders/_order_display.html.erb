@@ -1,123 +1,132 @@
-<% if logged_in_merchant_has_order_items %>
-  <div class="top-banner">
-    <%= image_tag("user_info.gif", :alt => "user banner") %>
-  </div>
-<% else %>
-  <div class="top-banner">
-    <%= image_tag("market_banner.gif", :alt => "marketplace banner") %>
-  </div>
-<% end %>
-
-<div class="top-banner">
-  <%= image_tag("inventory_warehouse.png", :alt => "grundo with clipboard in a warehouse", :class => "rounded") %>
-</div>
-
-<br><br>
-
-<h4 class="text-center">Order Summary</h4>
-<table class="table table-hover">
-  <thead>
-  <tr class="table-active">
-    <th scope="col">Order Total</th>
-    <th scope="col">Purchase Date</th>
-    <th scope="col">Current Status</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr>
+<section class="wrapper">
+  <section class="header-images">
     <% if logged_in_merchant_has_order_items %>
-      <td><%= number_to_currency(@order.order_total(@login_user.id)) %></td>
+      <div class="top-banner">
+        <%= image_tag("user_info.gif", :alt => "user banner") %>
+      </div>
     <% else %>
-      <td><%= number_to_currency(@order.order_total) %></td>
+      <div class="top-banner">
+        <%= image_tag("market_banner.gif", :alt => "marketplace banner") %>
+      </div>
     <% end %>
 
-    <td><%= readable_date(@order.created_at) %></td>
+    <div class="top-banner">
+      <%= image_tag("inventory_warehouse.png", :alt => "grundo with clipboard in a warehouse", :class => "rounded") %>
+    </div>
+  </section>
 
-    <%# if @login_user && @order.extract_merchant_order_items(@login_user.id).any? %>
-    <!--        <td><%#= @order.extract_merchant_order_items(@login_user.id).first.status.capitalize %></td>-->
-    <%# else %>
-    <td><%= @order.status.capitalize %></td>
-    <%# end %>
-  </tr>
-  </tbody>
-</table>
+  <br><br>
 
-<br><br>
-
-<h4 class="text-center">Billing Information</h4>
-<table class="table table-hover">
-  <thead>
-  <tr class="table-active">
-    <th scope="col">Customer Name</th>
-    <th scope="col">Address</th>
-    <th scope="col">Zip</th>
-    <th scope="col">Credit Card</th>
-    <th scope="col">Expiration</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr>
-    <td><%= @order.name %></td>
-    <td><%= @order.address %></td>
-    <td><%= @order.zip_code %></td>
-    <td><%= @order.credit_card_end(@order.credit_card) %></td>
-    <td><%= @order.exp_date %></td>
-  </tr>
-  </tbody>
-</table>
-
-<br><br>
-
-<h4 class="text-center">Products Purchased</h4>
-<table class="table table-hover">
-  <thead>
-  <tr class="table-active">
-    <th scope="col">Name</th>
-    <th scope="col">Price</th>
-    <th scope="col">Quantity</th>
-    <th scope="col">Item Total</th>
-    <% if logged_in_merchant_has_order_items %>
-      <th scope="col">Update Status</th>
-    <% end %>
-  </tr>
-  </thead>
-  <tbody>
-
-  <% if logged_in_merchant_has_order_items %>
-    <% merchant_items.each do |order_item| %>
-      <tr>
-        <td><%= link_to "#{order_item.product.name}", product_path(order_item.product.id) %></td>
-        <td><%= number_to_currency(order_item.product.price) %></td>
-        <td><%= order_item.quantity %></td>
-        <td><%= number_to_currency(@order.order_item_total_cost(order_item)) %></td>
-        <% if logged_in_merchant_has_order_items %>
-          <% if order_item.status == "pending" %>
-            <td><%= button_to "Ship!", order_item_path(order_item.id), params: { :order_item => { :id => order_item.id, :status => "shipped" }}, method: :put, :class => 'btn btn-secondary', data: { confirm: "Are you sure? This cannot be undone." } %></td>
+  <section class="page-body">
+    <!-- /// ORDER SUMMARY /// -->
+    <section class="order-summary">
+      <h4 class="text-center">Order Summary</h4>
+      <table class="table table-hover">
+        <thead>
+        <tr class="table-active">
+          <th scope="col">Order Total</th>
+          <th scope="col">Purchase Date</th>
+          <th scope="col">Current Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <% if logged_in_merchant_has_order_items %>
+            <td><%= number_to_currency(@order.order_total(@login_user.id)) %></td>
           <% else %>
-            <td><%= link_to "Shipped", order_path(order_item.id), method: :get, class: "btn btn-secondary disabled" %></td>
+            <td><%= number_to_currency(@order.order_total) %></td>
+          <% end %>
+          <td><%= readable_date(@order.created_at) %></td>
+          <td><%= @order.status.capitalize %></td>
+        </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <br><br>
+
+    <!-- /// CUSTOMER INFO /// -->
+    <section class="customer-info">
+      <h4 class="text-center">Billing Information</h4>
+      <table class="table table-hover">
+        <thead>
+        <tr class="table-active">
+          <th scope="col">Customer Name</th>
+          <th scope="col">Address</th>
+          <th scope="col">Zip</th>
+          <th scope="col">Credit Card</th>
+          <th scope="col">Expiration</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td><%= @order.name %></td>
+          <td><%= @order.address %></td>
+          <td><%= @order.zip_code %></td>
+          <td><%= @order.credit_card_end(@order.credit_card) %></td>
+          <td><%= @order.exp_date %></td>
+        </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <br><br>
+
+    <!-- /// PRODUCTS INFO /// -->
+    <section class="product-summary">
+      <h4 class="text-center">Products Purchased</h4>
+      <table class="table table-hover">
+        <thead>
+        <tr class="table-active">
+          <th scope="col">Name</th>
+          <th scope="col">Price</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Item Total</th>
+          <% if logged_in_merchant_has_order_items %>
+            <th scope="col">Update Status</th>
+          <% end %>
+        </tr>
+        </thead>
+        <tbody>
+
+        <!-- /// IF ORDER'S MERCHANT, DISPLAY MERCHANT PRODUCTS /// -->
+        <% if logged_in_merchant_has_order_items %>
+          <% merchant_items.each do |order_item| %>
+            <tr>
+              <td><%= link_to "#{order_item.product.name}", product_path(order_item.product.id) %></td>
+              <td><%= number_to_currency(order_item.product.price) %></td>
+              <td><%= order_item.quantity %></td>
+              <td><%= number_to_currency(@order.order_item_total_cost(order_item)) %></td>
+                <% if order_item.status == "pending" %>
+                  <td><%= button_to "Ship!", order_item_path(order_item.id), params: { :order_item => { :id => order_item.id, :status => "shipped" }}, method: :put, :class => 'btn btn-secondary', data: { confirm: "Are you sure? This cannot be undone." } %></td>
+                <% else %>
+                  <td><%= link_to "Shipped", order_path(order_item.id), method: :get, class: "btn btn-secondary disabled" %></td>
+                <% end %>
+            </tr>
+          <% end %>
+        <!-- /// OTHERWISE, DISPLAY ALL PRODUCTS /// -->
+        <% else %>
+          <% @order.order_items.each do |order_item| %>
+            <tr>
+              <td><%= link_to "#{order_item.product.name}", product_path(order_item.product.id) %></td>
+              <td><%= number_to_currency(order_item.product.price) %></td>
+              <td><%= order_item.quantity %></td>
+              <td><%= number_to_currency(@order.order_item_total_cost(order_item)) %></td>
+            </tr>
           <% end %>
         <% end %>
-      </tr>
+        </tbody>
+      </table>
+
+    <br>
+
+    <!-- /// BACK TO DASH BUTTON /// -->
+    <% if logged_in_merchant_has_order_items %>
+      <div class="container text-center">
+    <%= button_to '<< Back To Dashboard', dashboard_path, method: :get, class: "btn btn-primary" %>
+      </div>
     <% end %>
-  <% else %>
-    <% @order.order_items.each do |order_item| %>
-      <tr>
-        <td><%= link_to "#{order_item.product.name}", product_path(order_item.product.id) %></td>
-        <td><%= number_to_currency(order_item.product.price) %></td>
-        <td><%= order_item.quantity %></td>
-        <td><%= number_to_currency(@order.order_item_total_cost(order_item)) %></td>
-      </tr>
-    <% end %>
-  <% end %>
-  </tbody>
-</table>
 
-<br>
-
-<% if logged_in_merchant_has_order_items %>
-  <div class="container text-center">
-<%= button_to '<< Back To Dashboard', dashboard_path, method: :get, class: "btn btn-primary" %>
-  </div>
-<% end %>
-
-<br>
+    <br>
+  </section>
+</section>
