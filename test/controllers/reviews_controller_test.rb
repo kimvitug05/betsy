@@ -12,46 +12,18 @@ describe ReviewsController do
         active: true)
   end
 
-  describe "index" do
-    it "should get the product reviews" do
-      get "/reviews", params: { product_id: products(:desktop).id }
+  describe "new" do
+    it "new review with product id" do
+      get new_product_review_path(@product.id)
 
       must_respond_with :success
     end
 
-    it "should get all reviews" do
-      get "/reviews"
-
-      must_respond_with :success
-    end
-  end
-
-  describe "show" do
-    it "should get the review page" do
-      get "/reviews/show", params: { review_id: reviews(:review1).id }
-
-      must_respond_with :success
-    end
-
-    it "should redirect to products page if the review does not exist" do
+    it "should redirect to products page if the product does not exist" do
       get review_path(-1)
 
       must_respond_with :redirect
       must_redirect_to products_path
-    end
-  end
-
-  describe "new" do
-    it "new review with product id" do
-      get "/reviews/new", params: { product_id: @product[:id] }
-
-      must_respond_with :success
-    end
-
-    it "new review without product id" do
-      get "/reviews/new"
-
-      must_respond_with :success
     end
   end
 
@@ -82,7 +54,7 @@ describe ReviewsController do
 
     it "renders bad_request and does not update the DB if merchant tries to review their own product" do
       perform_login(@product.merchant)
-      bad_review = { review: { rating: nil, description: nil, product_id: @product[:id] } }
+      bad_review = {review: {rating: nil, description: nil, product_id: @product[:id]}}
 
       expect {
         post "/products/#{@product.id}/reviews", params: bad_review
