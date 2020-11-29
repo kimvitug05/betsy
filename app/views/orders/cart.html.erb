@@ -1,27 +1,33 @@
-<section class="container">
+<section class="wrapper container">
+  <!-- /// IF EMPTY /// -->
   <% if !@order || @order.order_items.empty? %>
-    <div class="row align-items-center justify-content-center">
-      <%= image_tag("star.gif", :alt => "a star") %>
-      <h2>Your Shopping Cart</h2>
-      <%= image_tag("star.gif", :alt => "a star") %>
-    </div>
+    <section class="header-images">
+      <div class="row align-items-center justify-content-center">
+        <%= image_tag("star.gif", :alt => "a star") %>
+        <h2>Your Shopping Cart</h2>
+        <%= image_tag("star.gif", :alt => "a star") %>
+      </div>
+    </section>
 
     <br><br>
     <h6 class="text-center">Your cart is currently empty! How sad. Wouldn't you like to support all those starving pounded Neopets??</h6>
     <br><br>
 
-    <div class="text-center">
+    <section class="cart-buttons text-center">
       <%= link_to "Clear Cart", clear_cart_path, class: "btn btn-secondary disabled" %>
       <%= link_to "Go Shopping!", products_path, class: "btn btn-secondary" %>
       <%= link_to "Checkout", checkout_path, class: "btn btn-secondary" %>
-    </div>
+    </section>
 
+  <!-- /// IF NOT EMPTY /// -->
   <% else %>
-    <div class="row align-items-center justify-content-right">
-      <%= image_tag("star.gif", :alt => "a star") %>
-      <h2>Your Shopping Cart</h2>
-      <%= image_tag("star.gif", :alt => "a star") %>
-    </div>
+    <section class="header-images">
+      <div class="row align-items-center justify-content-right">
+        <%= image_tag("star.gif", :alt => "a star") %>
+        <h2>Your Shopping Cart</h2>
+        <%= image_tag("star.gif", :alt => "a star") %>
+      </div>
+    </section>
 
     <% @order.order_items.each do |item| %>
       <div class="row">
@@ -66,22 +72,13 @@
       <hr>
     <% end %>
     <h3 class="text-right">Cart Total: <%=number_to_currency(@cart_total) %></h3>
-    <div class="text-right">
+    <section class="cart-buttons text-right">
       <%= link_to '<< Back', :back, class:"btn btn-secondary" %>
       <%= link_to "Clear Cart", clear_cart_path, class: "btn btn-secondary" %>
       <%= link_to "Checkout", checkout_path, class: "btn btn-secondary" %>
-    </div>
+    </section>
     <br>
   <% end %>
-<!--<<<<<<< HEAD:app/views/orders/cart.html.erb-->
-<!--  <div class="text-right">-->
-    <%#= link_to "Clear Cart", clear_cart_path, class: "btn btn-secondary" %>
-    <%#= link_to "Go Shopping", products_path, class: "btn btn-secondary" %>
-    <%#if @cart_total > 0 %>
-      <%#= link_to "Checkout", checkout_path, class: "btn btn-secondary" %>
-      <%#end %>
-<!--  </div>-->
-<!--=======-->
 
 </section>
 
