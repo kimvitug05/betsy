@@ -2,12 +2,7 @@ class ReviewsController < ApplicationController
   before_action :find_product
 
   def new
-    if params[:product_id]
-      product = Product.find_by(id: params[:product_id])
-      @review = product.reviews.new
-    else
-      render :new, status: :bad_request
-    end
+    @review = @product.reviews.new
   end
 
   def create
@@ -44,6 +39,11 @@ class ReviewsController < ApplicationController
 
   def find_product
     @product = Product.find_by(id: params[:product_id])
+    if @product.nil?
+      flash.now[:status] = :failure
+      flash.now[:result_text] = "Something went wrong. Could not find product."
+      redirect_to products_path
+    end
   end
 
   def review_params
