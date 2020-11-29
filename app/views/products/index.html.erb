@@ -1,6 +1,6 @@
-<div class="container">
+<section class="page-body container">
 
-  <div class="container">
+  <section class="header-images container">
     <div class="row">
       <div class="col-sm text-center">
         <div class="top-banner">
@@ -23,15 +23,17 @@
         </div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <% if @login_user %>
-    <%= render partial: 'product-grid', locals: { products: @products.where.not(merchant_id: @login_user.id, active: false) } %>
-  <% elsif @products.nil? %>
-    <br><br>
-    <h4><i>Eep! No products have been added yet! Sad day.</i></h4>
-  <% else %>
-    <%= render partial: 'product-grid', locals: { products: @products.where(active: true) } %>
-  <% end %>
+  <section class="display-products-container">
+    <% if @login_user %>
+      <%= render partial: 'product-grid', locals: { products: @products.where.not(merchant_id: @login_user.id, active: false) } %>
+    <% elsif @products.nil? %>
+      <br><br>
+      <h4><i>Eep! No products have been added yet! Sad day.</i></h4>
+    <% else %>
+      <%= render partial: 'product-grid', locals: { products: @products.where(active: true) } %>
+    <% end %>
+  </section>
 
-</div>
+</section>

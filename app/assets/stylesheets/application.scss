@@ -21,13 +21,13 @@
  margin-bottom:-8px
 }
 
-div.top-banner {
+section.top-banner, div.top-banner {
  padding: 6px;
  display: flex;
  justify-content: center;
 }
 
-div.top-banner img {
+div.top-banner img, section.top-banner img {
  opacity: 0.75;
 }
 
@@ -87,30 +87,6 @@ div.top-banner img {
 .caption-img-container:hover img {
   opacity: 0.95;
 }
-
-// .over-img-text {
-//   position: absolute;
-//   top: 50%;
-//   left: 50%;
-//   transform: translate(-50%, -50%);
-//   text-shadow:
-//   -1px -1px 0 #000,
-//   1px -1px 0 #000;
-//
-//   color: white;
-//   font-size: 20px;
-//   position: absolute;
-//   top: 50%;
-//   left: 50%;
-//   -webkit-transform: translate(-50%, -50%);
-//   -ms-transform: translate(-50%, -50%);
-//   transform: translate(-50%, -50%);
-//   text-align: center;
-// }
-//
-// .over-img-text:hover {
-//       display: none;
-// }
 
 .form-control::placeholder {
   color: #d2cccc;

@@ -1,4 +1,4 @@
-<section class="container">
+<section class="header-images container">
   <div class="row">
     <div class="col-sm text-center">
       <div class="top-banner">
@@ -20,7 +20,9 @@
       </div>
     </div>
   </div>
+</section>
 
+<section class="review-form">
   <%= form_with model: [@product, @review] do |f| %>
     <div class="form-group">
       <%= f.label :rating %>

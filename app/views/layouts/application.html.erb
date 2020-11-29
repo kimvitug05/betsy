@@ -11,110 +11,95 @@
 
   <body>
 
-  <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-primary">
-    <ul class="navbar-nav mr-auto">
-    <li class="nav-item active">
-      <%= link_to image_tag("poogle.png"), root_path, :alt => "a smiling kacheek" %>
-    </li>
-    </ul>
-    <a class="navbar-brand" href="#">N.E.O.P.E.T.S.Y</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarColor01">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-            <%= link_to image_tag("home.gif", :alt => "home icon", :class => "nav-link"), root_path %>
-        </li>
-
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><%= image_tag("shop.gif", :alt => "shopping cart icon") %></a>
-          <div class="dropdown-menu">
-            <%= link_to "View All Merchants", merchants_path, method: :get, class: "dropdown-item" %>
-            <%= link_to "View All Categories", categorizations_path, method: :get, class: "dropdown-item" %>
-            <%= link_to "View All Products", products_path, method: :get, class: "dropdown-item" %>
-            <%= link_to "Shopping Cart", cart_path, method: :get, class: "dropdown-item" %>
-          </div>
-        </li>
+  <!-- /// MAIN MENU NAV /// -->
+  <nav class="header-main-menu-navigation">
+    <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-primary">
+      <!-- /// LOGO /// -->
+      <ul class="nav-logo navbar-nav mr-auto">
+      <li class="nav-item active">
+        <%= link_to image_tag("poogle.png"), root_path, :alt => "a smiling kacheek" %>
+      </li>
       </ul>
+      <!-- /// SITE TITLE /// -->
+      <a class="navbar-brand" href="#">N.E.O.P.E.T.S.Y</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active d-none d-lg-block">
-          <%= image_tag("jubjub.png", :alt => "a jubjub neopet") %>
-        </li>
-        <li class="nav-item active d-none d-lg-block">
-          <%= image_tag("space_faerie.png", :alt => "a space faerie") %>
-        </li>
-        <li class="nav-item active d-none d-lg-block">
-          <%= image_tag("kougra.png", :alt => "a kougra neopet") %>
-        </li>
-        <li class="nav-item active d-none d-lg-block">
-          <%= image_tag("plushie.png", :alt => "a plushie shoyru neopet") %>
-        </li>
-        <li class="nav-item active d-none d-lg-block">
-          <%= image_tag("bruce.png", :alt => "a bruce neopet") %>
-        </li>
-        <li class="nav-item active d-none d-lg-block">
-          <%= image_tag("techno.png", :alt => "a techno martial artist") %>
-        </li>
-        <li class="nav-item active d-none d-lg-block">
-          <%= image_tag("shoyru2.png", :alt => "a shoyru neopet") %>
-        </li>
-        <li class="nav-item active d-none d-lg-block">
-          <%= image_tag("xweetok.png", :alt => "a xzweetok neopet") %>
-        </li>
-        <li class="nav-item active d-none d-md-block">
-          <%= image_tag("acara.png", :alt => "a acara neopet") %>
-        </li>
-      </ul>
+      <!-- /// MAIN MENU SELECTIONS /// -->
+      <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navigation-links navbar-nav mr-auto">
+          <!-- /// HOME /// -->
+          <li class="nav-item active">
+              <%= link_to image_tag("home.gif", :alt => "home icon", :class => "nav-link"), root_path %>
+          </li>
 
-      <ul class="my-2 my-lg-0 navbar-nav">
-        <li class="nav-item dropdown">
-          <% if @login_user %>
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><%= image_tag("toolbar.gif", :alt => "toolbar icon") %></a>
+          <!-- /// PRODUCTS VIEW FILTER OPTIONS /// -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><%= image_tag("shop.gif", :alt => "shopping cart icon") %></a>
             <div class="dropdown-menu">
-                <%= link_to "#{@login_user.username}'s Dashboard", dashboard_path, method: :get, class: "dropdown-item" %>
-                <%= link_to "Log Out", logout_path, method: :post, class: "dropdown-item" %>
+              <%= link_to "View All Merchants", merchants_path, method: :get, class: "dropdown-item" %>
+              <%= link_to "View All Categories", categorizations_path, method: :get, class: "dropdown-item" %>
+              <%= link_to "View All Products", products_path, method: :get, class: "dropdown-item" %>
+              <%= link_to "Shopping Cart", cart_path, method: :get, class: "dropdown-item" %>
             </div>
-          <% else %>
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><%= image_tag("portal.gif", :alt => "portal icon") %></a>
-            <div class="dropdown-menu">
-              <%= link_to "Log In", github_login_path,
-                :class => 'dropdown-item', data: { confirm: "Login is authenticated through Github.  New users will be redirected to enter a GitHub login." } %>
-            </div>
-          <% end %>
-        </li>
-      </ul>
+          </li>
+        </ul>
 
-<!--If we want a search bar later-->
-<!--      <form class="form-inline my-2 my-lg-0">-->
-<!--        <input class="form-control mr-sm-2" type="text" placeholder="Search">-->
-<!--        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>-->
-<!--      </form>-->
+        <!-- /// NAVBAR DECOR IMAGES /// -->
+        <ul class="nav-images navbar-nav mr-auto">
+          <li class="nav-item active d-none d-lg-block">
+            <%= image_tag("jubjub.png", :alt => "a jubjub neopet") %>
+          </li>
+          <li class="nav-item active d-none d-lg-block">
+            <%= image_tag("space_faerie.png", :alt => "a space faerie") %>
+          </li>
+          <li class="nav-item active d-none d-lg-block">
+            <%= image_tag("kougra.png", :alt => "a kougra neopet") %>
+          </li>
+          <li class="nav-item active d-none d-lg-block">
+            <%= image_tag("plushie.png", :alt => "a plushie shoyru neopet") %>
+          </li>
+          <li class="nav-item active d-none d-lg-block">
+            <%= image_tag("bruce.png", :alt => "a bruce neopet") %>
+          </li>
+          <li class="nav-item active d-none d-lg-block">
+            <%= image_tag("techno.png", :alt => "a techno martial artist") %>
+          </li>
+          <li class="nav-item active d-none d-lg-block">
+            <%= image_tag("shoyru2.png", :alt => "a shoyru neopet") %>
+          </li>
+          <li class="nav-item active d-none d-lg-block">
+            <%= image_tag("xweetok.png", :alt => "a xzweetok neopet") %>
+          </li>
+          <li class="nav-item active d-none d-md-block">
+            <%= image_tag("acara.png", :alt => "a acara neopet") %>
+          </li>
+        </ul>
 
-    </div>
+        <!-- /// LOGIN/DASHBOARD NAV ITEMS /// -->
+        <ul class="navigation-user-portal my-2 my-lg-0 navbar-nav">
+          <li class="nav-item dropdown">
+            <% if @login_user %>
+              <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><%= image_tag("toolbar.gif", :alt => "toolbar icon") %></a>
+              <div class="dropdown-menu">
+                  <%= link_to "#{@login_user.username}'s Dashboard", dashboard_path, method: :get, class: "dropdown-item" %>
+                  <%= link_to "Log Out", logout_path, method: :post, class: "dropdown-item" %>
+              </div>
+            <% else %>
+              <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><%= image_tag("portal.gif", :alt => "portal icon") %></a>
+              <div class="dropdown-menu">
+                <%= link_to "Log In", github_login_path,
+                  :class => 'dropdown-item', data: { confirm: "Login is authenticated through Github.  New users will be redirected to enter a GitHub login." } %>
+              </div>
+            <% end %>
+          </li>
+        </ul>
+      </div>
+    </nav>
   </nav>
 
-<!--this is the old logout buttons, in case we need-->
-<!--  LOGIN/LOGOUT BUTTONS-->
-<!--  <ul class="nav app-header__user-nav-container">-->
-    <%# if @login_user %>
-      <%#= link_to "My Account", dashboard_path, class: "btn btn-primary" %>
-<!--            <li class="nav-item app-header__nav_item">-->
-        <%#= link_to "Logged in as #{@login_user.username}", user_path(@login_user), class: "btn btn-primary" %>
-<!--      </li>-->
-<!--      <li class="nav-item app-header__nav_item">-->
-        <%#= link_to "Log Out", logout_path, method: :post, class: "btn btn-primary" %>
-<!--      </li>-->
-    <%# else %>
-<!--      <li class="nav-item app-header__nav_item">-->
-        <%#= link_to "Log In", github_login_path, class: "btn btn-primary" %>
-<!--      </li>-->
-  <%# end %>
-<!--  </ul>-->
-
-
+  <!-- /// FLASH /// -->
   <% if flash[:result_text] or flash[:messages] %>
     <section class="alert__container">
       <div class="alert alert-<%= flash[:status].to_s == 'failure' ? 'warning' : flash[:status] %>">
@@ -133,34 +118,39 @@
   <% end %>
 
     <%= yield %>
-  <!--Is there a way that I don't have to use br here?-->
   <br>
   <br>
   <br>
 
-  <nav class="navbar fixed-bottom navbar-expand-lg navbar-dark bg-primary">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+  <!-- /// FOOTER MENU /// -->
+  <nav class="footer-mini-menu-navigation">
+    <nav class="about-us-menu navbar fixed-bottom navbar-expand-lg navbar-dark bg-primary">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-    <div class="collapse navbar-collapse" id="navbarColor01">
+      <div class="collapse navbar-collapse" id="navbarColor01">
 
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <%= link_to image_tag("about.png", :alt => "home icon", :class => "nav-link"), about_us_path %>
-        </li>
-        <li class="nav-item active">
-          <%= link_to image_tag("contactus.png", :alt => "home icon", :class => "nav-link"), contact_us_path %>
-        </li>
-      </ul>
+        <ul class="about-us-links navbar-nav mr-auto">
+          <!-- /// ABOUT US /// -->
+          <li class="nav-item active">
+            <%= link_to image_tag("about.png", :alt => "home icon", :class => "nav-link"), about_us_path %>
+          </li>
+          <!-- /// CONTACT US /// -->
+          <li class="nav-item active">
+            <%= link_to image_tag("contactus.png", :alt => "home icon", :class => "nav-link"), contact_us_path %>
+          </li>
+        </ul>
 
-      <ul class="navbar-nav my-2 my-lg-0">
-        <li class="nav-item active">
-          <%= link_to image_tag("logo-sml.png"), "http://www.neopets.com/index.phtml", :alt => "neopets icon",  :target => "_blank"%>
-        </li>
-      </ul>
+        <!-- /// NEOPETS EXT LINK /// -->
+        <ul class="navbar-nav my-2 my-lg-0">
+          <li class="nav-item active">
+            <%= link_to image_tag("logo-sml.png"), "http://www.neopets.com/index.phtml", :alt => "neopets icon",  :target => "_blank"%>
+          </li>
+        </ul>
 
-    </div>
+      </div>
+    </nav>
   </nav>
 
   </body>

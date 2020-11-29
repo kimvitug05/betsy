@@ -1,10 +1,10 @@
-<section class="container text-center">
+<section class="wrapper container text-center">
 
-  <div class="top-banner">
+  <section class="top-banner">
     <%= image_tag("userlookup.gif", :alt => "user banner") %>
-  </div>
+  </section>
 
-  <div class="container">
+  <section class="user-display-images container">
     <div class="row d-flex align-items-center justify-content-center">
       <div>
         <%= image_tag("shield.gif", :alt => "user shield") %>
@@ -16,14 +16,14 @@
         <%= image_tag("clipboard.gif", :alt => "clipboard") %>
       </div>
     </div>
-  </div>
+  </section>
 
-  <div class="mb-4">
+  <section class="user-stats mb-4">
     <h2><%= @login_user.username %></h2>
     <h4>Total Revenue: <%= number_to_currency(@login_user.total_revenue) %></h4>
-  </div>
+  </section>
 
-  <div class="container">
+  <section class="user-controls container">
       <div class="row">
         <div class="col-sm text-center">
     <%= button_to 'Add Product', new_product_path, method: :get, class: "btn btn-primary" %>
@@ -38,15 +38,11 @@
     <%= button_to 'My Merchant Page', merchant_path(@login_user), method: :get, class: "btn btn-primary" %>
         </div>
       </div>
-  </div>
+  </section>
 
-  <br>
+  <br><br><br>
 
-  <%#= render partial: 'products/product-grid', locals: { products: @login_user.products } %>
-
-  <br><br>
-
- <div class="container">
+ <section class="order-tables container">
     <h4>Pending Orders: <%= @login_user.total_num_orders_by_status("pending") %></h4>
     <h6>Revenue: <%= number_to_currency(@login_user.total_revenue_by_status("pending")) %></h6>
     <%= render partial: 'table', locals: { :orders => @login_user.filter_orders("pending") } %>
@@ -68,6 +64,6 @@
     <h4>Cancelled Orders: <%= @login_user.total_num_orders_by_status("cancelled") %></h4>
     <h6>Revenue: <%= number_to_currency(@login_user.total_revenue_by_status("cancelled")) %></h6>
     <%= render partial: 'table', locals: { :orders => @login_user.filter_orders("cancelled") } %>
- </div>
+ </section>
 
 </section>
