@@ -1,13 +1,13 @@
-<div class="homepage-banner">
+<section class="header-images homepage-banner container">
   <%= image_tag("splash.jpg", :alt => "mystical faerieland") %>
-</div>
+</section>
 
-<div class="text-center">
+<section class="welcome text-center">
   <%= image_tag("welcome.png", :alt => "reads welcome", :class => "w-25") %>
-</div>
+</section>
 <br>
 
-<div class="container">
+<section class="page-body container">
   <h4 class="text-center">
     <i>
       Proceeds from every order on Neopetsy go back directly into the community, fueling the free resources
@@ -16,7 +16,7 @@
   </h4>
   <br>
 
-<div class="container">
+<section class="homepage-images container">
   <div class="row">
     <div class="col-sm text-center">
       <div class="caption-img-container">
@@ -37,15 +37,16 @@
       </div>
     </div>
   </div>
-</div>
+</section>
 
   <br>
 
-  <div class="text-center">
+  <section class="image-heading text-center">
     <%= image_tag("wanna_join.png", :alt => "reads wanna join", :class => "w-25") %>
-  </div>
+  </section>
 
   <br><br>
+
   <h5 class="text-center">
       Take advantage of the fun & fresh products Neopetsy has to offer and rest easy knowing your neopoints aren't just funneling back into
       the National Neopian Bank.
@@ -57,11 +58,11 @@
 
   <br>
 
-  <div class="text-center">
+  <section class="image-heading text-center">
     <%= image_tag("hot_items.png", :alt => "reads hot items", :class => "w-25") %>
-  </div>
+  </section>
 
   <br>
 
   <%= render partial: 'products/product-grid', locals: { products: Product.spotlight } %>
-</div>
+</section>
