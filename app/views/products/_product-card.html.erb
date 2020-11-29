@@ -1,22 +1,25 @@
 <div class="card border-secondary mb-3 d-flex h-100 product-card">
-  <div class="container">
+
+  <!-- /// IMAGE /// -->
+  <section class="product-image container">
     <div
       alt="product image"
       class="card-img-top product-image-preview"
       style="background-image: url(<%= product.photo && product.photo != '' ? product.photo : 'https://i.imgur.com/voPUjQv.png' %>)"
     ></div>
-  </div>
+  </section>
 
-  <div class="card-body">
+  <section class="card-body">
+    <!-- /// NAME /// -->
     <h5 class="card-title text-center">
       <%= product.name.capitalize %>
     </h5>
-<!--    <p class="card-text">-->
-<!--      Category: <%#= product.categorizations[0] ? product.categorizations[0].name : '' %>-->
-<!--    </p>-->
+    <!-- /// PRICE  /// -->
     <h5 class="card-text text-success text-center">
       <%= number_to_currency(product.price) %>
     </h5>
+
+    <!-- /// REVIEWS /// -->
     <p class="card-text text-center">
     <% if product.reviews.any? %>
       <% product.average_rating.round.times do  %>
@@ -27,7 +30,8 @@
       <% end %>
     <% end %>
     </p>
-<!--    HIDE UNNECESSARY DESCRIPTION FROM @login_user DASH-->
+
+    <!-- /// STOCK & DESCRIPTION /// -->
     <% if merchant_view %>
       <p class="text-center">In Stock: <%= product.quantity %></p>
     <% else %>
@@ -35,11 +39,10 @@
         <%= product.description %>
       </p>
     <% end %>
-  </div>
+  </section>
 
-  <!--      IF VIEWING FROM PRODUCT MANAGE PAGE ON DASH-->
-<!--  <p class="card-text text-center">In Stock: <%#= product.quantity %></p>-->
-  <div class="container">
+  <!-- /// MERCHANT-OWNER ONLY BUTTONS  /// -->
+  <section class="buttons container">
     <div class="row text-center">
       <% if merchant_view %>
         <div class="col-sm">
@@ -59,7 +62,7 @@
         <% end %>
         <br>
       </div>
-<!--        OTHERWISE, DISPLAY VIEW BUTTON-->
+      <!-- /// NON-MERCHANT-OWNER BUTTONS  /// -->
       <% else %>
       <div class="col-sm text-center">
         <%= button_to 'View Product', product_path(product.id), method: :get, :class => 'btn btn-primary' %>
@@ -67,5 +70,6 @@
       </div>
       <% end %>
     </div>
-  </div>
+  </section>
+
 </div>

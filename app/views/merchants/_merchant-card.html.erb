@@ -1,33 +1,29 @@
 <div class="card border-secondary mb-3 d-flex h-100 merchant-card">
-  <div class="container">
+
+  <!-- /// IMAGE /// -->
+  <section class="merchant-image container">
     <%= image_tag "shopkeeper_#{rand(1..8)}.gif" %>
-<!--    <div-->
-<!--      alt="merchant image"-->
-<!--      class="card-img-top merchant-image-preview"-->
-<!--      style="background-image: url(<%#= merchant.avatar || 'https://via.placeholder.com/320x240' %>)"-->
-<!--    ></div>-->
-  </div>
-  <div class="card-body">
+  </section>
+
+  <section class="card-body">
+    <!-- /// NAME /// -->
     <h5 class="card-title text-center">
       <%= merchant.username.capitalize %>
     </h5>
-<!--    <p class="card-text">-->
-<!--      Category: <%#= product.categorizations[0] ? product.categorizations[0].name : '' %>-->
-<!--    </p>-->
+
+    <!-- /// JOIN DATE /// -->
     <h5 class="card-text text-success text-center">
       Joined: <%= readable_date(merchant.created_at) %>
     </h5>
-<!--    <p class="card-text">-->
-      <%#= product.description %>
-<!--    </p>-->
+  </section>
 
-  </div>
-  <div class="container">
+  <!-- /// PRODUCTS /// -->
+  <section class="display-products container">
     <div class="row">
       <div class="col-sm text-center">
         <%= button_to 'View Products', merchant_path(merchant.id), method: :get, :class => 'btn btn-primary' %>
         <br>
       </div>
     </div>
-  </div>
+  </section>
 </div>

@@ -1,7 +1,9 @@
-<div class="product-grid row">
-  <% products.each do |product| %>
-    <div class="col-6 col-md-3 py-3">
-      <%= render partial: 'products/product-card', locals: { product: product, merchant_view: current_page?('/dashboard/products') } %>
-    </div>
-  <% end %>
-</div>
+<section class="products-grid-container">
+  <div class="product-grid row">
+    <% products.each do |product| %>
+      <div class="col-6 col-md-3 py-3">
+        <%= render partial: 'products/product-card', locals: { product: product, merchant_view: current_page?('/dashboard/products') } %>
+      </div>
+    <% end %>
+  </div>
+</section>

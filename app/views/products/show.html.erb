@@ -1,36 +1,74 @@
-<section class="container">
-  <div class="row align-items-center">
+<section class="product-details container">
+
+  <!-- /// TITLE  /// -->
+  <section class="product-title row align-items-center">
     <%= image_tag("star.gif", :alt => "a star") %>
     <h2><%= @product.name %></h2>
     <%= image_tag("star.gif", :alt => "a star") %>
-  </div>
+  </section>
 
+  <!-- /// IMAGE  /// -->
   <%= image_tag @product.photo && @product.photo != '' ? @product.photo : 'https://i.imgur.com/voPUjQv.png', :alt => "#{@product.name} image", :class => "product-photo w-25" %>
-  <div class="product-merch">Sold by: <%=  @product.merchant.username %></div>
-  <div class="product-quantity">In Stock: <%= @product.quantity %></div>
+
+  <!-- /// MERCHANT  /// -->
+  <section class="product-merchant">
+    Sold by: <%=  @product.merchant.username %>
+  </section>
+
+  <!-- /// STOCK  /// -->
+  <section class="product-quantity">
+    In Stock: <%= @product.quantity %>
+  </section>
+
   <br>
-  <div class="product-desc">
-    <h5 class="card-text text-secondary">
-      <% if @product.reviews.any? %>
-        <% @product.average_rating.round.times do  %>
-          <span>★</span>
+
+  <section class="product-description">
+    <!-- /// REVIEWS  /// -->
+    <section class="product-reviews">
+      <h5 class="card-text text-secondary">
+        <% if @product.reviews.any? %>
+          <% @product.average_rating.round.times do  %>
+            <span>★</span>
+          <% end %>
+          <% @product.calculate_empty_stars.round.times do %>
+            <span>☆</span>
+          <% end %>
         <% end %>
-        <% @product.calculate_empty_stars.round.times do %>
-          <span>☆</span>
-        <% end %>
-      <% end %>
-<!--      Rating: <%#= @product.average_rating %>-->
-    </h5>
-    <h5 class="card-text text-success">
-      Price: <%= number_to_currency(@product.price) %>
-    </h5>
+      </h5>
+    </section>
+
+    <!-- /// PRICE /// -->
+    <section class="product-price">
+      <h5 class="card-text text-success">
+        Price: <%= number_to_currency(@product.price) %>
+      </h5>
+    </section>
+
     <br>
-    <h5 class="product-desc">
-      <i><%= @product.description %></i>
-    </h5>
-  </div>
-  <!--    <div class="product-desc"><p>Price: $<%#=  @product.categorizations_products %> </p></div>-->
+
+    <!-- /// DESC /// -->
+    <section class="product-description">
+      <h5 class="product-description-text">
+        <i><%= @product.description %></i>
+      </h5>
+    </section>
+
+  </section>
+
+  <!-- /// CATEGORIES /// -->
+  <% if @product.categorizations.any? %>
+      <section class="product-categories">
+      <h5 class="card-text">
+        <% @product.categorizations.each do |categorization|  %>
+          <span class="badge badge-secondary"><%= categorization.name %></span>
+        <% end %>
+      </h5>
+    <% end %>
+  </section>
+
   <hr>
+
+  <!-- /// ADD TO CART FUNCTIONALITY  /// -->
   <%= form_with model: @order_items, url: add_to_cart_path(@product), method: :post do |f| %>
     <div class="form-group">
       <%= f.select(:selected_quantity, (1..@product.quantity), {}, { :class => 'form-control' }) %>
@@ -40,16 +78,19 @@
     </div>
   <%end%>
 
-  <%= link_to 'Write a review', new_product_review_path(@product), class:"btn btn-primary" %>
+  <!-- /// REVIEW BUTTON  /// -->
+  <section class="review-button">
+    <%= link_to 'Write a review', new_product_review_path(@product), class:"btn btn-primary" %>
+  </section>
 
   <br><br><br>
+
+  <!-- /// REVIEWS  /// -->
   <% if @product.reviews.any? %>
-    <div>
+    <section class="reviews">
       <%= image_tag("reviews.png", :alt => "reads reviews", :class => "w-25") %>
-    </div>
-
+    </section>
     <br>
-
     <div>
       <% @product.reviews.each do |review| %>
         <% review.rating.to_i.times do  %>
@@ -58,7 +99,6 @@
         <% review.calculate_empty_stars.to_i.times do %>
           <span class="text-secondary">☆</span>
         <% end %>
-
         <%= review.description %>
         <br><br>
       <% end %>
